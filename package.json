@@ -5,6 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build-lib": "vue-cli-service build --target lib --name dashblocks ./src/components/index.js",
+    "build-wc": "vue-cli-service build --target wc --name dashblocks 'src/components/**/*.vue'",
+    "build-wc-async": "vue-cli-service build --target wc-async --name dash-blocks 'src/components/**/*.vue'",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e"
@@ -27,7 +30,8 @@
     "lint-staged": "^7.2.2",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "^2.5.17",
+    "dygraphs": "^2.1.0"
   },
   "eslintConfig": {
     "root": true,
