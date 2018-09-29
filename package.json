@@ -1,6 +1,6 @@
 {
   "name": "dashblocks",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -12,6 +12,14 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e"
   },
+  "files": [
+    "dist/*",
+    "src/*",
+    "public/*",
+    "*.json",
+    "*.js"
+  ],
+  "main": "dist/dashblocks.common.js",
   "dependencies": {
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
