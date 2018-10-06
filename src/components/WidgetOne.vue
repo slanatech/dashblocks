@@ -6,10 +6,10 @@
 
 <script>
 export default {
-  name: "WidgetOne",
+  name: 'WidgetOne',
   data() {
     return {
-      test: "test"
+      test: 'test'
     };
   }
 };

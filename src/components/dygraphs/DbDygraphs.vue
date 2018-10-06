@@ -2,7 +2,7 @@
   <div ref="container" class="dbc-dygraphs"/>
 </template>
 <script>
-import Dygraphs from "dygraphs";
+import Dygraphs from 'dygraphs';
 
 export default {
   props: {

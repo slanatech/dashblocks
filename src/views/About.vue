@@ -6,10 +6,10 @@
 
 <script>
 // @ is an alias to /src
-import DashOne from "@/components/DashOne.vue";
+import DashOne from '@/components/DashOne.vue';
 
 export default {
-  name: "home",
+  name: 'home',
   components: {
     DashOne
   }

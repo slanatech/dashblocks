@@ -1,5 +1,5 @@
-import HelloDash from "./HelloDash.vue";
-import DbDygraphs from "./dygraphs/DbDygraphs.vue";
+import HelloDash from './HelloDash.vue';
+import DbDygraphs from './dygraphs/DbDygraphs.vue';
 
 const dbComponents = {
   HelloDash,

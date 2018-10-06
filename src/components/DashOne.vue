@@ -1,6 +1,6 @@
 <template>
-  <div class="dbc-dashboard">
-    <div class="dbc-dashboard" v-for="widget in dbspec.widgets" v-bind:key="widget.id">
+  <div class="dbc-dashboard db-grid-layout">
+    <div :class="'db-dash-item ' + widget.class" v-for="widget in dbspec.widgets" v-bind:key="widget.id" :style="widget.style">
       Name: {{ widget.name }}
       Data: {{ dbdata[widget.name] }}
       <component v-bind:is="widget.type">
@@ -11,13 +11,14 @@
 
 <script>
 // Imports all components, then whatever is specified in dashboard will be used dynamically
-import DbWidgets from "./dbwidgets";
+import DbWidgets from './dbwidgets';
 
-// TODO LAYOUTS !!!
+// TODO LAYOUTS
 // TODO Under layout property of dashboard spec, do layout-specific config
+// TODO Handle responsive in Layout - https://alligator.io/vuejs/vue-media-queries/ - or justr
 
 export default {
-  name: "DashOne",
+  name: 'DashOne',
   components: DbWidgets,
   mounted() {
     //this.components['WidgetOne'] = import('./WidgetOne.vue');
@@ -30,20 +31,68 @@ export default {
       },
       dbspec: {
         layout: {
-          type: "bootstrap",
+          type: 'bootstrap',
           // Rows, Columns
-          rows: [[{ w1: "1" }, { w2: "2" }]]
+          rows: [[{ w1: '1' }, { w2: '2' }]]
         },
         widgets: [
           {
-            id: "1",
-            name: "w1",
-            type: "WidgetOne"
+            id: '1',
+            name: 'w1',
+            type: 'WidgetOne',
+            class: 'cspan-4'
           },
           {
-            id: "2",
-            name: "w2",
-            type: "WidgetTwo"
+            id: '2',
+            name: 'w2',
+            type: 'WidgetTwo',
+            style: 'grid-row-end: span 2;'
+          },
+          {
+            id: '1',
+            name: 'w1',
+            type: 'WidgetOne',
+            class: 'cspan-4'
+          },
+          {
+            id: '1',
+            name: 'w1',
+            type: 'WidgetOne'
+          },
+          {
+            id: '1',
+            name: 'w1',
+            type: 'WidgetOne'
+          },
+          {
+            id: '1',
+            name: 'w1',
+            type: 'WidgetOne'
+          },
+          {
+            id: '1',
+            name: 'w1',
+            type: 'WidgetOne'
+          },
+          {
+            id: '1',
+            name: 'w1',
+            type: 'WidgetOne'
+          },
+          {
+            id: '1',
+            name: 'w1',
+            type: 'WidgetOne'
+          },
+          {
+            id: '1',
+            name: 'w1',
+            type: 'WidgetOne'
+          },
+          {
+            id: '1',
+            name: 'w1',
+            type: 'WidgetOne'
           }
         ]
       }
@@ -51,7 +100,11 @@ export default {
   }
 };
 </script>
-
+<style>
+.db-dash-item {
+  border: 1px solid magenta;
+}
+</style>
 
 /* Notes **
 
