@@ -1,17 +1,17 @@
 <template>
-  <div class="dbc-dashboard db-grid-layout">
-    <div :class="'db-dash-item ' + widget.class" v-for="widget in dbspec.widgets" v-bind:key="widget.id" :style="widget.style">
-      Name: {{ widget.name }}
-      Data: {{ dbdata[widget.name] }}
-      <component v-bind:is="widget.type">
-      </component>
-    </div>
+  <div class="db-dashboard">
+    <component
+      v-bind:is="layoutComponent"
+      :spec="dbspec"
+      :data="dbdata"
+    >
+    </component>
+    <div @click="handleInc">INC</div>
   </div>
 </template>
 
 <script>
-// Imports all components, then whatever is specified in dashboard will be used dynamically
-import DbWidgets from './dbwidgets';
+import DbLayouts from './dblayouts';
 
 // TODO LAYOUTS
 // TODO Under layout property of dashboard spec, do layout-specific config
@@ -19,7 +19,7 @@ import DbWidgets from './dbwidgets';
 
 export default {
   name: 'DashOne',
-  components: DbWidgets,
+  components: DbLayouts.components,
   mounted() {
     //this.components['WidgetOne'] = import('./WidgetOne.vue');
   },
@@ -31,16 +31,14 @@ export default {
       },
       dbspec: {
         layout: {
-          type: 'bootstrap',
-          // Rows, Columns
-          rows: [[{ w1: '1' }, { w2: '2' }]]
+          type: 'grid'
         },
         widgets: [
           {
             id: '1',
             name: 'w1',
             type: 'WidgetOne',
-            class: 'cspan-4'
+            class: 'cspan-2'
           },
           {
             id: '2',
@@ -93,10 +91,40 @@ export default {
             id: '1',
             name: 'w1',
             type: 'WidgetOne'
+          },
+          {
+            id: '1',
+            name: 'w1',
+            type: 'WidgetOne'
+          },
+          {
+            id: '1',
+            name: 'w1',
+            type: 'WidgetOne'
+          },
+          {
+            id: '1',
+            name: 'w1',
+            type: 'WidgetOne'
+          },
+          {
+            id: '1',
+            name: 'w1',
+            type: 'WidgetOne'
           }
         ]
       }
     };
+  },
+  computed: {
+    layoutComponent() {
+      return DbLayouts.resolve(this.dbspec.layout.type);
+    }
+  },
+  methods: {
+    handleInc: function() {
+      this.dbdata.w1 = this.dbdata.w1 + 10;
+    }
   }
 };
 </script>

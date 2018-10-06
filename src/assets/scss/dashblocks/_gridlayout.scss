@@ -17,46 +17,34 @@
   .db-grid-layout {
     grid-template-columns: repeat(1, 1fr);
   }
-  .cspan-2 {
-    grid-column-end: span 1;
-  }
+  .cspan-2 { grid-column-end: span 1; }
+  .cspan-4 { grid-column-end: span 1; }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
   .db-grid-layout {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
-  .cspan-2 {
-    grid-column-end: span 1;
-  }
-  .cspan-1 {
-    grid-column-end: span 2;
-  }
+  .cspan-2 { grid-column-end: span 1; }
+  .cspan-4 { grid-column-end: span 1; }
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
   .db-grid-layout {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(8, 1fr);
   }
-  .cspan-2 {
-    grid-column-end: span 1;
-  }
-  .cspan-4 {
-    grid-column-end: span 2;
-  }
+  .cspan-2 { grid-column-end: span 1; }
+  .cspan-4 { grid-column-end: span 2; }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
   .db-grid-layout {
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(16, 1fr);
   }
-  .cspan-2 {
-    grid-column-end: span 2;
-  }
-  .cspan-4 {
-    grid-column-end: span 4;
-  }
+  .cspan-2 { grid-column-end: span 2; }
+  .cspan-4 { grid-column-end: span 4; }
 }
+
