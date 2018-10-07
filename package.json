@@ -40,7 +40,9 @@
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
     "vue-template-compiler": "^2.5.17",
-    "dygraphs": "^2.1.0"
+    "dygraphs": "^2.1.0",
+    "vue-chartjs":"^3.4.0",
+    "chart.js":"^2.7.2"
   },
   "eslintConfig": {
     "root": true,

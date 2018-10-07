@@ -44,18 +44,19 @@ export default {
             id: '2',
             name: 'w2',
             type: 'WidgetTwo',
-            style: 'grid-row-end: span 2;'
+            class: 'cspan-2'
           },
           {
             id: '1',
             name: 'w1',
-            type: 'WidgetOne',
+            type: 'WidgetBar',
             class: 'cspan-4'
           },
           {
             id: '1',
-            name: 'w1',
-            type: 'WidgetOne'
+            name: 'w5',
+            type: 'WidgetBar',
+            class: 'cspan-4'
           },
           {
             id: '1',

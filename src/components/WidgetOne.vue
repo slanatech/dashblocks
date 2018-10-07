@@ -1,6 +1,6 @@
 <template>
   <div class="dbc-widget">
-    WidgetOne!
+    1
   </div>
 </template>
 

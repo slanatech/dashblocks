@@ -1,9 +1,8 @@
 <template>
   <div class="db-grid-layout">
     <div :class="'db-dash-item ' + widget.class" v-for="widget in spec.widgets" v-bind:key="widget.id" :style="widget.style">
-      Name: {{ widget.name }}
-      Data: {{ data[widget.name] }}
-      <component v-bind:is="widget.type">
+      {{ widget.name }}
+      <component v-bind:is="widget.type" style="height:150px;">
       </component>
     </div>
   </div>
