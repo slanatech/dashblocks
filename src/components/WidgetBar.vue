@@ -1,24 +1,50 @@
 <script>
 import { Bar } from 'vue-chartjs';
-
 export default {
   extends: Bar,
   data() {
     return {
+      that: this,
       datacollection: {
-        labels: ['January', 'February'],
+        labels: ['January', 'February', 'March', 'April'],
         datasets: [
           {
             label: 'Data One',
-            backgroundColor: '#f87979',
-            data: [40, -20]
+            data: [10, 20, 30, 40]
           }
         ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        onClick: (evt, item) => {
+          this.onClick(evt, item);
+        }
+        /*
+        onClick2: function(evt,item) {
+          //let activeElement = this.tooltipActive[0];
+          _this.onClick(evt, item);
+        }
+        */
       }
     };
   },
   mounted() {
-    this.renderChart(this.datacollection, { responsive: true, maintainAspectRatio: false });
+    this.renderChart(this.datacollection, this.options);
+  },
+  methods: {
+    onClick: function(/*evt,item*/) {
+      //let activeEl = this.$data._chart.getElementAtEvent(evt);
+      /*
+        var firstPoint = myChart.getElementAtEvent(evt)[0];
+        if (firstPoint) {
+            var label = myChart.data.labels[firstPoint._index];
+            var value = myChart.data.datasets[firstPoint._datasetIndex].data[firstPoint._index];
+        }
+       */
+      //console.log('On click! Label: ');
+      // TODO Fire event
+    }
   }
 };
 </script>
