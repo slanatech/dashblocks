@@ -1,11 +1,6 @@
 <template>
   <div class="db-dashboard">
-    <component
-      v-bind:is="layoutComponent"
-      :spec="dbspec"
-      :data="dbdata"
-    >
-    </component>
+    <component v-bind:is="layoutComponent" :spec="dbspec" :data="dbdata"> </component>
     <div @click="handleInc">INC</div>
   </div>
 </template>
@@ -27,7 +22,16 @@ export default {
     return {
       dbdata: {
         w1: 10,
-        w2: 20
+        w2: 20,
+        w5: {
+          labels: ['January', 'February', 'March', 'April'],
+          datasets: [
+            {
+              label: 'Data One',
+              data: [10, 20, 30, 100]
+            }
+          ]
+        }
       },
       dbspec: {
         layout: {
@@ -48,7 +52,7 @@ export default {
           },
           {
             id: '1',
-            name: 'w1',
+            name: 'w5',
             type: 'WidgetBar',
             class: 'cspan-4'
           },
@@ -125,6 +129,12 @@ export default {
   methods: {
     handleInc: function() {
       this.dbdata.w1 = this.dbdata.w1 + 10;
+      let d = this.dbdata.w5.datasets[0].data;
+      for (let i = 0; i < d.length; i++) {
+        this.$set(d, i, d[i] + 10);
+        //d[i] = d[i] + 10;
+      }
+      //this.$set(this.dbdata,'w5',nd);
     }
   }
 };
@@ -135,12 +145,4 @@ export default {
 }
 </style>
 
-/* Notes **
-
-That works:
-components: {
-'WidgetOne': () => import('./WidgetOne.vue')
-},
-
-
-*/
+/* Notes ** That works: components: { 'WidgetOne': () => import('./WidgetOne.vue') }, */

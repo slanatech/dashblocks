@@ -5,6 +5,7 @@ export default {
   data() {
     return {
       that: this,
+      chartdata: null,
       datacollection: {
         labels: ['January', 'February', 'March', 'April'],
         datasets: [
@@ -29,8 +30,23 @@ export default {
       }
     };
   },
+  props: ['wspec', 'wdata'],
   mounted() {
-    this.renderChart(this.datacollection, this.options);
+    this.chartdata = JSON.parse(JSON.stringify(this.wdata));
+    //console.log(`chartdata: ${JSON.stringify(this.chartdata)}`);
+    this.renderChart(this.chartdata, this.options);
+  },
+  watch: {
+    wdata: {
+      handler(newVal) {
+        //console.log('wdata prop changed: ', newVal, ' | was: ', oldVal);
+        //this.renderChart(newVal, this.options);
+        this.chartdata = JSON.parse(JSON.stringify(newVal));
+        //console.log(`chartdata: ${JSON.stringify(this.chartdata)}`);
+        this.renderChart(this.chartdata, this.options);
+      },
+      deep: true
+    }
   },
   methods: {
     onClick: function(/*evt,item*/) {

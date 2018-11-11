@@ -1,5 +1,5 @@
 <template>
-  <div ref="container" class="dbc-dygraphs"/>
+  <div ref="container" class="dbc-dygraphs" />
 </template>
 <script>
 import Dygraphs from 'dygraphs';

@@ -1,7 +1,5 @@
 <template>
-  <div class="dbc-widget">
-    2
-  </div>
+  <div class="dbc-widget">2</div>
 </template>
 
 <script>

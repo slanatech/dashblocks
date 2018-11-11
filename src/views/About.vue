@@ -1,7 +1,5 @@
 <template>
-  <div class="home">
-    <DashOne/>
-  </div>
+  <div class="home"><DashOne /></div>
 </template>
 
 <script>
