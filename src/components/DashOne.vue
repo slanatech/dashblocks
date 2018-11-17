@@ -130,10 +130,14 @@ export default {
     handleInc: function() {
       this.dbdata.w1 = this.dbdata.w1 + 10;
       let d = this.dbdata.w5.datasets[0].data;
+      this.dbdata.w5.labels.push(`L:${Math.random()}`);
+      d.push(Math.random());
+      /*
       for (let i = 0; i < d.length; i++) {
         this.$set(d, i, d[i] + 10);
         //d[i] = d[i] + 10;
       }
+      */
       //this.$set(this.dbdata,'w5',nd);
     }
   }
