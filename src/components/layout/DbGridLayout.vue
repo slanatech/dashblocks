@@ -2,7 +2,7 @@
   <div class="db-grid-layout">
     <div
       :class="'db-dash-item ' + widget.class"
-      v-for="widget in spec.widgets"
+      v-for="widget in dbspec.widgets"
       v-bind:key="widget.id"
       :style="widget.style"
     >
@@ -20,12 +20,24 @@ export default {
   name: 'DbGridLayout',
   components: DbWidgets,
   props: {
-    spec: Object,
-    data: Object
+    dbspec: Object,
+    dbdata: Object
   },
+  /*
+  watch: {
+    dbdata: {
+      handler(newVal, oldVal) {
+        //console.log(`dbdata prop changed ${JSON.stringify(oldVal)} -> ${JSON.stringify(newVal)}`);
+      },
+      deep: true
+    }
+  },
+  */
   methods: {
     getWidgetData: function(widget) {
-      return this.data[widget.name];
+      //console.log(`getWidgetData called!`);
+      let wd = this.dbdata.getWData(widget.name);
+      return wd;
     }
   }
 };

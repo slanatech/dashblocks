@@ -1,12 +1,13 @@
 <template>
   <div class="db-dashboard">
-    <component v-bind:is="layoutComponent" :spec="dbspec" :data="dbdata"> </component>
+    <component v-bind:is="layoutComponent" :dbspec="dbspec" :dbdata="dbdata"> </component>
     <div @click="handleInc">INC</div>
   </div>
 </template>
 
 <script>
 import DbLayouts from './dblayouts';
+import DbData from '../dbdata';
 
 // TODO LAYOUTS
 // TODO Under layout property of dashboard spec, do layout-specific config
@@ -15,24 +16,9 @@ import DbLayouts from './dblayouts';
 export default {
   name: 'DashOne',
   components: DbLayouts.components,
-  mounted() {
-    //this.components['WidgetOne'] = import('./WidgetOne.vue');
-  },
   data() {
     return {
-      dbdata: {
-        w1: 10,
-        w2: 20,
-        w5: {
-          labels: ['January', 'February', 'March', 'April'],
-          datasets: [
-            {
-              label: 'Data One',
-              data: [10, 20, 30, 100]
-            }
-          ]
-        }
-      },
+      dbdata: new DbData(),
       dbspec: {
         layout: {
           type: 'grid'
@@ -126,13 +112,39 @@ export default {
       return DbLayouts.resolve(this.dbspec.layout.type);
     }
   },
+  created() {
+    //console.log('Created !');
+    this.dbdata.setWData('w1', {
+      value: 10
+    });
+    this.dbdata.setWData('w2', {
+      value: 20
+    });
+    this.dbdata.setWData('w5', {
+      labels: ['January', 'February', 'March', 'April'],
+      datasets: [
+        {
+          label: 'Data One',
+          data: [10, 20, 30, 100]
+        }
+      ]
+    });
+  },
   methods: {
     handleInc: function() {
-      this.dbdata.w1 = this.dbdata.w1 + 10;
-      let d = this.dbdata.w5.datasets[0].data;
-      this.dbdata.w5.labels.push(`L:${Math.random()}`);
-      d.push(Math.random());
+      //this.dbdata['_updated'] = Date.now();
+
+      this.dbdata.wdata['w1'].value = this.dbdata.wdata['w1'].value + 10;
+
+      //this.dbdata.setWData('w1', {
+      //  value: newVal
+      //});
+
       /*
+      this.dbdata.wdata.w1 = this.dbdata.wdata.w1 + 10;
+      let d = this.dbdata.wdata.w5.datasets[0].data;
+      this.dbdata.wdata.w5.labels.push(`L:${Math.random()}`);
+      d.push(Math.random());
       for (let i = 0; i < d.length; i++) {
         this.$set(d, i, d[i] + 10);
         //d[i] = d[i] + 10;
