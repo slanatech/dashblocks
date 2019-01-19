@@ -123,6 +123,23 @@ export default {
         .attr('dy', '0.35em')
         .text(d => d.key);
 
+      const rule = svg
+        .append('line')
+        .attr('stroke', '#000')
+        .attr('y1', margin.top - 6)
+        .attr('y2', height - margin.bottom - 1)
+        .attr('x1', 0.5)
+        .attr('x2', 0.5);
+
+      svg.on('mousemove touchmove', () => {
+        const mx = d3.mouse(svg.node())[0] + 0.5;
+        rule.attr('x1', mx).attr('x2', mx);
+        // this gets value from X in data - original timestamp ?
+        //let scalex = x.invert(mx);
+        // TODO get Y using X
+        //console.log(`Mouse move: mx=${mx}, x=${scalex}`);
+      });
+
       function horizon(d) {
         const context = this.getContext('2d');
         area.context(context);

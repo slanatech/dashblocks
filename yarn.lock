@@ -6818,6 +6818,10 @@ please-upgrade-node@^3.0.2:
   dependencies:
     semver-compare "^1.0.0"
 
+plotly.js-dist@^1.43.2:
+  version "1.43.2"
+  resolved "https://registry.yarnpkg.com/plotly.js-dist/-/plotly.js-dist-1.43.2.tgz#05747665dfefc450f64cf49ee268eda6c7f90906"
+
 pluralize@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
@@ -7294,6 +7298,10 @@ querystringify@^2.0.0:
 ramda@0.24.1:
   version "0.24.1"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.24.1.tgz#c3b7755197f35b8dc3502228262c4c91ddb6b857"
+
+ramda@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
 
 randomatic@^3.0.0:
   version "3.1.1"

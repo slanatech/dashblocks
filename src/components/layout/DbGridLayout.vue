@@ -1,11 +1,6 @@
 <template>
   <div class="db-grid-layout">
-    <div
-      :class="'db-dash-item ' + widget.class"
-      v-for="widget in dbspec.widgets"
-      v-bind:key="widget.id"
-      :style="widget.style"
-    >
+    <div :class="getWidgetClass(widget)" v-for="widget in dbspec.widgets" v-bind:key="widget.id" :style="widget.style">
       {{ widget.name }}
       <component
         v-bind:is="widget.type"
@@ -19,6 +14,7 @@
 </template>
 
 <script>
+import { pathOr } from 'ramda';
 // Imports all components, then whatever is specified in dashboard will be used dynamically
 import DbWidgets from '../dbwidgets';
 export default {
@@ -39,6 +35,17 @@ export default {
   },
   */
   methods: {
+    getWidgetClass: function(widget) {
+      let wClass = 'db-dash-item';
+      let cspan = pathOr(null, ['cspan'], widget);
+      if (cspan) {
+        wClass += ' cspan-' + cspan;
+      }
+      if ('class' in widget) {
+        wClass += ' ' + widget.class;
+      }
+      return wClass;
+    },
     getWidgetData: function(widget) {
       //console.log(`getWidgetData called!`);
       let wd = this.dbdata.getWData(widget.name);

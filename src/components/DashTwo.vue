@@ -31,7 +31,7 @@ export default {
             id: '1',
             name: 'w1',
             type: 'DbHorizon',
-            class: 'cspan-16'
+            cspan: 16
           }
         ]
       }

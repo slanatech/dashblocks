@@ -43,7 +43,9 @@
     "dygraphs": "^2.1.0",
     "vue-chartjs":"^3.4.0",
     "chart.js":"^2.7.3",
-    "d3": "^5.7.0"
+    "d3": "^5.7.0",
+    "plotly.js-dist": "^1.43.2",
+    "ramda": "^0.26.1"
   },
   "eslintConfig": {
     "root": true,
