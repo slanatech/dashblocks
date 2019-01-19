@@ -7,7 +7,12 @@
       :style="widget.style"
     >
       {{ widget.name }}
-      <component v-bind:is="widget.type" :wspec="widget" :wdata="getWidgetData(widget)" style="height:150px;">
+      <component
+        v-bind:is="widget.type"
+        :wspec="widget"
+        :wdata="getWidgetData(widget)"
+        style="min-height:150px;position:relative;"
+      >
       </component>
     </div>
   </div>
