@@ -47,7 +47,8 @@
     "plotly.js-dist": "^1.44.1",
     "ramda": "^0.26.1",
     "loglevel": "^1.6.1",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "vue-sidebar-menu": "^3.4.0"
   },
   "eslintConfig": {
     "root": true,
