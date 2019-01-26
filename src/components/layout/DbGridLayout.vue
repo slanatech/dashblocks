@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { pathOr } from 'ramda';
+import pathOr from 'ramda/es/pathOr';
 // Imports all components, then whatever is specified in dashboard will be used dynamically
 import DbWidgets from '../dbwidgets';
 export default {

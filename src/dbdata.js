@@ -1,6 +1,7 @@
 /* DashBlocks Data */
 
-import { pathOr } from 'ramda';
+//import { pathOr } from 'ramda';
+import pathOr from 'ramda/es/pathOr';
 
 // TODO Support different kinds of data
 // - plan hash by widget name

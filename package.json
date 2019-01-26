@@ -22,30 +22,32 @@
   ],
   "main": "dist/dashblocks.common.js",
   "dependencies": {
-    "vue": "^2.5.18",
+    "vue": "^2.5.22",
     "vue-router": "^3.0.2",
-    "vuex": "^3.0.1"
+    "vuex": "^3.1.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.2.0",
-    "@vue/cli-plugin-e2e-cypress": "^3.2.0",
-    "@vue/cli-plugin-eslint": "^3.2.1",
-    "@vue/cli-plugin-unit-jest": "^3.2.0",
-    "@vue/cli-service": "^3.2.0",
+    "@vue/cli-plugin-babel": "^3.3.0",
+    "@vue/cli-plugin-e2e-cypress": "^3.3.0",
+    "@vue/cli-plugin-eslint": "^3.3.0",
+    "@vue/cli-plugin-unit-jest": "^3.3.0",
+    "@vue/cli-service": "^3.3.1",
     "@vue/eslint-config-prettier": "^3.0.5",
-    "@vue/test-utils": "^1.0.0-beta.26",
+    "@vue/test-utils": "^1.0.0-beta.28",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "lint-staged": "^7.3.0",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.5.18",
+    "vue-template-compiler": "^2.5.22",
     "dygraphs": "^2.1.0",
     "vue-chartjs":"^3.4.0",
     "chart.js":"^2.7.3",
     "d3": "^5.7.0",
-    "plotly.js-dist": "^1.43.2",
-    "ramda": "^0.26.1"
+    "plotly.js-dist": "^1.44.1",
+    "ramda": "^0.26.1",
+    "loglevel": "^1.6.1",
+    "moment": "^2.24.0"
   },
   "eslintConfig": {
     "root": true,

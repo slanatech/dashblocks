@@ -8,7 +8,7 @@
 <script>
 import DbLayouts from './dblayouts';
 import DbData from '../dbdata';
-// Temp
+import log from './log';
 import * as d3 from 'd3';
 
 // TODO LAYOUTS
@@ -39,12 +39,15 @@ export default {
   },
   computed: {},
   async created() {
-    //console.log('Created !');
+    log.info('Created !');
+
+    // TODO Set log level based on props
+    log.setLevel('error');
 
     // Get the data
     let data = await this.getData();
 
-    //console.log('Data: ' + JSON.stringify(data));
+    log.info('Data: ' + JSON.stringify(data));
 
     this.dbdata.setWData('w1', data);
 

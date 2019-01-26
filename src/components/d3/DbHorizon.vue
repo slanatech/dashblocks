@@ -3,6 +3,7 @@
 </template>
 <script>
 import * as d3 from 'd3';
+import log from '../log';
 
 export default {
   props: {
@@ -19,7 +20,7 @@ export default {
     this.render();
   },
   beforeDestroy: function() {
-    //console.log('beforeDestroy!');
+    log.info('beforeDestroy!');
     window.removeEventListener('resize', this.handleResize);
   },
   watch: {
@@ -38,7 +39,7 @@ export default {
       });
     },
     render() {
-      //console.log('Rendering d3 ...');
+      log.info('Rendering d3 ...');
 
       // Clear whole content of container
       while (this.$refs.container.lastChild) {
