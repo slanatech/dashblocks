@@ -1,0 +1,81 @@
+{
+  "layout": {
+    "type": "grid"
+  },
+  "widgets": [
+    {
+      "id": "1",
+      "name": "w1",
+      "type": "WidgetOne",
+      "cspan": 2
+    },
+    {
+      "id": "2",
+      "name": "w2",
+      "type": "WidgetTwo",
+      "cspan": 2
+    },
+    {
+      "id": "3",
+      "name": "w3",
+      "type": "WidgetBar",
+      "cspan": 4,
+      "height": 350
+    },
+    {
+      "id": "4",
+      "name": "w4",
+      "type": "WidgetBar",
+      "cspan": 4,
+      "height": 400
+    },
+    {
+      "id": "5",
+      "name": "w5",
+      "type": "WidgetBar",
+      "cspan": 4
+    },
+    {
+      "id": "1",
+      "name": "w1",
+      "type": "WidgetOne",
+      "cspan": 2
+    },
+    {
+      "id": "1",
+      "name": "w1",
+      "type": "WidgetOne",
+      "cspan": 2
+    },
+    {
+      "id": "1",
+      "name": "w1",
+      "type": "WidgetOne",
+      "cspan": 2
+    },
+    {
+      "id": "1",
+      "name": "w1",
+      "type": "WidgetOne",
+      "cspan": 2
+    },
+    {
+      "id": "1",
+      "name": "w1",
+      "type": "WidgetOne",
+      "cspan": 2
+    },
+    {
+      "id": "1",
+      "name": "w1",
+      "type": "WidgetOne",
+      "cspan": 2
+    },
+    {
+      "id": "1",
+      "name": "w1",
+      "type": "WidgetOne",
+      "cspan": 2
+    }
+  ]
+}

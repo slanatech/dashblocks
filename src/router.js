@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import DashThree from './views/DashThree.vue';
+import DashFour from './views/DashFour.vue';
 
 Vue.use(Router);
 
@@ -20,6 +22,16 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+    },
+    {
+      path: '/dashthree',
+      name: 'dashthree',
+      component: DashThree
+    },
+    {
+      path: '/dashfour',
+      name: 'dashfour',
+      component: DashFour
     }
   ]
 });

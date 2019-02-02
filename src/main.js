@@ -4,7 +4,7 @@ import router from './router';
 import store from './store';
 import './css.js';
 
-import 'vue-sidebar-menu/dist/vue-sidebar-menu.css';
+//import 'vue-sidebar-menu/dist/vue-sidebar-menu.css';
 
 Vue.config.productionTip = false;
 

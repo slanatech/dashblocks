@@ -1,13 +1,12 @@
 /* DashBlocks Data */
 
-//import { pathOr } from 'ramda';
 import pathOr from 'ramda/es/pathOr';
 
 // TODO Support different kinds of data
-// - plan hash by widget name
+// - plain hash by widget name
 // - tabular data - i.e. query result from SQL
 //   - support "query" in widgets to get data from table
-// - etc
+// - dataframes
 
 /* DashBlocks Data holder */
 class DbData {

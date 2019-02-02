@@ -1,0 +1,70 @@
+<template>
+  <div :class="getClass()" :style="getWidgetStyle()">
+    <component v-bind:is="wspec.type" :wspec="wspec" :wdata="wdata" :style="getItemStyle()"> </component>
+  </div>
+</template>
+
+<script>
+//import pathOr from 'ramda/es/pathOr';
+// Imports all item components, then whatever is specified in dashboard will be used dynamically
+import DbWidgets from '../dbwidgets';
+export default {
+  name: 'DbWidget',
+  components: DbWidgets,
+  props: {
+    layoutClass: String,
+    wspec: Object,
+    wdata: Object
+  },
+  data() {
+    return {
+      test: 'test'
+    };
+  },
+  /*
+  watch: {
+    wdata: {
+      handler(newVal, oldVal) {
+        console.log(`wdata prop changed ${JSON.stringify(oldVal)} -> ${JSON.stringify(newVal)}`);
+      },
+      deep: true
+    }
+  },
+  */
+  computed: {
+    // TODO
+  },
+  methods: {
+    getClass: function() {
+      let wClass = 'dbc-widget ';
+      wClass += this.layoutClass;
+      if ('class' in this.wspec) {
+        wClass += ' ' + this.wspec.class;
+      }
+      return wClass;
+    },
+    getWidgetStyle: function() {
+      let wStyle = 'min-height: 150px; position: relative;';
+      if ('style' in this.wspec) {
+        wStyle += this.wspec.style;
+      }
+      return wStyle;
+    },
+    getItemStyle: function() {
+      let iStyle = 'position: relative;min-height:100%;';
+      // TODO pass item-specific styles ?
+      if ('height' in this.wspec) {
+        iStyle += 'height:' + this.wspec.height + 'px;';
+      } else {
+        iStyle += 'height:100%';
+      }
+      return iStyle;
+    }
+  }
+};
+</script>
+<style lang="scss">
+.dbc-widget {
+  border: 1px solid magenta;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="dbc-widget">2</div>
+  <div>2</div>
 </template>
 
 <script>

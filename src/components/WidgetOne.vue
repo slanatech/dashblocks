@@ -1,5 +1,5 @@
 <template>
-  <div class="dbc-widget">{{ val }}</div>
+  <div>{{ val }}</div>
 </template>
 
 <script>

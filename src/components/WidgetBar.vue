@@ -1,20 +1,21 @@
 <script>
 import { Bar } from 'vue-chartjs';
+//import pathOr from 'ramda/es/pathOr';
 export default {
   extends: Bar,
+  /*
+  computed: {
+    styles () {
+      return {
+        height: '100%'
+      };
+    }
+  },
+  */
   data() {
     return {
       that: this,
       chartdata: null,
-      datacollection: {
-        labels: ['January', 'February', 'March', 'April'],
-        datasets: [
-          {
-            label: 'Data One',
-            data: [10, 20, 30, 40]
-          }
-        ]
-      },
       options: {
         responsive: true,
         maintainAspectRatio: false,
@@ -30,7 +31,14 @@ export default {
       }
     };
   },
-  props: ['wspec', 'wdata'],
+  props: {
+    wspec: Object,
+    wdata: Object,
+    height: {
+      default: 150,
+      type: Number
+    }
+  },
   mounted() {
     this.chartdata = JSON.parse(JSON.stringify(this.wdata));
     //console.log(`chartdata: ${JSON.stringify(this.chartdata)}`);

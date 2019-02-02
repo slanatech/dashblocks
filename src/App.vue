@@ -7,6 +7,7 @@
       @collapse="onCollapse"
       :theme="sidebarTheme"
       :showOneChild="true"
+      :width="'300px'"
     />
   </div>
 </template>
@@ -26,12 +27,22 @@ export default {
         },
         {
           href: '/',
-          title: 'Home',
+          title: 'Dashboard One',
           icon: 'fa fa-user'
         },
         {
-          title: 'About',
+          title: 'Dashboard Two',
           href: '/about',
+          icon: 'fa fa-chart-area'
+        },
+        {
+          title: 'Dashboard Three',
+          href: '/dashthree',
+          icon: 'fa fa-chart-area'
+        },
+        {
+          title: 'Dashboard Four',
+          href: '/dashfour',
           icon: 'fa fa-chart-area'
         }
       ],
@@ -61,7 +72,7 @@ body {
 }
 
 #app {
-  padding-left: 350px;
+  padding-left: 300px;
 }
 
 #app.collapsed {
@@ -70,5 +81,20 @@ body {
 
 .content {
   padding: 20px;
+}
+
+.v-sidebar-menu {
+  background: #0f2027; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #0f2027, #203a43, #2c5364); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #0f2027,
+    #203a43,
+    #2c5364
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  &.vsm-icon {
+    background-color: red;
+  }
 }
 </style>
