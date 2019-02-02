@@ -31,6 +31,15 @@ export default {
       this.dbdata.setWData('w2', {
         value: 20
       });
+      this.dbdata.setWData('w3', {
+        labels: ['January', 'February', 'March', 'April'],
+        datasets: [
+          {
+            label: 'Data One',
+            data: [10, 20, 30, 100]
+          }
+        ]
+      });
       this.dbdata.setWData('w5', {
         labels: ['January', 'February', 'March', 'April'],
         datasets: [

@@ -10,6 +10,23 @@
   grid-auto-rows: minmax(100px, auto);
   column-gap: 10px;
   row-gap: 1em;
+
+  .rspan-1 { grid-row-end: span 1; }
+  .rspan-2 { grid-row-end: span 2; }
+  .rspan-3 { grid-row-end: span 3; }
+  .rspan-4 { grid-row-end: span 4; }
+  .rspan-5 { grid-row-end: span 5; }
+  .rspan-6 { grid-row-end: span 6; }
+  .rspan-7 { grid-row-end: span 7; }
+  .rspan-8 { grid-row-end: span 8; }
+  .rspan-9 { grid-row-end: span 9; }
+  .rspan-10 { grid-row-end: span 10; }
+  .rspan-11 { grid-row-end: span 11; }
+  .rspan-12 { grid-row-end: span 12; }
+  .rspan-13 { grid-row-end: span 13; }
+  .rspan-14 { grid-row-end: span 14; }
+  .rspan-15 { grid-row-end: span 15; }
+  .rspan-16 { grid-row-end: span 16; }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -47,8 +64,21 @@
   .dbc-grid-layout {
     grid-template-columns: repeat(16, 1fr);
 
+    .cspan-1 { grid-column-end: span 1; }
     .cspan-2 { grid-column-end: span 2; }
+    .cspan-3 { grid-column-end: span 3; }
     .cspan-4 { grid-column-end: span 4; }
+    .cspan-5 { grid-column-end: span 5; }
+    .cspan-6 { grid-column-end: span 6; }
+    .cspan-7 { grid-column-end: span 7; }
+    .cspan-8 { grid-column-end: span 8; }
+    .cspan-9 { grid-column-end: span 9; }
+    .cspan-10 { grid-column-end: span 10; }
+    .cspan-11 { grid-column-end: span 11; }
+    .cspan-12 { grid-column-end: span 12; }
+    .cspan-13 { grid-column-end: span 13; }
+    .cspan-14 { grid-column-end: span 14; }
+    .cspan-15 { grid-column-end: span 15; }
     .cspan-16 { grid-column-end: span 16; }
   }
 }

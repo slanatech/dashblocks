@@ -38,9 +38,13 @@ export default {
     getWidgetClass: function(widget) {
       // TODO - wspan ?
       let wClass = '';
-      let cspan = pathOr(1, ['cspan'], widget);
+      let cspan = pathOr(null, ['cspan'], widget);
       if (cspan) {
         wClass += ' cspan-' + cspan;
+      }
+      let rspan = pathOr(null, ['rspan'], widget);
+      if (rspan) {
+        wClass += ' rspan-' + rspan;
       }
       return wClass;
     },

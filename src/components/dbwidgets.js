@@ -3,10 +3,14 @@ import WidgetOne from './WidgetOne.vue';
 import WidgetTwo from './WidgetTwo.vue';
 import WidgetBar from './WidgetBar.vue';
 import DbHorizon from './d3/DbHorizon';
+import DbChartjsBar from './chartjs/DbChartjsBar';
+import DbChartjsLine from './chartjs/DbChartjsLine';
 
 export default {
   WidgetOne,
   WidgetTwo,
   WidgetBar,
-  DbHorizon
+  DbHorizon,
+  DbChartjsBar,
+  DbChartjsLine
 };

@@ -7,27 +7,29 @@
       "id": "1",
       "name": "w1",
       "type": "WidgetOne",
-      "cspan": 2
+      "cspan": 2,
+      "rspan": 2
     },
     {
       "id": "2",
       "name": "w2",
       "type": "WidgetTwo",
-      "cspan": 2
+      "cspan": 2,
+      "rspan": 1
     },
     {
       "id": "3",
       "name": "w3",
-      "type": "WidgetBar",
+      "type": "DbChartjsLine",
       "cspan": 4,
       "height": 350
     },
     {
       "id": "4",
       "name": "w4",
-      "type": "WidgetBar",
+      "type": "DbChartjsBar",
       "cspan": 4,
-      "height": 400
+      "height": 350
     },
     {
       "id": "5",
