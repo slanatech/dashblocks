@@ -34,7 +34,7 @@
     {
       "id": "5",
       "name": "w5",
-      "type": "WidgetBar",
+      "type": "DbChartjsBar",
       "cspan": 4
     },
     {

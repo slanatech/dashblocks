@@ -4,7 +4,6 @@ export default {
   extends: Bar,
   data() {
     return {
-      that: this,
       chartdata: null,
       options: {
         responsive: true,
