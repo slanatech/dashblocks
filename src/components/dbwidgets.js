@@ -6,6 +6,7 @@ import DbHorizon from './d3/DbHorizon';
 //import DbChartjsBar from './chartjs/DbChartjsBar';
 //import DbChartjsLine from './chartjs/DbChartjsLine';
 import { DbChartjsBar, DbChartjsLine } from './chartjs/DbChartjs';
+import DbNumber from './db/DbNumber';
 
 export default {
   WidgetOne,
@@ -13,5 +14,6 @@ export default {
   WidgetBar,
   DbHorizon,
   DbChartjsBar,
-  DbChartjsLine
+  DbChartjsLine,
+  DbNumber
 };

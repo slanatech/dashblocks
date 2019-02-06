@@ -13,7 +13,7 @@
     {
       "id": "2",
       "name": "w2",
-      "type": "WidgetTwo",
+      "type": "WidgetOne",
       "cspan": 2,
       "rspan": 1
     },
@@ -40,14 +40,8 @@
     {
       "id": "1",
       "name": "w1",
-      "type": "WidgetOne",
-      "cspan": 2
-    },
-    {
-      "id": "1",
-      "name": "w1",
-      "type": "WidgetOne",
-      "cspan": 2
+      "type": "DbNumber",
+      "cspan": 4
     },
     {
       "id": "1",
