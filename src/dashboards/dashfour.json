@@ -41,19 +41,18 @@
       "id": "1",
       "name": "w1",
       "type": "DbNumber",
-      "cspan": 4
+      "cspan": 4,
+      "height": 300
     },
     {
       "id": "1",
-      "name": "w1",
-      "type": "WidgetOne",
-      "cspan": 2
-    },
-    {
-      "id": "1",
-      "name": "w1",
-      "type": "WidgetOne",
-      "cspan": 2
+      "name": "w6",
+      "type": "DbEasyPie",
+      "cspan": 4,
+      "properties": {
+        "barColor": "red",
+        "lineWidth": 10
+      }
     },
     {
       "id": "1",

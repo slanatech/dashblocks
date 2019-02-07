@@ -1,11 +1,18 @@
 <template>
   <div :class="getClass()" :style="getWidgetStyle()">
-    <component v-bind:is="wspec.type" :wspec="wspec" :wdata="wdata" :style="getItemStyle()"> </component>
+    <component
+      v-bind:is="wspec.type"
+      :wspec="wspec"
+      :wdata="wdata"
+      v-bind="getWidgetProperties()"
+      :style="getItemStyle()"
+    >
+    </component>
   </div>
 </template>
 
 <script>
-//import pathOr from 'ramda/es/pathOr';
+import pathOr from 'ramda/es/pathOr';
 // Imports all item components, then whatever is specified in dashboard will be used dynamically
 import DbWidgets from '../dbwidgets';
 export default {
@@ -49,6 +56,9 @@ export default {
         wStyle += this.wspec.style;
       }
       return wStyle;
+    },
+    getWidgetProperties: function() {
+      return pathOr({}, ['properties'], this.wspec);
     },
     getItemStyle: function() {
       let iStyle = 'position: relative;min-height:100%;';

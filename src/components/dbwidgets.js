@@ -3,10 +3,9 @@ import WidgetOne from './WidgetOne.vue';
 import WidgetTwo from './WidgetTwo.vue';
 import WidgetBar from './WidgetBar.vue';
 import DbHorizon from './d3/DbHorizon';
-//import DbChartjsBar from './chartjs/DbChartjsBar';
-//import DbChartjsLine from './chartjs/DbChartjsLine';
 import { DbChartjsBar, DbChartjsLine } from './chartjs/DbChartjs';
 import DbNumber from './db/DbNumber';
+import DbEasyPie from './db/DbEasyPie';
 
 export default {
   WidgetOne,
@@ -15,5 +14,6 @@ export default {
   DbHorizon,
   DbChartjsBar,
   DbChartjsLine,
-  DbNumber
+  DbNumber,
+  DbEasyPie
 };

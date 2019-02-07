@@ -48,7 +48,8 @@
     "ramda": "^0.26.1",
     "loglevel": "^1.6.1",
     "moment": "^2.24.0",
-    "vue-sidebar-menu": "^3.4.0"
+    "vue-sidebar-menu": "^3.4.0",
+    "easy-pie-chart": "^2.1.7"
   },
   "eslintConfig": {
     "root": true,

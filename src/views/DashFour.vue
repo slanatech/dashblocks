@@ -49,6 +49,9 @@ export default {
           }
         ]
       });
+      this.dbdata.setWData('w6', {
+        value: 25
+      });
     }
   }
 };
