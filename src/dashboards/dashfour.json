@@ -55,22 +55,10 @@
       }
     },
     {
-      "id": "1",
-      "name": "w1",
-      "type": "WidgetOne",
-      "cspan": 2
-    },
-    {
-      "id": "1",
-      "name": "w1",
-      "type": "WidgetOne",
-      "cspan": 2
-    },
-    {
-      "id": "1",
-      "name": "w1",
-      "type": "WidgetOne",
-      "cspan": 2
+      "id": "7",
+      "name": "w7",
+      "type": "DbTrendLine",
+      "cspan": 6
     }
   ]
 }
