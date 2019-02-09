@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     foo() {
-      return this.dbdata['w0'].updated;
+      return this.dbdata['w0']._updated;
     }
   },
   watch: {
@@ -35,10 +35,10 @@ export default {
       },
       deep: true
     },
-    */
     foo() {
-      //console.log('DbDashboard: dbdata.w0._updated changed');
+      console.log('DbDashboard: dbdata.w0._updated changed');
     }
+    */
   },
   created() {
     log.info('Dashboard created');

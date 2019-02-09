@@ -1,6 +1,5 @@
 <template>
   <div :class="getClass()" :style="getWidgetStyle()">
-    <div>{{ foo }}</div>
     <component
       v-bind:is="wspec.type"
       :wspec="wspec"
@@ -29,16 +28,18 @@ export default {
       test: 'test'
     };
   },
+  /* TODO Check if needed
   computed: {
     foo() {
-      return this.wdata.updated;
+      return this.wdata._updated;
     }
   },
   watch: {
     foo() {
-      // console.log('DbDashboard: dbdata.w0._updated changed');
+      console.log('DbWidgets: wdata._updated changed');
     }
   },
+  */
   methods: {
     getClass: function() {
       let wClass = 'dbc-widget ';

@@ -1,31 +1,28 @@
 /* DbTrendLine: Trend Line using https://github.com/QingWei-Li/vue-trend */
 <template>
-  <div class="dbc-trend-line" ref="chart">
-    <trend
+  <div class="dbc-trend-bars" ref="chart">
+    <bars
       ref="trend"
       :data="data"
       :auto-draw="autoDraw"
-      :auto-draw-easing="autoDrawEasing"
-      :auto-draw-duration="autoDrawDuration"
+      :bar-width="barWidth"
+      :grow-duration="growDuration"
       :gradient="gradient"
       :max="max"
       :min="min"
       :padding="padding"
-      :radius="radius"
-      :smooth="smooth"
-      :stroke-width="strokeWidth"
       :width="lineWidth"
       :height="lineHeight"
     >
-    </trend>
+    </bars>
   </div>
 </template>
 <script>
-import Trend from 'vuetrend';
+import Bars from 'vuebars';
 export default {
   name: 'DbTrendLine',
   components: {
-    Trend
+    Bars
   },
   data() {
     return {
@@ -43,17 +40,17 @@ export default {
       default: () => []
     },
     autoDraw: Boolean,
-    autoDrawDuration: {
+    barWidth: {
       type: Number,
-      default: 2000
+      default: 8
     },
-    autoDrawEasing: {
-      type: String,
-      default: 'ease'
+    growDuration: {
+      type: Number,
+      default: 0.5
     },
     gradient: {
       type: Array,
-      default: () => ['#6fa8dc', '#42b983', '#2c3e50']
+      default: () => ['#6fa8dc', '#42b983']
     },
     max: {
       type: Number,
@@ -68,23 +65,12 @@ export default {
     padding: {
       type: Number,
       default: 8
-    },
-    radius: {
-      type: Number,
-      default: 100
-    },
-    smooth: {
-      type: Boolean,
-      default: true
-    },
-    strokeWidth: {
-      type: Number,
-      default: 5
     }
   },
   watch: {
-    _updated() {
-      //console.log('TrendLine: updated prop changed: ', newVal);
+    _updated(/*newVal*/) {
+      // TODO Verify - updates do not work
+      //console.log('TrendBar: updated prop changed: ', newVal);
       this.$nextTick(function() {
         //console.log('Data: ', this.data);
         this.$refs.trend.$forceUpdate();

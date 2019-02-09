@@ -28,7 +28,7 @@ export default {
     /*
     dbdata: {
       handler(newVal, oldVal) {
-        // console.log(`dbdata prop changed ${JSON.stringify(oldVal)} -> ${JSON.stringify(newVal)}`);
+        console.log(`dbdata prop changed ${JSON.stringify(oldVal)} -> ${JSON.stringify(newVal)}`);
       },
       deep: true
     }

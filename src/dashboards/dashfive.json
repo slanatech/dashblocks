@@ -9,25 +9,26 @@
       "type": "DbTrendLine",
       "cspan": 4,
       "properties": {
-        "smooth": false
+        "smooth": false,
+        "strokeWidth": 1
       }
     },
     {
-      "id": "0",
+      "id": "1",
       "name": "w0",
       "type": "DbTrendLine",
       "cspan": 4
     },
     {
-      "id": "0",
-      "name": "w0",
-      "type": "DbTrendLine",
+      "id": "2",
+      "name": "w1",
+      "type": "DbTrendBar",
       "cspan": 4
     },
     {
-      "id": "0",
-      "name": "w0",
-      "type": "DbTrendLine",
+      "id": "3",
+      "name": "w2",
+      "type": "DbTrendBar",
       "cspan": 4
     }
   ]

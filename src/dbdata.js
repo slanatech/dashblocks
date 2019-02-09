@@ -12,7 +12,7 @@ import pathOr from 'ramda/es/pathOr';
 /* DashBlocks Data holder */
 class DbData {
   constructor() {
-    this.updated = 't' + Date.now();
+    this._updated = Date.now();
   }
 
   // TODO Get
@@ -20,26 +20,14 @@ class DbData {
   // TODO Set / Update
   setWData(key, data) {
     Vue.set(this, key, data);
-    Vue.set(this[key], 'updated', 't' + Date.now());
-    /*
-      Object.assign(
-      {},
-      {
-        _updated: Date.now()
-      },
-    );
-    */
-
-    // ???
-    Vue.set(this, 'updated', 't' + Date.now());
+    Vue.set(this[key], '_updated', Date.now());
+    Vue.set(this, '_updated', Date.now());
   }
 
-  /*
   setUpdated(key) {
-    //Vue.set(this[key], '_updated', Date.now())
-    this.updated = 't' + Date.now();
+    Vue.set(this[key], '_updated', Date.now());
+    Vue.set(this, '_updated', Date.now());
   }
-  */
 
   getWData(key) {
     return pathOr(null, [key], this);
