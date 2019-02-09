@@ -24,16 +24,16 @@ export default {
     dbspec: Object,
     dbdata: Object
   },
-  /*
   watch: {
+    /*
     dbdata: {
       handler(newVal, oldVal) {
-        //console.log(`dbdata prop changed ${JSON.stringify(oldVal)} -> ${JSON.stringify(newVal)}`);
+        // console.log(`dbdata prop changed ${JSON.stringify(oldVal)} -> ${JSON.stringify(newVal)}`);
       },
       deep: true
     }
+    */
   },
-  */
   methods: {
     getWidgetClass: function(widget) {
       // TODO - wspan ?
@@ -49,8 +49,8 @@ export default {
       return wClass;
     },
     getWidgetData: function(widget) {
-      let wd = this.dbdata.getWData(widget.name);
-      return wd;
+      //return Object.assign({},this.dbdata[widget.name]);
+      return this.dbdata[widget.name];
     }
   }
 };

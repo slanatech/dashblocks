@@ -37,6 +37,10 @@ export default {
           {
             label: 'Data One',
             data: [10, 20, 30, 100]
+          },
+          {
+            label: 'Data Two',
+            data: [50, 10, 70, 11]
           }
         ]
       });

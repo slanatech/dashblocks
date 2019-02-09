@@ -1,0 +1,34 @@
+{
+  "layout": {
+    "type": "grid"
+  },
+  "widgets": [
+    {
+      "id": "0",
+      "name": "w0",
+      "type": "DbTrendLine",
+      "cspan": 4,
+      "properties": {
+        "smooth": false
+      }
+    },
+    {
+      "id": "0",
+      "name": "w0",
+      "type": "DbTrendLine",
+      "cspan": 4
+    },
+    {
+      "id": "0",
+      "name": "w0",
+      "type": "DbTrendLine",
+      "cspan": 4
+    },
+    {
+      "id": "0",
+      "name": "w0",
+      "type": "DbTrendLine",
+      "cspan": 4
+    }
+  ]
+}

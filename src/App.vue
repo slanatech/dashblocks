@@ -44,6 +44,11 @@ export default {
           title: 'Dashboard Four',
           href: '/dashfour',
           icon: 'fa fa-chart-area'
+        },
+        {
+          title: 'Dashboard Five',
+          href: '/dashfive',
+          icon: 'fa fa-chart-area'
         }
       ],
       collapsed: false,

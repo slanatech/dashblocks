@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import DashThree from './views/DashThree.vue';
 import DashFour from './views/DashFour.vue';
+import DashFive from './views/DashFive.vue';
 
 Vue.use(Router);
 
@@ -32,6 +33,11 @@ export default new Router({
       path: '/dashfour',
       name: 'dashfour',
       component: DashFour
+    },
+    {
+      path: '/dashfive',
+      name: 'dashfive',
+      component: DashFive
     }
   ]
 });

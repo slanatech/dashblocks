@@ -22,6 +22,24 @@ export default {
       layoutComponent: null
     };
   },
+  computed: {
+    foo() {
+      return this.dbdata['w0'].updated;
+    }
+  },
+  watch: {
+    /*
+    dbdata: {
+      handler() {
+        console.log('DbDashboard: prop dbdata changed');
+      },
+      deep: true
+    },
+    */
+    foo() {
+      //console.log('DbDashboard: dbdata.w0._updated changed');
+    }
+  },
   created() {
     log.info('Dashboard created');
 

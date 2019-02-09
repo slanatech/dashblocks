@@ -4,6 +4,12 @@
   },
   "widgets": [
     {
+      "id": "0",
+      "name": "w0",
+      "type": "DbTrendLine",
+      "cspan": 16
+    },
+    {
       "id": "1",
       "name": "w1",
       "type": "WidgetOne",

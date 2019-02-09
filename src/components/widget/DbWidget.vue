@@ -1,5 +1,6 @@
 <template>
   <div :class="getClass()" :style="getWidgetStyle()">
+    <div>{{ foo }}</div>
     <component
       v-bind:is="wspec.type"
       :wspec="wspec"
@@ -28,18 +29,15 @@ export default {
       test: 'test'
     };
   },
-  /*
-  watch: {
-    wdata: {
-      handler(newVal, oldVal) {
-        console.log(`wdata prop changed ${JSON.stringify(oldVal)} -> ${JSON.stringify(newVal)}`);
-      },
-      deep: true
+  computed: {
+    foo() {
+      return this.wdata.updated;
     }
   },
-  */
-  computed: {
-    // TODO
+  watch: {
+    foo() {
+      // console.log('DbDashboard: dbdata.w0._updated changed');
+    }
   },
   methods: {
     getClass: function() {
@@ -51,14 +49,15 @@ export default {
       return wClass;
     },
     getWidgetStyle: function() {
-      let wStyle = 'min-height: 150px; position: relative;';
+      let wStyle = 'min-height: 50px; position: relative;';
       if ('style' in this.wspec) {
         wStyle += this.wspec.style;
       }
       return wStyle;
     },
     getWidgetProperties: function() {
-      return pathOr({}, ['properties'], this.wspec);
+      let props = Object.assign({}, pathOr({}, ['properties'], this.wspec), this.wdata);
+      return props; //pathOr({}, ['properties'], this.wspec);
     },
     getItemStyle: function() {
       let iStyle = 'position: relative;min-height:100%;';
