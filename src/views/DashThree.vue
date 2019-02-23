@@ -29,7 +29,7 @@ export default {
       // Get the data, and when it becomes available, render dashboard by setting dashboard component
       let data = await this.getData();
       // Set data for our widget
-      this.dbdata.setWData('w1', data);
+      this.dbdata.setWData('w1', { data: data });
       // Trigger component drawing
       this.dbDashboardComponent = 'DbDashboard';
     },

@@ -12,6 +12,8 @@ import pathOr from 'ramda/es/pathOr';
 /* DashBlocks Data holder */
 class DbData {
   constructor() {
+    // TODO accept widgets data set here
+    // go through each key and add _updated
     this._updated = Date.now();
   }
 

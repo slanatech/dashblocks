@@ -30,6 +30,16 @@
       "name": "w2",
       "type": "DbTrendBar",
       "cspan": 4
+    },
+    {
+      "id": "4",
+      "name": "w4",
+      "type": "DbNumber",
+      "cspan": 4,
+      "properties": {
+        "title": "Test1",
+        "tag": "req/s"
+      }
     }
   ]
 }

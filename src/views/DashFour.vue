@@ -25,6 +25,9 @@ export default {
   methods: {
     initialize: function() {
       // Set data for our widgets
+      this.dbdata.setWData('w0', {
+        data: [1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 10]
+      });
       this.dbdata.setWData('w1', {
         value: 10
       });
@@ -41,6 +44,15 @@ export default {
           {
             label: 'Data Two',
             data: [50, 10, 70, 11]
+          }
+        ]
+      });
+      this.dbdata.setWData('w4', {
+        labels: ['January', 'February', 'March', 'April'],
+        datasets: [
+          {
+            label: 'Data One',
+            data: [10, 20, 30, 100]
           }
         ]
       });

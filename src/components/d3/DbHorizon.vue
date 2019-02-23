@@ -46,7 +46,7 @@ export default {
         this.$refs.container.removeChild(this.$refs.container.lastChild);
       }
 
-      let data = this.wdata;
+      let data = this.wdata.data;
 
       let step = 23;
       let scheme = 'schemeGreens';

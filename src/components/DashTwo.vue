@@ -49,7 +49,7 @@ export default {
 
     log.info('Data: ' + JSON.stringify(data));
 
-    this.dbdata.setWData('w1', data);
+    this.dbdata.setWData('w1', { data: data });
 
     // Trigger component drawing
     this.layoutComponent = DbLayouts.resolve(this.dbspec.layout.type);

@@ -1,6 +1,6 @@
 <template>
   <div class="dbc-grid-layout">
-    <db-widget
+    <db-widget-container
       v-for="widget in dbspec.widgets"
       v-bind:key="widget.id"
       :layoutClass="getWidgetClass(widget)"
@@ -8,17 +8,17 @@
       :wdata="getWidgetData(widget)"
       :style="widget.style"
     >
-    </db-widget>
+    </db-widget-container>
   </div>
 </template>
 
 <script>
 import pathOr from 'ramda/es/pathOr';
-import DbWidget from '../widget/DbWidget.vue';
+import DbWidgetContainer from './DbWidgetContainer';
 export default {
   name: 'DbGridLayout',
   components: {
-    DbWidget
+    DbWidgetContainer
   },
   props: {
     dbspec: Object,

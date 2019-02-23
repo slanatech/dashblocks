@@ -1,16 +1,17 @@
 /* DashBlocks: Number widget * TODO: use https://github.com/rendro/easy-pie-chart/blob/master/dist/easypiechart.js *
 and: * https://github.com/DotNetAge/vue-easy-pie-chart/blob/master/package.json */
 <template>
-  <div class="swsbox float-e-margins">
-    <div class="swsbox-title">
-      <span class="sws-widget-extra label pull-right">label</span>
-      <h5 class="sws-widget-title">Title</h5>
+  <div class="dbc-number">
+    <div class="dbc-n-hdr">
+      <span class="dbc-n-title">{{ title }}</span> <span class="dbc-n-tag">{{ tag }}</span>
     </div>
-    <div class="swsbox-content" style="display: block;">
-      <div class="swsbox-trend"><i class="sws-widget-trend fa"></i></div>
-      <div class="swsbox-values">
-        <h1 class="sws-widget-value no-margins">111</h1>
-        <small class="sws-widget-subtitle">Subtitle</small>
+    <div class="dbc-n-content">
+      <div class="dbc-n-icon">OPA</div>
+      <div class="dbc-n-payload">
+        <div class="dbc-n-values">
+          <div class="dbc-n-value">11111111</div>
+          <div class="dbc-n-subtitle">200 OK Requests per Second</div>
+        </div>
       </div>
     </div>
   </div>
@@ -21,7 +22,9 @@ export default {
   name: 'DbNumber',
   props: {
     wspec: Object,
-    wdata: Object
+    wdata: Object,
+    title: String,
+    tag: String
   },
   data() {
     return {
@@ -47,121 +50,163 @@ export default {
 };
 </script>
 <style lang="scss">
-.pull-right {
-  float: right !important;
-}
-.swsbox {
-  clear: both;
-  margin-bottom: 10px;
-  margin-top: 0;
-  padding: 0;
-}
-.swsbox-title {
-  -moz-border-bottom-colors: none;
-  -moz-border-left-colors: none;
-  -moz-border-right-colors: none;
-  -moz-border-top-colors: none;
-  background-color: #ffffff;
-  border-color: #e7eaec;
-  border-image: none;
-  border-style: solid solid solid;
-  border-width: 1px 0 1px;
-  color: inherit;
-  margin-bottom: 0px;
-  padding: 5px 10px 5px 10px;
+.dbc-number {
+  width: 100%;
+  height: 100%;
+  background-color: aquamarine;
+  display: flex;
+  flex-flow: column;
+
+  .dbc-n-hdr {
+    background: tomato;
+  }
+
+  .dbc-n-title {
+    font-size: 20px;
+  }
+
+  .dbc-n-tag {
+    float: right;
+    background: #4285f4;
+    margin-right: 10px;
+    margin-top: 2px;
+  }
+
+  .dbc-n-content {
+    width: 100%;
+    background-color: antiquewhite;
+    flex: 2;
+    position: relative;
+  }
+
+  .dbc-n-icon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: fuchsia;
+  }
+
+  .dbc-n-payload {
+    position: absolute;
+    text-align: right;
+    width: 100%;
+    height: 100%;
+  }
+
+  .dbc-n-values {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 10px;
+  }
+
+  .dbc-n-value {
+    font-size: 36px;
+  }
+
+  .dbc-n-subtitle {
+    font-size: 14px;
+  }
 }
 
-.swsbox-title h5 {
-  margin-bottom: 0px;
+/*
+.number-wrapper {
+  width: 100%;
+  position: relative;
 }
-
-.swsbox-extra-padding {
-  padding: 10px;
+.number-chart {
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  text-align: center;
+  vertical-align: bottom;
 }
-
-.swsbox-footer {
-  color: inherit;
-  border-top: 1px solid #e7eaec;
-  font-size: 90%;
-  background: #ffffff;
-  padding: 10px 15px;
+.number-icon {
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1;
 }
-
-.stat-percent {
-  float: right;
+.number-icon:before {
+  font-size: 85px;
 }
-
-.float-e-margins .btn {
-  margin-bottom: 5px;
+.number-icon-red:before {
+  color: #fa603d;
 }
-
-.swsbox-content {
+.number-icon-green:before {
+  color: #4b6a41;
+}
+.number-icon-yellow:before {
+  color: #fabb3d;
+}
+.number-icon-neutral:before {
+  color: #e4e9f0;
+}
+.number-chart canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.percent {
+  display: inline-block;
+  line-height: 90px;
+  z-index: 2;
+  font-size: 20px;
+}
+.percent:after {
+  content: '%';
+  margin-left: 0.1em;
+  font-size: 18px;
+}
+.number-values {
   position: relative;
   overflow: hidden;
   display: inline-block;
-  background-color: #ffffff;
-  width: 100%;
-  color: inherit;
-  padding: 10px 10px 10px 10px;
-  border-color: #e7eaec;
-  border-image: none;
-  border-style: solid solid none;
-  border-width: 1px 0;
+  width: calc(100% - 95px);
+  height: 90px;
+  vertical-align: top;
+  line-height: 1;
 }
-
-.swsbox-values {
+.number-values-total {
   position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+  height: 90px;
+  vertical-align: top;
+  line-height: 1;
 }
-
-.swsbox-trend {
+.number-data {
+  text-align: right;
+  display: inline-block;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+.number-value {
+  text-shadow: none;
+  font-size: 36px;
+  font-weight: normal;
+  text-align: right;
+}
+.number-subtitle {
+  font-size: 14px;
+}
+.number-sparkline {
   display: inline-block;
   width: 100%;
   text-align: right;
-  padding-right: 18px;
   position: absolute;
-  bottom: 5px;
-  font-size: 48px;
-  color: #e7eaec;
+  bottom: 2px;
 }
-
-.swsbox-trend-container {
-  position: relative;
-  display: inline-block;
-  width: 100%;
+.number-pointer {
+  cursor: pointer;
 }
-
-.swsbox-trend-container svg {
-  display: inline-block;
-  position: absolute;
-  top: 75%;
-  -webkit-transform: translateY(-75%);
-  -ms-transform: translateY(-75%);
-  transform: translateY(-75%);
-  right: 0;
-}
-
-.swsbox-collapse2 {
-  padding-right: 10px;
-}
-
-.swsbox-info {
-  /*color: #8a6d3b; */
-  color: #31708f;
-}
-
-.swsbox-info .swsbox-content,
-.swsbox-info .swsbox-title {
-  /*background-color: #fcf8e3;*/
-  background-color: #d9edf7;
-}
-
-.swsbox-info .swsbox-content {
-  /*border-color: #faebcc;*/
-  border-color: #bce8f1;
-}
-
-.swsbox-info-subtitle {
-  font-size: 16px;
-  font-weight: 600;
-}
+*/
 </style>

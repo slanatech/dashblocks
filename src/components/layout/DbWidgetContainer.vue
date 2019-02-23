@@ -16,7 +16,7 @@ import pathOr from 'ramda/es/pathOr';
 // Imports all item components, then whatever is specified in dashboard will be used dynamically
 import DbWidgets from '../dbwidgets';
 export default {
-  name: 'DbWidget',
+  name: 'DbWidgetContainer',
   components: DbWidgets,
   props: {
     layoutClass: String,
