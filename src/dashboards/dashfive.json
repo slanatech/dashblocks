@@ -16,6 +16,7 @@
     {
       "id": "1",
       "name": "w0",
+      "height": 250,
       "type": "DbTrendLine",
       "cspan": 4
     },
@@ -36,8 +37,19 @@
       "name": "w4",
       "type": "DbNumber",
       "cspan": 4,
+      "height": 150,
       "properties": {
         "title": "Test1",
+        "tag": "req/s"
+      }
+    },
+    {
+      "id": "5",
+      "name": "w5",
+      "type": "DbNumber",
+      "cspan": 4,
+      "properties": {
+        "title": "Test NO Trend",
         "tag": "req/s"
       }
     }

@@ -1,16 +1,24 @@
-/* DashBlocks: Number widget * TODO: use https://github.com/rendro/easy-pie-chart/blob/master/dist/easypiechart.js *
-and: * https://github.com/DotNetAge/vue-easy-pie-chart/blob/master/package.json */
+/* DashBlocks: Number widget */
 <template>
   <div class="dbc-number">
     <div class="dbc-n-hdr">
       <span class="dbc-n-title">{{ title }}</span> <span class="dbc-n-tag">{{ tag }}</span>
     </div>
     <div class="dbc-n-content">
-      <div class="dbc-n-icon">OPA</div>
-      <div class="dbc-n-payload">
-        <div class="dbc-n-values">
-          <div class="dbc-n-value">11111111</div>
-          <div class="dbc-n-subtitle">200 OK Requests per Second</div>
+      <div v-if="isTrend" class="dbc-n-layer">
+        <db-trend-line
+          :_updated="_updated"
+          :data="trend"
+          style="position: relative; min-height: 100%; height: 100%;"
+        ></db-trend-line>
+      </div>
+      <div class="dbc-n-layer">
+        <div class="dbc-v-center"><i class="fa fa-chart-area" style="font-size: 50px;"></i></div>
+      </div>
+      <div class="dbc-n-layer" style="text-align: right;">
+        <div class="dbc-v-center">
+          <div class="dbc-n-value">{{ value }}</div>
+          <div class="dbc-n-subtitle">200 OK Requests per Second: {{ isTrend }}</div>
         </div>
       </div>
     </div>
@@ -18,11 +26,25 @@ and: * https://github.com/DotNetAge/vue-easy-pie-chart/blob/master/package.json 
 </template>
 
 <script>
+import DbTrendLine from './DbTrendLine';
 export default {
   name: 'DbNumber',
+  components: {
+    DbTrendLine
+  },
   props: {
-    wspec: Object,
-    wdata: Object,
+    _updated: {
+      type: Number,
+      default: 0
+    },
+    value: {
+      type: Number,
+      default: 0
+    },
+    trend: {
+      type: Array,
+      default: () => []
+    },
     title: String,
     tag: String
   },
@@ -42,9 +64,8 @@ export default {
   },
   */
   computed: {
-    val() {
-      //console.log(`Computed val: ${this.wdata.value}`);
-      return this.wdata.value;
+    isTrend() {
+      return this.trend && Array.isArray(this.trend) && this.trend.length > 0;
     }
   }
 };
@@ -53,12 +74,11 @@ export default {
 .dbc-number {
   width: 100%;
   height: 100%;
-  background-color: aquamarine;
   display: flex;
   flex-flow: column;
 
   .dbc-n-hdr {
-    background: tomato;
+    border-bottom: 1px solid #4285f4;
   }
 
   .dbc-n-title {
@@ -74,30 +94,21 @@ export default {
 
   .dbc-n-content {
     width: 100%;
-    background-color: antiquewhite;
     flex: 2;
     position: relative;
   }
 
-  .dbc-n-icon {
+  .dbc-n-layer {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    background: fuchsia;
-  }
-
-  .dbc-n-payload {
-    position: absolute;
-    text-align: right;
     width: 100%;
     height: 100%;
   }
 
-  .dbc-n-values {
+  .dbc-v-center {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-    margin-right: 10px;
+    margin: 0px 10px 0px 10px;
   }
 
   .dbc-n-value {
@@ -108,105 +119,4 @@ export default {
     font-size: 14px;
   }
 }
-
-/*
-.number-wrapper {
-  width: 100%;
-  position: relative;
-}
-.number-chart {
-  position: relative;
-  display: inline-block;
-  width: 90px;
-  height: 90px;
-  text-align: center;
-  vertical-align: bottom;
-}
-.number-icon {
-  position: relative;
-  display: inline-block;
-  width: 90px;
-  height: 90px;
-  text-align: center;
-  vertical-align: middle;
-  line-height: 1;
-}
-.number-icon:before {
-  font-size: 85px;
-}
-.number-icon-red:before {
-  color: #fa603d;
-}
-.number-icon-green:before {
-  color: #4b6a41;
-}
-.number-icon-yellow:before {
-  color: #fabb3d;
-}
-.number-icon-neutral:before {
-  color: #e4e9f0;
-}
-.number-chart canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-.percent {
-  display: inline-block;
-  line-height: 90px;
-  z-index: 2;
-  font-size: 20px;
-}
-.percent:after {
-  content: '%';
-  margin-left: 0.1em;
-  font-size: 18px;
-}
-.number-values {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  width: calc(100% - 95px);
-  height: 90px;
-  vertical-align: top;
-  line-height: 1;
-}
-.number-values-total {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  width: 100%;
-  height: 90px;
-  vertical-align: top;
-  line-height: 1;
-}
-.number-data {
-  text-align: right;
-  display: inline-block;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 10;
-}
-.number-value {
-  text-shadow: none;
-  font-size: 36px;
-  font-weight: normal;
-  text-align: right;
-}
-.number-subtitle {
-  font-size: 14px;
-}
-.number-sparkline {
-  display: inline-block;
-  width: 100%;
-  text-align: right;
-  position: absolute;
-  bottom: 2px;
-}
-.number-pointer {
-  cursor: pointer;
-}
-*/
 </style>
