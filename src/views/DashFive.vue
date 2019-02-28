@@ -64,14 +64,14 @@ export default {
         data: [0, 50, 50, 200, 80, 3, 4, 3, 2, 10]
       });
       // This works
-      //this.dbdata.setWData('w4', {
-      //  value: 15555,
-      //  trend: [1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 50]
-      //});
+      this.dbdata.setWData('w4', {
+        value: 15555,
+        trend: [40, 2, 3, 4, 5, 6, 5, 4, 3, 2, 50]
+      });
       // This works
       this.dbdata['w4'].value = 55555;
       // This does not work, as expected
-      this.dbdata['w4'].trend[0] = 100;
+      //this.dbdata['w4'].trend[0] = 100;
       // TODO - would need to call dbdata.update here ?
     },
     handleInc2: function() {

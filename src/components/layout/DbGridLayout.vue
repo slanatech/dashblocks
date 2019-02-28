@@ -1,5 +1,5 @@
 <template>
-  <div class="dbc-grid-layout">
+  <div class="db-grid-layout">
     <db-widget-container
       v-for="widget in dbspec.widgets"
       v-bind:key="widget.id"

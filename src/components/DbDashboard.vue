@@ -1,5 +1,7 @@
 <template>
-  <div class="db-dashboard"><component v-bind:is="layoutComponent" :dbspec="dbspec" :dbdata="dbdata"> </component></div>
+  <div class="db-dashboard db-theme-default">
+    <component v-bind:is="layoutComponent" :dbspec="dbspec" :dbdata="dbdata"> </component>
+  </div>
 </template>
 
 <script>

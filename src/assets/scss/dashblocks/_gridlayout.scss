@@ -5,11 +5,9 @@
   - small - just 1 column
  */
 
-.dbc-grid-layout {
+.db-grid-layout {
   display: grid;
   grid-auto-rows: minmax(100px, auto);
-  column-gap: 10px;
-  row-gap: 1em;
 
   .rspan-1 { grid-row-end: span 1; }
   .rspan-2 { grid-row-end: span 2; }
@@ -31,7 +29,7 @@
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
-  .dbc-grid-layout {
+  .db-grid-layout {
     grid-template-columns: repeat(16, 1fr);
     .cspan-1 { grid-column-end: span 8; }
     .cspan-2 { grid-column-end: span 16; }
@@ -54,7 +52,7 @@
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-  .dbc-grid-layout {
+  .db-grid-layout {
     grid-template-columns: repeat(16, 1fr);
     .cspan-1 { grid-column-end: span 4; }
     .cspan-2 { grid-column-end: span 8; }
@@ -77,7 +75,7 @@
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
-  .dbc-grid-layout {
+  .db-grid-layout {
     grid-template-columns: repeat(16, 1fr);
     .cspan-1 { grid-column-end: span 2; }
     .cspan-2 { grid-column-end: span 4; }
@@ -100,7 +98,7 @@
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
-  .dbc-grid-layout {
+  .db-grid-layout {
     grid-template-columns: repeat(16, 1fr);
     .cspan-1 { grid-column-end: span 1; }
     .cspan-2 { grid-column-end: span 2; }

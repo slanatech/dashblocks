@@ -1,0 +1,22 @@
+.db-dashboard {
+  background-color: lightgray;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: gray;
+
+  & .db-grid-layout {
+    column-gap: 0px;
+    row-gap: 0px;
+  }
+
+  & .db-widget-container {
+    margin: 5px;
+    background-color: white;
+  }
+
+  & .dbc-n-layer {
+    & i {
+      color: gray;
+      opacity: 0.7;
+    }
+  }
+}

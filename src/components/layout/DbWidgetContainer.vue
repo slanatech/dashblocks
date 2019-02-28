@@ -42,7 +42,7 @@ export default {
   */
   methods: {
     getClass: function() {
-      let wClass = 'dbc-widget ';
+      let wClass = 'db-widget-container ';
       wClass += this.layoutClass;
       if ('class' in this.wspec) {
         wClass += ' ' + this.wspec.class;
@@ -73,8 +73,4 @@ export default {
   }
 };
 </script>
-<style lang="scss">
-.dbc-widget {
-  border: 1px solid magenta;
-}
-</style>
+<style lang="scss"></style>
