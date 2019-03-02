@@ -14,7 +14,7 @@
     transform: translateY(-50%);
   }
 
-  .db-tag {
+  .db-badge {
     background: $primary;
     color: $on-primary;
     font-size: 80%;
@@ -112,6 +112,20 @@
   & .bg-good {
     background: $positive;
   }
+
+  & .bg-neutral {
+    background: $neutral;
+  }
+  & .bg-success {
+    background: $success;
+  }
+  & .bg-warning {
+    background: $warning;
+  }
+  & .bg-alarm {
+    background: $alarm;
+  }
+
 
 }
 

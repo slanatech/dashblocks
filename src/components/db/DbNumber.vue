@@ -2,25 +2,30 @@
 <template>
   <div class="dbc-number">
     <div class="dbc-n-hdr">
-      <span class="text-md">{{ title }}</span> <span class="db-tag db-float-right">{{ tag }}</span>
+      <span class="text-md">{{ title }}</span> <span class="db-badge db-float-right">{{ badge }}</span>
     </div>
     <div class="dbc-n-content">
-      <div v-if="isTrend" class="dbc-n-layer">
+      <div
+        v-if="hasTrend"
+        class="dbc-n-layer"
+        style="display: flex; flex-direction: column; justify-content: space-between;"
+      >
+        <div></div>
         <db-trend-line
           :_updated="_updated"
           :data="trend"
           :gradient="trendGradient"
-          :strokeWidth="6"
-          style="position: relative; min-height: 100%; height: 100%;"
+          :strokeWidth="4"
+          style="position: relative; min-height: 40%; height: 40%;"
         ></db-trend-line>
       </div>
-      <div class="dbc-n-layer">
-        <div class="db-v-center"><i class="fa fa-chart-area text-x3l bg-bad dbc-number-icon"></i></div>
+      <div v-if="hasIcon" class="dbc-n-layer">
+        <div class="db-v-center"><i :class="iconClass"></i></div>
       </div>
       <div class="dbc-n-layer" style="text-align: right;">
         <div class="db-v-center">
           <div class="text-xxl">{{ value }}</div>
-          <div class="text-sm text-faded">200 OK Requests per Second: {{ isTrend }}</div>
+          <div class="text-sm text-faded">200 OK Requests per Second: {{ hasTrend }}</div>
         </div>
       </div>
     </div>
@@ -47,8 +52,19 @@ export default {
       type: Array,
       default: () => []
     },
+    ranges: {
+      type: Array,
+      default: () => []
+    },
+    icon: {
+      type: String,
+      default: ''
+    },
     title: String,
-    tag: String
+    badge: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {
@@ -66,8 +82,31 @@ export default {
   },
   */
   computed: {
-    isTrend() {
+    hasTrend() {
       return this.trend && Array.isArray(this.trend) && this.trend.length > 0;
+    },
+    hasRanges() {
+      return this.ranges && Array.isArray(this.ranges) && this.ranges.length == 2;
+    },
+    hasIcon() {
+      return this.icon !== '';
+    },
+    iconClass() {
+      return this.icon + ' dbc-number-icon ' + this.getRangeClass();
+    }
+  },
+  methods: {
+    getRangeClass() {
+      if (!this.hasRanges) {
+        return 'bg-neutral';
+      }
+      if (this.value <= this.ranges[0]) {
+        return 'bg-success';
+      } else if (this.value <= this.ranges[1]) {
+        return 'bg-warning';
+      } else {
+        return 'bg-alarm';
+      }
     }
   }
 };
@@ -100,10 +139,11 @@ export default {
   }
 
   .dbc-number-icon {
-    padding: 8px;
+    font-size: 210%;
+    padding: 6px;
     border-radius: 4px;
     color: white;
-    opacity: 0.7;
+    opacity: 0.6;
   }
 }
 </style>

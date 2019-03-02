@@ -37,20 +37,35 @@
       "name": "w4",
       "type": "DbNumber",
       "cspan": 4,
-      "height": 120,
       "properties": {
-        "title": "Test1",
-        "tag": "req/s"
+        "title": "Test OK",
+        "badge": "req/s",
+        "icon" : "fa fa-signal",
+        "ranges": [1000,2000]
       }
     },
     {
       "id": "5",
       "name": "w5",
       "type": "DbNumber",
-      "cspan": 3,
+      "cspan": 4,
       "properties": {
-        "title": "Test NO Trend",
-        "tag": "req/s"
+        "title": "Test Warning",
+        "badge": "req/s",
+        "icon" : "fa fa-clock",
+        "ranges": [1000,2000]
+      }
+    },
+    {
+      "id": "5",
+      "name": "w6",
+      "type": "DbNumber",
+      "cspan": 4,
+      "properties": {
+        "title": "Test Alarm",
+        "badge": "req/s",
+        "icon" : "fa fa-chart-bar",
+        "ranges": [1000,2000]
       }
     }
   ]

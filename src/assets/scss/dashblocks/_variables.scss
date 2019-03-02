@@ -17,6 +17,13 @@ $faded     : #777;
 $white     : #FFFFFF;
 $black     : #000000;
 
+
+// Colors for ranges
+$neutral   : material-color('light-blue', '900');
+$success   : material-color('light-green', '900');
+$warning   : material-color('orange', '900');
+$alarm     : material-color('red', '900');
+
 // TODO - is this needed ?
 $dimmed-background       : rgba(0, 0, 0, .4);
 $light-dimmed-background : rgba(255, 255, 255, .6);
@@ -28,7 +35,7 @@ $separator-dark-color : rgba(255, 255, 255, .48);
 $font-family: 'Roboto', sans-serif;
 $font-size: 14px;
 
-// Text
+// Text - TODO - is it needed ?
 $on-primary: white;
 $on-secondary: black;
 $on-background: material-color('grey', '800');

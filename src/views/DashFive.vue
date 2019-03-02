@@ -48,11 +48,15 @@ export default {
         ]
       });
       this.dbdata.setWData('w4', {
-        value: 15207,
+        value: 56500,
         trend: [10, 2, 3, 4, 5, 6, 5, 4, 3, 2, 10, 10, 2, 3, 4, 5, 6, 5, 4, 3, 2, 10, 10, 2, 3, 4, 5, 6, 5, 4, 3, 2, 10]
       });
       this.dbdata.setWData('w5', {
-        value: 11208
+        value: 520
+      });
+      this.dbdata.setWData('w6', {
+        value: 5200,
+        trend: [10, 2, 3, 4, 5, 6, 5, 4, 3, 2, 10, 4, 3, 2, 10]
       });
     },
     handleInc: function() {
