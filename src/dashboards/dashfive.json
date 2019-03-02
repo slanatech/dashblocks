@@ -37,7 +37,7 @@
       "name": "w4",
       "type": "DbNumber",
       "cspan": 4,
-      "height": 150,
+      "height": 120,
       "properties": {
         "title": "Test1",
         "tag": "req/s"
@@ -47,7 +47,7 @@
       "id": "5",
       "name": "w5",
       "type": "DbNumber",
-      "cspan": 4,
+      "cspan": 3,
       "properties": {
         "title": "Test NO Trend",
         "tag": "req/s"

@@ -2,18 +2,26 @@
     DashBlocks
 */
 
+// Colors
+@import "dashblocks/material-colors";
+
+
 // Variables
 @import "dashblocks/variables";
 
 
-// Main
-@import "dashblocks/main";
+
+// Layouts
+@import "dashblocks/gridlayout";
+
 
 // TODO Components
 
-// Sidebar
+
+// Themes
+@import 'dashblocks/themes/theme-default';
+@import 'dashblocks/themes/theme-dark';
+
+
+// TODO Remove - Sidebar
 @import "dashblocks/sidebar";
-
-
-
-

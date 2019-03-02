@@ -2,23 +2,25 @@
 <template>
   <div class="dbc-number">
     <div class="dbc-n-hdr">
-      <span class="dbc-n-title">{{ title }}</span> <span class="dbc-n-tag">{{ tag }}</span>
+      <span class="text-md">{{ title }}</span> <span class="db-tag db-float-right">{{ tag }}</span>
     </div>
     <div class="dbc-n-content">
       <div v-if="isTrend" class="dbc-n-layer">
         <db-trend-line
           :_updated="_updated"
           :data="trend"
+          :gradient="trendGradient"
+          :strokeWidth="6"
           style="position: relative; min-height: 100%; height: 100%;"
         ></db-trend-line>
       </div>
       <div class="dbc-n-layer">
-        <div class="dbc-v-center"><i class="fa fa-chart-area" style="font-size: 50px;"></i></div>
+        <div class="db-v-center"><i class="fa fa-chart-area text-x3l bg-bad dbc-number-icon"></i></div>
       </div>
       <div class="dbc-n-layer" style="text-align: right;">
-        <div class="dbc-v-center">
-          <div class="dbc-n-value">{{ value }}</div>
-          <div class="dbc-n-subtitle">200 OK Requests per Second: {{ isTrend }}</div>
+        <div class="db-v-center">
+          <div class="text-xxl">{{ value }}</div>
+          <div class="text-sm text-faded">200 OK Requests per Second: {{ isTrend }}</div>
         </div>
       </div>
     </div>
@@ -50,7 +52,7 @@ export default {
   },
   data() {
     return {
-      test: 'test'
+      trendGradient: ['#DCEDC8', '#FFF9C4', '#FFCCBC']
     };
   },
   /*
@@ -77,21 +79,6 @@ export default {
   display: flex;
   flex-flow: column;
 
-  .dbc-n-hdr {
-    border-bottom: 1px solid #4285f4;
-  }
-
-  .dbc-n-title {
-    font-size: 20px;
-  }
-
-  .dbc-n-tag {
-    float: right;
-    background: #4285f4;
-    margin-right: 10px;
-    margin-top: 2px;
-  }
-
   .dbc-n-content {
     width: 100%;
     flex: 2;
@@ -104,19 +91,19 @@ export default {
     height: 100%;
   }
 
-  .dbc-v-center {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    margin: 0px 10px 0px 10px;
-  }
-
   .dbc-n-value {
-    font-size: 36px;
+    font-size: 250%;
   }
 
   .dbc-n-subtitle {
-    font-size: 14px;
+    font-size: 100%;
+  }
+
+  .dbc-number-icon {
+    padding: 8px;
+    border-radius: 4px;
+    color: white;
+    opacity: 0.7;
   }
 }
 </style>

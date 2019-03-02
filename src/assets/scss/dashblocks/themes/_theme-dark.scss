@@ -1,3 +1,9 @@
+@import "../dbdashboard";
+
+$accent: red;
+
 .db-dashboard.db-theme-dark {
-    background-color: red;
+  @include db-dashboard;
+  background: material-color('grey', '900');
 }
+

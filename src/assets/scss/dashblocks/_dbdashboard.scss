@@ -1,0 +1,120 @@
+// TODO Rename !!
+@mixin db-dashboard {
+  font-family: $font-family;
+  font-size: $font-size;
+  color: $dark;
+
+  .db-float-right {
+    float: right;
+  }
+
+  .db-v-center {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .db-tag {
+    background: $primary;
+    color: $on-primary;
+    font-size: 80%;
+    padding: 2px 4px 2px 4px;
+    border-radius: 4px;
+  }
+
+
+  & .db-grid-layout {
+    column-gap: 0px;
+    row-gap: 0px;
+  }
+
+  & .db-widget-container {
+    margin: 4px;
+    padding: 4px;
+    border: 1px solid material-color('grey', '300');
+    border-radius: 6px;
+  }
+
+  & .text-primary {
+    color: $primary;
+  }
+  & .bg-primary {
+    background: $primary;
+  }
+
+  & .text-on-primary {
+    color: $on-primary;
+  }
+  & .text-on-secondary {
+    color: $on-secondary;
+  }
+  & .text-on-background {
+    color: $on-background;
+  }
+  & .text-on-surface {
+    color: $on-surface;
+  }
+  & .text-on-error {
+    color: $on-error;
+  }
+
+  & .text-faded {
+    color: $faded;
+  }
+
+  & .text-positive {
+    color: $positive;
+  }
+  & .text-negative {
+    color: $negative;
+  }
+  & .text-info {
+    color: $info;
+  }
+  & .text-warning {
+    color: $warning;
+  }
+
+  & .text-xxs {
+    font-size: 70%
+  }
+  & .text-xs {
+    font-size: 80%
+  }
+  & .text-sm {
+    font-size: 90%
+  }
+  & .text-base {
+    font-size: 100%
+  }
+  & .text-md {
+    font-size: 110%
+  }
+  & .text-lg {
+    font-size: 120%
+  }
+  & .text-xl {
+    font-size: 150%
+  }
+  & .text-xxl {
+    font-size: 250%
+  }
+  & .text-x3l {
+    font-size: 300%
+  }
+  & .text-x4l {
+    font-size: 400%
+  }
+  & .text-x5l {
+    font-size: 400%
+  }
+
+  & .bg-good {
+    background: $positive;
+  }
+
+}
+
+
+
+

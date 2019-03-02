@@ -49,7 +49,7 @@ export default {
       });
       this.dbdata.setWData('w4', {
         value: 15207,
-        trend: [1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 10]
+        trend: [10, 2, 3, 4, 5, 6, 5, 4, 3, 2, 10, 10, 2, 3, 4, 5, 6, 5, 4, 3, 2, 10, 10, 2, 3, 4, 5, 6, 5, 4, 3, 2, 10]
       });
       this.dbdata.setWData('w5', {
         value: 11208

@@ -1,4 +1,43 @@
 
+// Dashblocks Variables
+
+$primary   : #027BE3;
+$secondary : #26A69A;
+$accent    : #9C27B0;
+
+$positive  : #21BA45;
+$negative  : #C10015;
+$info      : #31CCEC;
+$warning   : #F2C037;
+
+$light     : #bdbdbd;
+$dark      : #424242;
+$faded     : #777;
+
+$white     : #FFFFFF;
+$black     : #000000;
+
+// TODO - is this needed ?
+$dimmed-background       : rgba(0, 0, 0, .4);
+$light-dimmed-background : rgba(255, 255, 255, .6);
+$separator-color      : rgba(0, 0, 0, .12);
+$separator-dark-color : rgba(255, 255, 255, .48);
+
+
+// Fonts
+$font-family: 'Roboto', sans-serif;
+$font-size: 14px;
+
+// Text
+$on-primary: white;
+$on-secondary: black;
+$on-background: material-color('grey', '800');
+$on-surface: $faded;
+$on-error: white;
+
+
+
+
 // Sidebar variables
 
 $primaryColor: #4285f4 !default;
@@ -31,3 +70,6 @@ $mobileIconColor: #fff !default;
 
 $dropDownColor: #fff !default;
 $dropDownBg: $lightenBg !default;
+
+
+
