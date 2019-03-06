@@ -5,18 +5,13 @@
       <span class="text-md">{{ title }}</span> <span class="db-badge db-float-right">{{ badge }}</span>
     </div>
     <div class="dbc-n-content">
-      <div
-        v-if="hasTrend"
-        class="dbc-n-layer"
-        style="display: flex; flex-direction: column; justify-content: space-between;"
-      >
-        <div></div>
+      <div v-if="hasTrend" class="dbc-n-layer">
         <db-trend-line
           :_updated="_updated"
           :data="trend"
           :gradient="trendGradient"
           :strokeWidth="4"
-          style="position: relative; min-height: 40%; height: 40%;"
+          style="height: 80%; width: 80%;position: absolute;top:20%; right: 0%;"
         ></db-trend-line>
       </div>
       <div v-if="hasIcon" class="dbc-n-layer">
@@ -24,7 +19,7 @@
       </div>
       <div class="dbc-n-layer" style="text-align: right;">
         <div class="db-v-center">
-          <div class="text-xxl">{{ value }}</div>
+          <div class="dbc-n-value">{{ value }}</div>
           <div class="text-sm text-faded">200 OK Requests per Second: {{ hasTrend }}</div>
         </div>
       </div>
@@ -68,6 +63,7 @@ export default {
   },
   data() {
     return {
+      // TODO Better gradient for light and dark
       trendGradient: ['#DCEDC8', '#FFF9C4', '#FFCCBC']
     };
   },
@@ -131,7 +127,7 @@ export default {
   }
 
   .dbc-n-value {
-    font-size: 250%;
+    font-size: 210%;
   }
 
   .dbc-n-subtitle {

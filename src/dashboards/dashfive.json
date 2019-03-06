@@ -37,6 +37,7 @@
       "name": "w4",
       "type": "DbNumber",
       "cspan": 4,
+      "height": 100,
       "properties": {
         "title": "Test OK",
         "badge": "req/s",
