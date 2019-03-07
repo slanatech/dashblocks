@@ -1,4 +1,5 @@
 import Chart from 'chart.js';
+import Colors from '../dbcolors';
 
 export function generateChart(chartId, chartType) {
   return {
@@ -69,6 +70,15 @@ export function generateChart(chartId, chartType) {
 
     mounted() {
       this.chartdata = JSON.parse(JSON.stringify(this.wdata));
+      // TEMP TODO Optimize
+      // Set default colors if not specified
+      let dsidx = 0;
+      for (let ds of this.chartdata.datasets) {
+        if (!('backgroundColor' in ds)) {
+          ds.backgroundColor = Colors.defaultColors[dsidx];
+        }
+        dsidx++;
+      }
       this.renderChart(this.chartdata, this.options);
     },
 
