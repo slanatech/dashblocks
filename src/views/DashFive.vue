@@ -58,6 +58,14 @@ export default {
         value: 5200,
         trend: [10, 2, 3, 4, 5, 6, 5, 4, 3, 2, 10, 4, 3, 2, 10]
       });
+      this.dbdata.setWData('w7', {
+        data: [
+          {
+            y: [10, 2, 3, 4, 5, 6, 5, 4, 3, 2, 10, 10, 4, 3, 2, 10, 10, 2, 3, 4, 5, 6, 5, 4, 3, 2, 10],
+            type: 'bar'
+          }
+        ]
+      });
     },
     handleInc: function() {
       // Set completely new data for our widgets
@@ -75,8 +83,17 @@ export default {
       // This works
       this.dbdata['w4'].value = 55555;
       // This does not work, as expected
-      //this.dbdata['w4'].trend[0] = 100;
       // TODO - would need to call dbdata.update here ?
+      //this.dbdata['w4'].trend[0] = 100;
+
+      this.dbdata.setWData('w7', {
+        data: [
+          {
+            x: ['A', 'B', 'C', 'D', 'E'],
+            y: [10, 24, 3, 2, 10]
+          }
+        ]
+      });
     },
     handleInc2: function() {
       this.dbdata['w0'].data[0] += 10;
