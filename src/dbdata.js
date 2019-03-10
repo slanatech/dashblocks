@@ -31,6 +31,11 @@ class DbData {
     Vue.set(this, '_updated', Date.now());
   }
 
+  touch(key) {
+    Vue.set(this[key], '_updated', Date.now());
+    Vue.set(this, '_updated', Date.now());
+  }
+
   getWData(key) {
     return pathOr(null, [key], this);
   }

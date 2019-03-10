@@ -73,8 +73,8 @@
       "id": "7",
       "name": "w7",
       "type": "DbPlotly",
-      "cspan": 12,
-      "rspan": 4,
+      "cspan": 16,
+      "rspan": 2,
       "properties": {
         "layout": {
           "title": "reactive charts",
@@ -93,6 +93,25 @@
           }
         }
       }
+    },
+    {
+      "id": "8",
+      "name": "w8",
+      "type": "DbPlotlyLine",
+      "cspan": 16,
+      "rspan": 2,
+      "properties": {
+        "layout": {
+          "margin": {
+            "l": 60,
+            "r": 40,
+            "b": 40,
+            "t": 40,
+            "pad": 5
+          }
+        }
+      }
     }
+
   ]
 }

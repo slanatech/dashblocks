@@ -9,6 +9,7 @@ import DbEasyPie from './db/DbEasyPie';
 import DbTrendLine from './db/DbTrendLine';
 import DbTrendBar from './db/DbTrendBar';
 import DbPlotly from './plotly/DbPlotly';
+import DbPlotlyLine from './plotly/DbPlotlyLine';
 
 export default {
   WidgetOne,
@@ -21,5 +22,6 @@ export default {
   DbEasyPie,
   DbTrendLine,
   DbTrendBar,
-  DbPlotly
+  DbPlotly,
+  DbPlotlyLine
 };

@@ -66,6 +66,44 @@ export default {
           }
         ]
       });
+      this.dbdata.setWData('w8', {
+        data: [
+          {
+            y: [10, 2, 3, 4, 5, 6, 5, 4, 3, 2, 10, 10, 4, 3, 2, 10, 10, 2, 3, 4, 5, 6, 5, 4, 3, 2, 10]
+          },
+          {
+            y: [
+              10,
+              12,
+              13,
+              14,
+              15,
+              16,
+              15,
+              14,
+              13,
+              12,
+              20,
+              20,
+              14,
+              13,
+              12,
+              20,
+              20,
+              12,
+              13,
+              14,
+              15,
+              16,
+              15,
+              14,
+              13,
+              12,
+              20
+            ]
+          }
+        ]
+      });
     },
     handleInc: function() {
       // Set completely new data for our widgets
@@ -86,6 +124,7 @@ export default {
       // TODO - would need to call dbdata.update here ?
       //this.dbdata['w4'].trend[0] = 100;
 
+      /*
       this.dbdata.setWData('w7', {
         data: [
           {
@@ -94,6 +133,17 @@ export default {
           }
         ]
       });
+      this.dbdata.setWData('w8', {
+        data: [
+          {
+            x: ['A', 'B', 'C', 'D', 'E'],
+            y: [20, 124, 13, 12, 110]
+          }
+        ]
+      });
+      */
+      this.dbdata['w8'].data[0].y[0] = 100;
+      this.dbdata.touch('w8');
     },
     handleInc2: function() {
       this.dbdata['w0'].data[0] += 10;

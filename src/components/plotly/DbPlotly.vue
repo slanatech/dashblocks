@@ -5,7 +5,7 @@
 import Plotly from 'plotly.js-dist';
 import log from '../log';
 export default {
-  name: 'DbNumber',
+  name: 'DbPlotly',
   props: {
     _updated: {
       type: Number,
@@ -27,18 +27,6 @@ export default {
       }
     };
   },
-  computed: {
-    // Augment props with chart-specif attributes, i.e. enforce chart type
-    // TODO Check if this is expensive ?
-    dataEx() {
-      log.info('DbPlotly: computing DataEx ... ');
-      let dx = [];
-      for (let d of this.data) {
-        dx.push(Object.assign({}, d, { type: 'bar' }));
-      }
-      return dx;
-    }
-  },
   mounted() {
     this.render();
   },
@@ -57,7 +45,7 @@ export default {
   },
   methods: {
     render() {
-      Plotly.plot(this.$refs.plotlychart, this.dataEx, this.layout, this.options);
+      Plotly.plot(this.$refs.plotlychart, this.data, this.layout, this.options);
     },
     scheduleRefresh() {
       this.needUpdate = true;
@@ -72,7 +60,8 @@ export default {
       }
       this.needUpdate = false;
       log.info('DbPlotly: reacting ...');
-      Plotly.react(this.$refs.plotlychart, this.dataEx, this.layout);
+      // TODO Does not work if value in array changed !
+      Plotly.react(this.$refs.plotlychart, this.data, this.layout);
     }
   }
 };
