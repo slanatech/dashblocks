@@ -61,7 +61,8 @@ export default {
       this.needUpdate = false;
       log.info('DbPlotly: reacting ...');
       // TODO Does not work if value in array changed !
-      Plotly.react(this.$refs.plotlychart, this.data, this.layout);
+      // react ?
+      Plotly.react(this.$refs.plotlychart, this.data, Object.assign({ datarevision: Date.now() }, this.layout));
     }
   }
 };

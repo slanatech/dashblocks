@@ -16,7 +16,6 @@
     {
       "id": "1",
       "name": "w0",
-      "height": 250,
       "type": "DbTrendLine",
       "cspan": 4
     },
@@ -37,7 +36,6 @@
       "name": "w4",
       "type": "DbNumber",
       "cspan": 4,
-      "height": 100,
       "properties": {
         "title": "Test OK",
         "badge": "req/s",

@@ -27,7 +27,8 @@ export default {
       lineProps: {
         mode: 'lines+markers',
         type: 'scatter'
-      }
+      },
+      dataLineA: this.data
     };
   },
   computed: {
