@@ -4,6 +4,13 @@
   },
   "widgets": [
     {
+      "id": "a",
+      "name": "wa",
+      "type": "DbDygraphsDateTimeHistogram",
+      "cspan": 16,
+      "height": 250
+    },
+    {
       "id": "0",
       "name": "w0",
       "type": "DbTrendLine",

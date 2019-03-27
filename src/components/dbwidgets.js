@@ -10,6 +10,7 @@ import DbTrendLine from './db/DbTrendLine';
 import DbTrendBar from './db/DbTrendBar';
 import DbPlotly from './plotly/DbPlotly';
 import DbPlotlyLine from './plotly/DbPlotlyLine';
+import DbDygraphsDateTimeHistogram from './dygraphs/DbDygraphsDateTimeHistogram';
 
 export default {
   WidgetOne,
@@ -23,5 +24,6 @@ export default {
   DbTrendLine,
   DbTrendBar,
   DbPlotly,
-  DbPlotlyLine
+  DbPlotlyLine,
+  DbDygraphsDateTimeHistogram
 };

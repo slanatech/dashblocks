@@ -35,7 +35,6 @@ export default {
 <style>
 .dbc-dygraphs {
   width: 100%;
-  height: 95%;
-  display: block;
+  height: 100%;
 }
 </style>
