@@ -2,8 +2,10 @@
   <div ref="container" class="db-dygraphs" />
 </template>
 <script>
+import DbColors from '../dbcolors';
 import Dygraphs from 'dygraphs';
 import 'dygraphs/dist/dygraph.css';
+import log from '../log';
 
 export default {
   props: {
@@ -21,8 +23,24 @@ export default {
   },
   data() {
     return {
-      graph: null
+      graph: null,
+      defaultOptions: {
+        colors: DbColors.defaultColors,
+        animatedZooms: true,
+        zoomCallback: this.handleZoom
+      }
     };
+  },
+  computed: {
+    // Augment passed options with defaults for Dygraphs
+    graphOptions: {
+      get() {
+        return Object.assign({}, this.defaultOptions, this.options);
+      },
+      set() {
+        /*noop*/
+      }
+    }
   },
   mounted() {
     this.render();
@@ -37,7 +55,15 @@ export default {
   methods: {
     render() {
       //console.log("Rendering Dygraph ...");
-      this.graph = new Dygraphs(this.$refs.container, this.data, this.options);
+      this.graph = new Dygraphs(this.$refs.container, this.data, this.graphOptions);
+    },
+    handleZoom: function(minDate, maxDate, yRanges) {
+      log.info('handleZoom: minDate:' + minDate + ', maxDate:' + maxDate + ', yRanges:' + yRanges);
+      this.$emit('db-event', {
+        minDate: Math.floor(minDate),
+        maxDate: Math.floor(maxDate),
+        yRanges: yRanges
+      });
     }
   }
 };

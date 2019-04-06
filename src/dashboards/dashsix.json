@@ -6,7 +6,7 @@
     {
       "id": "1",
       "name": "w1",
-      "type": "DbDygraphsDateTimeHistogram",
+      "type": "DbDygraphsBar",
       "cspan": 16,
       "height": 250
     },

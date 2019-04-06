@@ -6,7 +6,7 @@
 <script>
 import DygraphInteraction from 'dygraphs';
 import DbDygraphs from './DbDygraphs';
-import log from '../log';
+//import log from '../log';
 export default {
   name: 'DbDygraphsLine',
   components: {
@@ -39,8 +39,6 @@ export default {
         legend: 'follow',
         includeZero: true,
         panEdgeFraction: 0.00000001,
-        animatedZooms: true,
-        zoomCallback: this.handleZoom,
         fillGraph: true,
         fillAlpha: 0.2,
         /*
@@ -100,15 +98,6 @@ export default {
 
       // Setup callbacks
       this.graphOptions.zoomCallback = this.handleZoom;
-    },
-
-    handleZoom: function(minDate, maxDate, yRanges) {
-      log.info('handleZoom: minDate:' + minDate + ', maxDate:' + maxDate + ', yRanges:' + yRanges);
-      this.$emit('zoom', {
-        minDate: Math.floor(minDate),
-        maxDate: Math.floor(maxDate),
-        yRanges: yRanges
-      });
     }
   }
 };

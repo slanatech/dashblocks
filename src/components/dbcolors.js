@@ -22,6 +22,8 @@ const defaultColors = [
 
 // TODO Light / Dark themes support
 
+// TODO Make it a class, export instance, add methods like getColors that would return colors for current theme
+
 export default {
   defaultColors
 };

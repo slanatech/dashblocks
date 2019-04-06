@@ -6,6 +6,7 @@
       :wdata="wdata"
       v-bind="getWidgetProperties()"
       :style="getItemStyle()"
+      v-on:db-event="handleZoom"
     >
     </component>
   </div>
@@ -15,6 +16,7 @@
 import pathOr from 'ramda/es/pathOr';
 // Imports all item components, then whatever is specified in dashboard will be used dynamically
 import DbWidgets from '../dbwidgets';
+import log from '../log';
 export default {
   name: 'DbWidgetContainer',
   components: DbWidgets,
@@ -69,6 +71,9 @@ export default {
         iStyle += 'height:100%';
       }
       return iStyle;
+    },
+    handleZoom: function(e) {
+      log.info('Got Zoom event' + e);
     }
   }
 };
