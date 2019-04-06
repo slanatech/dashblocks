@@ -1,13 +1,14 @@
 <template>
-  <div class="dbc-dygraphs-dth"><db-dygraphs ref="dygraph" :data="data" :options="graphOptions"> </db-dygraphs></div>
+  <div class="dbc-dygraphs-line">
+    <db-dygraphs ref="dygraph" :_updated="_updated" :data="data" :options="graphOptions"> </db-dygraphs>
+  </div>
 </template>
 <script>
-//import merge from "deepmerge";
 import DygraphInteraction from 'dygraphs';
 import DbDygraphs from './DbDygraphs';
 import log from '../log';
 export default {
-  name: 'DbDygraphsDateTimeHistogram',
+  name: 'DbDygraphsLine',
   components: {
     DbDygraphs
   },
@@ -26,38 +27,53 @@ export default {
   },
   data() {
     return {
-      graphData: [],
-      graphOptionsNN: {},
+      defaultOptionsNN: {
+        rollPeriod: 30,
+        legend: 'always',
+        title: 'High and Low Temperatures (30-day average)',
+        ylabel: 'Temperature (F)',
+        xlabel: 'Date (Ticks indicate the start of the indicated time period)',
+        strokeWidth: 1.5
+      },
       defaultOptions: {
         legend: 'follow',
         includeZero: true,
         panEdgeFraction: 0.00000001,
         animatedZooms: true,
         zoomCallback: this.handleZoom,
+        fillGraph: true,
+        fillAlpha: 0.2,
+        /*
+        highlightSeriesOpts: {
+          strokeWidth: 2,
+          strokeBorderWidth: 1,
+          highlightCircleSize: 5
+        },
+        */
         interactionModel: DygraphInteraction.defaultInteractionModel,
         axes: {
           x: {
-            drawGrid: false
+            drawGrid: true
           }
-        },
-        plotter: this.barChartPlotter
+        }
       }
     };
   },
   mounted: function() {
-    this.configure();
-    this.graphData = this.data;
+    //this.configure();
+    //this.graphData = this.data;
   },
   watch: {
     data: function(/*val, oldVal*/) {
-      this.graphData = this.data;
-    },
+      //this.graphData = this.data;
+    }
+    /*
     options: {
-      handler: function(/*val, oldVal*/) {
+      handler: function() {
         this.configure();
       },
       deep: true
-    }
+    }*/
   },
   computed: {
     // Augment passed options with defaults for this chart type
@@ -83,19 +99,7 @@ export default {
       this.graphOptions = Object.assign({}, this.defaultOptions, this.options);
 
       // Setup callbacks
-      //this.graphOptions.zoomCallback = this.handleZoom;
-
-      // TODO Consider making below configurable
-      // Disable double-click
-      //this.graphOptions.interactionModel.dblclick = this.handleDblclick;
-
-      // Enable bars
-      //this.graphOptions.plotter = this.barChartPlotter;
-    },
-
-    handleDblclick: function(/*event, g, context*/) {
-      // Ignore double-click - disable zoom in
-      return;
+      this.graphOptions.zoomCallback = this.handleZoom;
     },
 
     handleZoom: function(minDate, maxDate, yRanges) {
@@ -105,45 +109,17 @@ export default {
         maxDate: Math.floor(maxDate),
         yRanges: yRanges
       });
-    },
-
-    // This function draws bars for a single series
-    barChartPlotter: function(e) {
-      var ctx = e.drawingContext;
-      var points = e.points;
-      var y_bottom = e.dygraph.toDomYCoord(0);
-
-      ctx.fillStyle = e.color;
-
-      // Find the minimum separation between x-values.
-      // This determines the bar width.
-      var min_sep = Infinity;
-      for (let i = 1; i < points.length; i++) {
-        var sep = points[i].canvasx - points[i - 1].canvasx;
-        if (sep < min_sep) min_sep = sep;
-      }
-      var bar_width = Math.floor((2.0 / 3) * min_sep);
-
-      // Do the actual plotting.
-      for (let i = 0; i < points.length; i++) {
-        var p = points[i];
-        var center_x = p.canvasx;
-
-        ctx.fillRect(center_x - bar_width / 2, p.canvasy, bar_width, y_bottom - p.canvasy);
-
-        ctx.strokeRect(center_x - bar_width / 2, p.canvasy, bar_width, y_bottom - p.canvasy);
-      }
     }
   }
 };
 </script>
 <style>
-.dbc-dygraphs-dth {
+.dbc-dygraphs-line {
   width: 100%;
   height: 100%;
 }
 
-.dygraph-legend {
+.dygraph-legendNN {
   background-color: rgba(209, 236, 241, 0.95) !important;
   padding: 4px;
   border: 1px solid #bee5eb;

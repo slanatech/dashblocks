@@ -1,0 +1,28 @@
+{
+  "layout": {
+    "type": "grid"
+  },
+  "widgets": [
+    {
+      "id": "1",
+      "name": "w1",
+      "type": "DbDygraphsDateTimeHistogram",
+      "cspan": 16,
+      "height": 250
+    },
+    {
+      "id": "2",
+      "name": "w2",
+      "type": "DbDygraphsLine",
+      "cspan": 16,
+      "height": 250,
+      "properties": {
+        "options": {
+          "title": "Random value Chart",
+          "ylabel": "Probability",
+          "labels" : ["Date","AAA","BBB"]
+        }
+      }
+    }
+  ]
+}
