@@ -8,7 +8,12 @@
       "name": "w1",
       "type": "DbDygraphsBar",
       "cspan": 16,
-      "height": 250
+      "height": 250,
+      "properties": {
+        "options": {
+          "stackedGraph": true
+        }
+      }
     },
     {
       "id": "2",
@@ -18,6 +23,7 @@
       "height": 250,
       "properties": {
         "options": {
+          "stackedGraph": true,
           "title": "Random value Chart",
           "ylabel": "Probability",
           "labels" : ["Date","AAA","BBB"]

@@ -37,7 +37,8 @@ export default {
       for (let i = 0; i < 100; i++) {
         let cTs = sTS + i * 3600 * 1000;
         let d = new Date(cTs);
-        dthData.push([d, Math.random()]);
+        let r = Math.random();
+        dthData.push([d, r, r + 0.5]);
         dthData2.push([d, Math.random(), Math.random()]);
       }
 
