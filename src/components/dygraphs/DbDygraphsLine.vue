@@ -36,7 +36,6 @@ export default {
         strokeWidth: 1.5
       },
       defaultOptions: {
-        legend: 'follow',
         includeZero: true,
         panEdgeFraction: 0.00000001,
         fillGraph: true,

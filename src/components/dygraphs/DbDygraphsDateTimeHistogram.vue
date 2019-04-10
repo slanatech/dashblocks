@@ -131,17 +131,6 @@ export default {
   height: 100%;
 }
 
-.dygraph-legend {
-  background-color: rgba(209, 236, 241, 0.95) !important;
-  padding: 4px;
-  border: 1px solid #bee5eb;
-  border-radius: 4px;
-  pointer-events: none;
-  width: 240px;
-  position: absolute;
-  margin-top: 40px;
-}
-
 .dbc-dygraphs-dth .dygraph-legend2 {
   font-size: 14px;
   text-align: left;

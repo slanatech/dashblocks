@@ -23,10 +23,11 @@
       "height": 250,
       "properties": {
         "options": {
-          "stackedGraph": true,
+          "stackedGraph": false,
           "title": "Random value Chart",
           "ylabel": "Probability",
-          "labels" : ["Date","AAA","BBB"]
+          "labels" : ["Date","AAA","BBB"],
+          "legend": "always"
         }
       }
     }

@@ -27,6 +27,9 @@ export default {
       defaultOptions: {
         colors: DbColors.defaultColors,
         animatedZooms: true,
+        labelsDiv: this.$refs.dbdylabels,
+        legend: 'follow',
+        legendFormatter: this.legendFormatter,
         zoomCallback: this.handleZoom
       }
     };
@@ -57,6 +60,29 @@ export default {
       //console.log("Rendering Dygraph ...");
       this.graph = new Dygraphs(this.$refs.container, this.data, this.graphOptions);
     },
+    legendFormatter: function(data) {
+      if (data.x == null) {
+        // This happens when there's no selection and {legend: 'always'} is set.
+        return (
+          '' +
+          data.series
+            .map(function(series) {
+              return series.dashHTML + ' ' + series.labelHTML;
+            })
+            .join(' ')
+        );
+      }
+      var html = this.graph.getLabels()[0] + ': ' + data.xHTML;
+      data.series.forEach(function(series) {
+        if (!series.isVisible) return;
+        var labeledData = series.labelHTML + ': ' + series.yHTML;
+        if (series.isHighlighted) {
+          labeledData = '<b>' + labeledData + '</b>';
+        }
+        html += '<br>' + series.dashHTML + ' ' + labeledData;
+      });
+      return html;
+    },
     handleZoom: function(minDate, maxDate, yRanges) {
       log.info('handleZoom: minDate:' + minDate + ', maxDate:' + maxDate + ', yRanges:' + yRanges);
       this.$emit('db-event', {
@@ -72,7 +98,6 @@ export default {
 .db-dygraphs {
   width: 100%;
   height: 100%;
-  position: relative;
 }
 .dygraph-axis-label {
   font-size: 12px;
@@ -84,5 +109,16 @@ export default {
   font-size: 16px;
   font-weight: normal;
   text-align: left;
+}
+.dygraph-legend {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  padding: 4px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-shadow: 4px 4px 4px #888;
+  pointer-events: none;
+  width: 190px;
+  font-size: 12px;
+  position: relative;
 }
 </style>
