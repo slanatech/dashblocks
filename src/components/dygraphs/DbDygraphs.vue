@@ -2,6 +2,9 @@
   <div ref="container" class="db-dygraphs" />
 </template>
 <script>
+// TODO Issue: wrong sizing on initial load (does not take drawer size into account )
+// Render on next tick ?
+
 import DbColors from '../dbcolors';
 import Dygraphs from 'dygraphs';
 import 'dygraphs/dist/dygraph.css';
@@ -46,13 +49,15 @@ export default {
     }
   },
   mounted() {
-    this.render();
+    this.$nextTick(() => {
+      this.render();
+    });
   },
   watch: {
     data: function() {
       // Rendering is triggered when data changed
       // To force re-render if only options changed, call $refs.child.render
-      this.render();
+      //this.render();
     }
   },
   methods: {

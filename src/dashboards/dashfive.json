@@ -6,9 +6,14 @@
     {
       "id": "a",
       "name": "wa",
-      "type": "DbDygraphsDateTimeHistogram",
+      "type": "DbDygraphsBar",
       "cspan": 16,
-      "height": 250
+      "height": 250,
+      "properties": {
+        "options": {
+          "stackedGraph": true
+        }
+      }
     },
     {
       "id": "0",

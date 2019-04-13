@@ -9452,6 +9452,10 @@ vuebars@^0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/vuebars/-/vuebars-0.1.3.tgz#559742bfd6dc2a70002e5c05b6e19aa8a51201a7"
 
+vuetify@^1.5.11:
+  version "1.5.11"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.5.11.tgz#ae1790df1dc1505289116dfd79426d83b38d2ba9"
+
 vuetrend@^0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/vuetrend/-/vuetrend-0.3.2.tgz#13100862ded562c78d3704c3865cd38c582e586a"

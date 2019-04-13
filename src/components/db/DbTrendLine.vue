@@ -98,13 +98,16 @@ export default {
   },
   methods: {
     initSize() {
-      this.lineHeight = this.height ? this.height : this.$refs.chart.clientHeight;
-      this.lineWidth = this.width ? this.width : this.$refs.chart.clientWidth - 5;
+      this.$nextTick(() => {
+        this.lineHeight = this.height ? this.height : this.$refs.chart.clientHeight;
+        this.lineWidth = this.width ? this.width : this.$refs.chart.clientWidth - 10;
+      });
     },
     handleResize(/*event*/) {
       this.$nextTick(() => {
+        // TODO Something wrong with this -10 ... Reconsider
         this.lineWidth = this.width ? this.width : this.$refs.chart.clientWidth;
-        this.lineHeight = this.height ? this.height : this.$refs.chart.clientHeight - 5;
+        this.lineHeight = this.height ? this.height : this.$refs.chart.clientHeight - 10;
       });
     }
   }

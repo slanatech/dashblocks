@@ -14,12 +14,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: Home
     },
     {
       path: '/about',
-      name: 'about',
+      name: 'Dashboard Two',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -27,22 +27,22 @@ export default new Router({
     },
     {
       path: '/dashthree',
-      name: 'dashthree',
+      name: 'Dashboard Three',
       component: DashThree
     },
     {
       path: '/dashfour',
-      name: 'dashfour',
+      name: 'Dashboard Four',
       component: DashFour
     },
     {
       path: '/dashfive',
-      name: 'dashfive',
+      name: 'Dashboard Five',
       component: DashFive
     },
     {
       path: '/dashsix',
-      name: 'dashsix',
+      name: 'Dashboard Six',
       component: DashSix
     }
   ]

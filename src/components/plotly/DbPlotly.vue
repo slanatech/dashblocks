@@ -28,7 +28,9 @@ export default {
     };
   },
   mounted() {
-    this.render();
+    this.$nextTick(() => {
+      this.render();
+    });
   },
   watch: {
     _updated: function() {

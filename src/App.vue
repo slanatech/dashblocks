@@ -1,70 +1,127 @@
 <template>
-  <div id="app" :class="[{ collapsed: collapsed }]">
-    <div class="content"><router-view /></div>
-    <sidebar-menu
-      :menu="menu"
-      :collapsed="collapsed"
-      @collapse="onCollapse"
-      :theme="sidebarTheme"
-      :showOneChild="true"
-      :width="'300px'"
-    />
+  <div id="app">
+    <v-app id="inspire" :dark="switchDark">
+      <v-navigation-drawer fixed v-model="drawer" :mini-variant.sync="mini" app>
+        <v-toolbar flat class="transparent">
+          <v-list class="pa-0">
+            <v-list-tile avatar>
+              <v-list-tile-avatar> <img src="./assets/logo.png" /> </v-list-tile-avatar>
+
+              <v-list-tile-content> <v-list-tile-title>DASHBLOCKS</v-list-tile-title> </v-list-tile-content>
+
+              <v-list-tile-action>
+                <v-btn icon @click.stop="mini = !mini;"> <v-icon>chevron_left</v-icon> </v-btn>
+              </v-list-tile-action>
+            </v-list-tile>
+          </v-list>
+        </v-toolbar>
+
+        <v-list dense two-line subheader>
+          <v-list-tile v-for="item in items" :key="item.title" avatar :to="item.href">
+            <v-tooltip bottom>
+              <v-list-tile-avatar slot="activator">
+                <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
+              </v-list-tile-avatar>
+              <span>{{ item.title }}</span>
+            </v-tooltip>
+
+            <v-list-tile-content>
+              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+              <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+            </v-list-tile-content>
+
+            <v-list-tile-action>
+              <v-btn icon ripple> <v-icon color="amber lighten-3">info</v-icon> </v-btn>
+            </v-list-tile-action>
+          </v-list-tile>
+
+          <v-divider inset></v-divider>
+
+          <v-subheader inset>Add more dashboards ...</v-subheader>
+        </v-list>
+      </v-navigation-drawer>
+
+      <v-toolbar dense fixed app>
+        <v-toolbar-side-icon @click.stop="drawer = !drawer;"></v-toolbar-side-icon>
+        <v-toolbar-title>{{ currentRouteName }}</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon> <v-icon>more_vert</v-icon> </v-btn>
+        <div><v-switch v-model="switchDark" label="Dark" hide-details></v-switch></div>
+      </v-toolbar>
+
+      <v-content>
+        <v-container fluid fill-height>
+          <v-layout>
+            <v-flex>
+              <div class="content"><router-view /></div>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-content>
+    </v-app>
   </div>
 </template>
 
 <script>
-import { SidebarMenu } from 'vue-sidebar-menu';
 export default {
-  components: {
-    SidebarMenu
-  },
   data() {
     return {
-      menu: [
+      drawer: true,
+      mini: true,
+      switchDark: false,
+      items: [
         {
-          header: true,
-          title: 'DashBlocks'
-        },
-        {
-          href: '/',
+          icon: 'bar_chart',
+          iconClass: 'teal lighten-2 white--text',
           title: 'Dashboard One',
-          icon: 'fa fa-user'
+          subtitle: 'Take one ...',
+          href: '/'
         },
         {
+          icon: 'bubble_chart',
+          iconClass: 'teal lighten-2 white--text',
           title: 'Dashboard Two',
-          href: '/about',
-          icon: 'fa fa-chart-area'
+          subtitle: 'Another try',
+          href: '/about'
         },
         {
+          icon: 'insert_chart',
+          iconClass: 'teal lighten-2 white--text',
           title: 'Dashboard Three',
-          href: '/dashthree',
-          icon: 'fa fa-chart-area'
+          subtitle: '',
+          href: '/dashthree'
         },
         {
+          icon: 'insert_chart',
+          iconClass: 'teal lighten-2 white--text',
           title: 'Dashboard Four',
-          href: '/dashfour',
-          icon: 'fa fa-chart-area'
+          subtitle: '',
+          href: '/dashfour'
         },
         {
+          icon: 'insert_chart',
+          iconClass: 'teal lighten-2 white--text',
           title: 'Dashboard Five',
-          href: '/dashfive',
-          icon: 'fa fa-chart-area'
+          subtitle: '',
+          href: '/dashfive'
         },
         {
+          icon: 'insert_chart',
+          iconClass: 'teal lighten-2 white--text',
           title: 'Dashboard Six',
-          href: '/dashsix',
-          icon: 'fa fa-chart-area'
+          subtitle: '',
+          href: '/dashsix'
         }
-      ],
-      collapsed: false,
-      sidebarTheme: 'default-theme'
+      ]
     };
   },
-  methods: {
-    onCollapse(val) {
-      this.collapsed = val;
-      window.dispatchEvent(new Event('resize'));
+  computed: {
+    currentRouteName() {
+      return this.$route.name;
     }
+  },
+  methods: {
+    // TODO
   }
 };
 </script>
@@ -79,32 +136,5 @@ html {
 }
 body {
   font-family: 'Source Sans Pro', sans-serif;
-}
-
-#app {
-  padding-left: 300px;
-}
-
-#app.collapsed {
-  padding-left: 50px;
-}
-
-.content {
-  padding: 20px;
-}
-
-.v-sidebar-menu {
-  background: #0f2027; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, #0f2027, #203a43, #2c5364); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to bottom,
-    #0f2027,
-    #203a43,
-    #2c5364
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-  &.vsm-icon {
-    background-color: red;
-  }
 }
 </style>
