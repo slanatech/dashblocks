@@ -1,5 +1,6 @@
 <template>
-  <db-dygraphs ref="dygraph" :data="data" :options="graphOptions" @db-event="handleDbEvent"> </db-dygraphs>
+  <db-dygraphs ref="dygraph" :_updated="_updated" :data="data" :options="graphOptions" @db-event="handleDbEvent">
+  </db-dygraphs>
 </template>
 <script>
 //import merge from "deepmerge";

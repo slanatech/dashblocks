@@ -1,5 +1,7 @@
 <template>
-  <div class="dbc-dygraphs-dth"><db-dygraphs ref="dygraph" :data="data" :options="graphOptions"> </db-dygraphs></div>
+  <div class="dbc-dygraphs-dth">
+    <db-dygraphs ref="dygraph" :_updated="_updated" :data="data" :options="graphOptions"> </db-dygraphs>
+  </div>
 </template>
 <script>
 //import merge from "deepmerge";

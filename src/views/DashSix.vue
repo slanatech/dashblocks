@@ -49,6 +49,27 @@ export default {
       this.dbdata.setWData('w2', {
         data: dthData2
       });
+
+      let cntr = 101;
+
+      setInterval(
+        function(comp) {
+          // Update first half of the values in the first chart
+          for (let i = 0; i < 50; i++) {
+            comp.dbdata['w1'].data[i][1] = Math.random();
+          }
+          comp.dbdata.touch('w1');
+
+          // Add new value to second chart
+          let x = new Date(sTS + cntr * 3600 * 1000);
+          cntr++;
+          comp.dbdata['w2'].data.shift();
+          comp.dbdata['w2'].data.push([x, Math.random(), Math.random()]);
+          comp.dbdata.touch('w2');
+        },
+        1000,
+        this
+      );
     }
   }
 };

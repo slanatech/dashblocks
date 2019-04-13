@@ -27,6 +27,7 @@ export default {
   data() {
     return {
       graph: null,
+      needUpdate: false,
       defaultOptions: {
         colors: DbColors.defaultColors,
         animatedZooms: true,
@@ -54,16 +55,37 @@ export default {
     });
   },
   watch: {
-    data: function() {
-      // Rendering is triggered when data changed
-      // To force re-render if only options changed, call $refs.child.render
-      //this.render();
+    _updated: function() {
+      log.info('_updated prop changed');
+      this.scheduleUpdate();
+    },
+    data: {
+      handler() {
+        log.info('data prop changed');
+        this.scheduleUpdate();
+      },
+      deep: true
     }
   },
   methods: {
     render() {
       //console.log("Rendering Dygraph ...");
       this.graph = new Dygraphs(this.$refs.container, this.data, this.graphOptions);
+    },
+    scheduleUpdate() {
+      this.needUpdate = true;
+      this.$nextTick(() => {
+        this.update();
+      });
+    },
+    update() {
+      // Prevent multiple re-draws per single data update ( because there are redundant watches )
+      if (!this.needUpdate) {
+        return;
+      }
+      this.needUpdate = false;
+      log.info('DbDygraphs: updating data ...');
+      this.graph.updateOptions({ file: this.data });
     },
     legendFormatter: function(data) {
       if (data.x == null) {

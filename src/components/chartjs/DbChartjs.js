@@ -1,6 +1,8 @@
 import Chart from 'chart.js';
 import Colors from '../dbcolors';
 
+// TODO Issue - does not resize properly in Firefox
+
 export function generateChart(chartId, chartType) {
   return {
     render: function(createElement) {
@@ -29,11 +31,11 @@ export function generateChart(chartId, chartType) {
         type: String
       },
       width: {
-        default: 400,
+        default: 100,
         type: Number
       },
       height: {
-        default: 150,
+        default: 100,
         type: Number
       },
       cssClasses: {
@@ -69,6 +71,7 @@ export function generateChart(chartId, chartType) {
     },
 
     mounted() {
+      // TODO Reconsider - how not to make a copy of data ?
       this.chartdata = JSON.parse(JSON.stringify(this.wdata));
       // TEMP TODO Optimize
       // Set default colors if not specified
@@ -92,12 +95,14 @@ export function generateChart(chartId, chartType) {
         }
       },
       renderChart(data, options) {
-        if (this.$data._chart) this.$data._chart.destroy();
-        this.$data._chart = new Chart(this.$refs.canvas.getContext('2d'), {
-          type: chartType,
-          data: data,
-          options: options,
-          plugins: this.$data._plugins
+        this.$nextTick(() => {
+          if (this.$data._chart) this.$data._chart.destroy();
+          this.$data._chart = new Chart(this.$refs.canvas.getContext('2d'), {
+            type: chartType,
+            data: data,
+            options: options,
+            plugins: this.$data._plugins
+          });
         });
       }
     },
