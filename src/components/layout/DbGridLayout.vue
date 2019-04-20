@@ -7,6 +7,7 @@
       :wspec="widget"
       :wdata="getWidgetData(widget)"
       :style="widget.style"
+      @db-event="handleDbEvent"
     >
     </db-widget-container>
   </div>
@@ -51,6 +52,10 @@ export default {
     getWidgetData: function(widget) {
       //return Object.assign({},this.dbdata[widget.name]);
       return this.dbdata[widget.name];
+    },
+    handleDbEvent(payload) {
+      // Pass up to dashboard
+      this.$emit('db-event', payload);
     }
   }
 };

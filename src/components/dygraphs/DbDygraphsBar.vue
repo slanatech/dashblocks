@@ -6,7 +6,8 @@
 //import merge from "deepmerge";
 import DygraphInteraction from 'dygraphs';
 import DbDygraphs from './DbDygraphs';
-import log from '../log';
+//import log from '../log';
+
 export default {
   name: 'DbDygraphsBar',
   components: {
@@ -40,18 +41,6 @@ export default {
         plotter: this.barChartPlotter
       }
     };
-  },
-  watch: {
-    // TODO Is this needed here ? Check, and keep only in main DbDygraphs
-    data: function(/*val, oldVal*/) {
-      this.graphData = this.data;
-    },
-    options: {
-      handler: function(/*val, oldVal*/) {
-        this.configure();
-      },
-      deep: true
-    }
   },
   computed: {
     // Augment passed options with defaults for this chart type
@@ -92,9 +81,8 @@ export default {
         ctx.strokeRect(center_x - bar_width / 2, p.canvasy, bar_width, y_bottom - p.canvasy);
       }
     },
-    handleDbEvent(...args) {
-      log.info('Got event!');
-      this.$emit('db-event', ...args);
+    handleDbEvent(payload) {
+      this.$emit('db-event', payload);
     }
   }
 };

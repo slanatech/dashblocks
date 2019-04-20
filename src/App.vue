@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div id="app">
     <v-app id="inspire" :dark="switchDark">
       <v-navigation-drawer fixed v-model="drawer" :mini-variant.sync="mini" app>
@@ -34,10 +34,33 @@
               <v-btn icon ripple> <v-icon color="amber lighten-3">info</v-icon> </v-btn>
             </v-list-tile-action>
           </v-list-tile>
+        </v-list>
+        <v-list dense>
+          <v-list-group
+            v-for="item in items2"
+            :key="item.title"
+            v-model="item.active"
+            :prepend-icon="item.icon"
+            no-action
+          >
+            <template v-slot:activator>
+              <v-list-tile>
+                <v-list-tile-content>
+                  <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </template>
 
-          <v-divider inset></v-divider>
+            <v-list-tile v-for="subItem in item.items" :key="subItem.title" :to="subItem.href">
+              <v-list-tile-content>
+                <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
+              </v-list-tile-content>
 
-          <v-subheader inset>Add more dashboards ...</v-subheader>
+              <v-list-tile-action>
+                <v-icon>{{ subItem.action }}</v-icon>
+              </v-list-tile-action>
+            </v-list-tile>
+          </v-list-group>
         </v-list>
       </v-navigation-drawer>
 
@@ -69,6 +92,22 @@ export default {
       drawer: true,
       mini: true,
       switchDark: false,
+      items2: [
+        {
+          icon: 'bar_chart',
+          title: 'Dygraphs',
+          items: [
+            {
+              title: 'Dynamic Updates',
+              href: '/dygraphsdynamic'
+            },
+            {
+              title: 'TODO',
+              href: '/dashsix'
+            }
+          ]
+        }
+      ],
       items: [
         {
           icon: 'bar_chart',

@@ -5,6 +5,7 @@ import DashThree from './views/DashThree.vue';
 import DashFour from './views/DashFour.vue';
 import DashFive from './views/DashFive.vue';
 import DashSix from './views/DashSix.vue';
+import DygraphsDynamic from './views/DygraphsDynamic';
 
 Vue.use(Router);
 
@@ -44,6 +45,11 @@ export default new Router({
       path: '/dashsix',
       name: 'Dashboard Six',
       component: DashSix
+    },
+    {
+      path: '/dygraphsdynamic',
+      name: 'Dygraphs - Dynamic Updates',
+      component: DygraphsDynamic
     }
   ]
 });

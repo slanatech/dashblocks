@@ -1,6 +1,6 @@
 <template>
   <div class="db-dashboard db-theme-default">
-    <component v-bind:is="layoutComponent" :dbspec="dbspec" :dbdata="dbdata"> </component>
+    <component v-bind:is="layoutComponent" :dbspec="dbspec" :dbdata="dbdata" v-on:db-event="handleDbEvent"> </component>
   </div>
 </template>
 
@@ -52,7 +52,10 @@ export default {
     this.layoutComponent = DbLayouts.resolve(this.dbspec.layout.type);
   },
   methods: {
-    // TODO
+    handleDbEvent(payload) {
+      log.debug(`DbDashboard:db-event: ${JSON.stringify(payload)}`);
+      this.$emit('db-event', payload);
+    }
   }
 };
 </script>

@@ -6,7 +6,7 @@
       :wdata="wdata"
       v-bind="getWidgetProperties()"
       :style="getItemStyle()"
-      v-on:db-event="handleZoom"
+      v-on:db-event="handleDbEvent"
     >
     </component>
   </div>
@@ -72,8 +72,10 @@ export default {
       }
       return iStyle;
     },
-    handleZoom: function(e) {
-      log.info('Got Zoom event' + e);
+    handleDbEvent(payload) {
+      log.debug(`DbWidgetContainer:db-event: ${JSON.stringify(payload)}`);
+      // Augment event with widget id
+      this.$emit('db-event', Object.assign({}, { id: this.wspec.name }, payload));
     }
   }
 };

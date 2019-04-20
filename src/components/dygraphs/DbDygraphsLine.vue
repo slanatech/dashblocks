@@ -1,7 +1,6 @@
 <template>
-  <div class="dbc-dygraphs-line">
-    <db-dygraphs ref="dygraph" :_updated="_updated" :data="data" :options="graphOptions"> </db-dygraphs>
-  </div>
+  <db-dygraphs ref="dygraph" :_updated="_updated" :data="data" :options="graphOptions" @db-event="handleDbEvent">
+  </db-dygraphs>
 </template>
 <script>
 import DygraphInteraction from 'dygraphs';
@@ -27,14 +26,6 @@ export default {
   },
   data() {
     return {
-      defaultOptionsNN: {
-        rollPeriod: 30,
-        legend: 'always',
-        title: 'High and Low Temperatures (30-day average)',
-        ylabel: 'Temperature (F)',
-        xlabel: 'Date (Ticks indicate the start of the indicated time period)',
-        strokeWidth: 1.5
-      },
       defaultOptions: {
         includeZero: true,
         panEdgeFraction: 0.00000001,
@@ -56,22 +47,7 @@ export default {
       }
     };
   },
-  mounted: function() {
-    //this.configure();
-    //this.graphData = this.data;
-  },
-  watch: {
-    data: function(/*val, oldVal*/) {
-      //this.graphData = this.data;
-    }
-    /*
-    options: {
-      handler: function() {
-        this.configure();
-      },
-      deep: true
-    }*/
-  },
+  mounted: function() {},
   computed: {
     // Augment passed options with defaults for this chart type
     graphOptions: {
@@ -84,19 +60,8 @@ export default {
     }
   },
   methods: {
-    // Trigger rendering
-    render: function() {
-      this.$refs.dygraph.render();
-    },
-
-    // Create graphOptions by processing options passed via props and defaults
-    configure: function() {
-      // TODO Check if we need deepmerge
-      //this.graphOptions = merge(this.defaultOptions, this.options);
-      this.graphOptions = Object.assign({}, this.defaultOptions, this.options);
-
-      // Setup callbacks
-      this.graphOptions.zoomCallback = this.handleZoom;
+    handleDbEvent(payload) {
+      this.$emit('db-event', payload);
     }
   }
 };

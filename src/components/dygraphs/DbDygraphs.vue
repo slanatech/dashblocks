@@ -2,15 +2,13 @@
   <div ref="container" class="db-dygraphs" />
 </template>
 <script>
-// TODO Issue: wrong sizing on initial load (does not take drawer size into account )
-// Render on next tick ?
-
 import DbColors from '../dbcolors';
 import Dygraphs from 'dygraphs';
 import 'dygraphs/dist/dygraph.css';
 import log from '../log';
 
 export default {
+  name: 'DbDygraphs',
   props: {
     _updated: {
       type: Number,
@@ -34,7 +32,8 @@ export default {
         labelsDiv: this.$refs.dbdylabels,
         legend: 'follow',
         legendFormatter: this.legendFormatter,
-        zoomCallback: this.handleZoom
+        zoomCallback: this.handleZoom,
+        clickCallback: this.handleClick
       }
     };
   },
@@ -99,10 +98,10 @@ export default {
             .join(' ')
         );
       }
-      var html = this.graph.getLabels()[0] + ': ' + data.xHTML;
+      let html = this.graph.getLabels()[0] + ': ' + data.xHTML;
       data.series.forEach(function(series) {
         if (!series.isVisible) return;
-        var labeledData = series.labelHTML + ': ' + series.yHTML;
+        let labeledData = series.labelHTML + ': ' + series.yHTML;
         if (series.isHighlighted) {
           labeledData = '<b>' + labeledData + '</b>';
         }
@@ -110,9 +109,18 @@ export default {
       });
       return html;
     },
-    handleZoom: function(minDate, maxDate, yRanges) {
-      log.info('handleZoom: minDate:' + minDate + ', maxDate:' + maxDate + ', yRanges:' + yRanges);
+    handleClick: function(e, x, points) {
+      log.debug(`handleClick: x:${x}, points:${JSON.stringify(points)}`);
       this.$emit('db-event', {
+        type: 'click',
+        x: x,
+        points: points
+      });
+    },
+    handleZoom: function(minDate, maxDate, yRanges) {
+      log.debug('handleZoom: minDate:' + minDate + ', maxDate:' + maxDate + ', yRanges:' + yRanges);
+      this.$emit('db-event', {
+        type: 'zoom',
         minDate: Math.floor(minDate),
         maxDate: Math.floor(maxDate),
         yRanges: yRanges
