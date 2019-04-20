@@ -49,7 +49,7 @@ export default {
       let data = this.wdata.data;
 
       let step = 23;
-      let scheme = 'schemeGreens';
+      let scheme = 'schemeOranges';
       let overlap = 7;
 
       let margin = { top: 30, right: 10, bottom: 0, left: 10 };
@@ -57,7 +57,21 @@ export default {
       let width = this.$refs.container.clientWidth - 40;
       let height = data.length * (step + 1) + margin.top + margin.bottom;
 
+      // TODO dark / light switch
+
+      // For Light scheme
       let color = i => d3[scheme][Math.max(3, overlap)][i + Math.max(0, 3 - overlap)];
+
+      // For dark scheme, need to take color in reverse order
+      /*
+      let color = (i) => {
+        let csize = Math.max(3, overlap);
+        let cidx = csize-1-(i + Math.max(0, 3 - overlap));
+        console.log(`Color for ${i}: overlap: ${overlap}: size: ${csize}, idx: ${cidx}`);
+        //return d3[scheme][Math.max(3, overlap)][i + Math.max(0, 3 - overlap)];
+        return d3[scheme][csize][cidx];
+      }
+      */
 
       let x = d3
         .scaleUtc()
