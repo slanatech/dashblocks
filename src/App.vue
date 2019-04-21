@@ -91,7 +91,6 @@ export default {
     return {
       drawer: true,
       mini: true,
-      switchDark: false,
       items2: [
         {
           icon: 'bar_chart',
@@ -157,6 +156,14 @@ export default {
   computed: {
     currentRouteName() {
       return this.$route.name;
+    },
+    switchDark: {
+      get() {
+        return this.$store.state.switchDark;
+      },
+      set(value) {
+        this.$store.commit('setSwitchDark', value);
+      }
     }
   },
   methods: {

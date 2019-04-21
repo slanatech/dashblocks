@@ -1,5 +1,5 @@
 <template>
-  <div><component v-bind:is="dbDashboardComponent" :dbspec="dbspec" :dbdata="dbdata"> </component></div>
+  <div><component v-bind:is="dbDashboardComponent" :dbspec="dbspec" :dbdata="dbdata" :dark="isDark"> </component></div>
 </template>
 
 <script>
@@ -23,6 +23,11 @@ export default {
   created() {
     // Start initialization
     this.initialize();
+  },
+  computed: {
+    isDark() {
+      return this.$store.state.switchDark;
+    }
   },
   methods: {
     initialize: async function() {

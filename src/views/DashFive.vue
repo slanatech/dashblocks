@@ -1,6 +1,6 @@
 <template>
   <div>
-    <db-dashboard v-if="ready" :dbspec="dbspec" :dbdata="dbdata"> </db-dashboard>
+    <db-dashboard v-if="ready" :dbspec="dbspec" :dbdata="dbdata" :dark="isDark"> </db-dashboard>
     <div @click="handleInc">INC</div>
     <div @click="handleInc2">INC-2</div>
     <div @click="handleIncStroke">INC-STROKE</div>
@@ -23,6 +23,11 @@ export default {
       dbspec: dashFourSpec,
       ready: false
     };
+  },
+  computed: {
+    isDark() {
+      return this.$store.state.switchDark;
+    }
   },
   created() {
     // Initialize dashboard data

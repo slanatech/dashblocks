@@ -4,6 +4,11 @@ $accent: red;
 
 .db-dashboard.db-theme-dark {
   @include db-dashboard;
-  background: material-color('grey', '900');
+  color: white;
+
+  & .db-widget-container {
+    border: 1px solid material-color('grey', '800');
+  }
+
 }
 
