@@ -1,0 +1,31 @@
+// We need colors and variables
+@import "../assets/scss/dashblocks/material-colors";
+@import "../assets/scss/dashblocks/variables";
+
+// We need base dashboard style
+@import '../assets/scss/dashblocks/dbdashboard';
+
+// We override what is needed in out theme
+.db-dashboard.db-theme-custom {
+  @include db-dashboard;
+
+  color: red;
+
+  background: #0f2027; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #0f2027, #203a43, #2c5364); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+      to bottom,
+      #0f2027,
+      #203a43,
+      #2c5364
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+// Dark mode
+.db-dashboard.db-theme-custom.db-dark {
+  color: yellow;
+  & .db-widget-container {
+    border: 1px solid material-color('red', '800');
+  }
+}

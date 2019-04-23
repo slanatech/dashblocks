@@ -6,6 +6,7 @@
       :wdata="wdata"
       v-bind="getWidgetProperties()"
       :style="getItemStyle()"
+      :dark="dark"
       v-on:db-event="handleDbEvent"
     >
     </component>
@@ -23,7 +24,11 @@ export default {
   props: {
     layoutClass: String,
     wspec: Object,
-    wdata: Object
+    wdata: Object,
+    dark: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {

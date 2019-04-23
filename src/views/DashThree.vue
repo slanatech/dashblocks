@@ -1,5 +1,8 @@
 <template>
-  <div><component v-bind:is="dbDashboardComponent" :dbspec="dbspec" :dbdata="dbdata" :dark="isDark"> </component></div>
+  <!--
+    <component v-bind:is="dbDashboardComponent" :dbspec="dbspec" :dbdata="dbdata" themeClass="db-theme-custom" :dark="isDark"> </component>
+  -->
+  <component v-bind:is="dbDashboardComponent" :dbspec="dbspec" :dbdata="dbdata" :dark="isDark"> </component>
 </template>
 
 <script>

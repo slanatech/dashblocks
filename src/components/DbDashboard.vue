@@ -1,6 +1,7 @@
 <template>
   <div :class="getDbClass()">
-    <component v-bind:is="layoutComponent" :dbspec="dbspec" :dbdata="dbdata" v-on:db-event="handleDbEvent"> </component>
+    <component v-bind:is="layoutComponent" :dbspec="dbspec" :dbdata="dbdata" :dark="dark" v-on:db-event="handleDbEvent">
+    </component>
   </div>
 </template>
 
@@ -45,12 +46,8 @@ export default {
   methods: {
     getDbClass() {
       let dbClass = 'db-dashboard ';
-      if (this.themeClass !== '') {
-        dbClass += this.themeClass;
-      } else {
-        // use default themes
-        dbClass += this.dark ? 'db-theme-dark' : 'db-theme-default';
-      }
+      dbClass += this.themeClass ? this.themeClass : 'db-theme-default ';
+      dbClass += this.dark ? ' db-dark' : '';
       return dbClass;
     },
     handleDbEvent(payload) {

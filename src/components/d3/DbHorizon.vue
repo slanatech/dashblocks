@@ -8,11 +8,20 @@ import log from '../log';
 export default {
   props: {
     wdata: {},
-    wspec: {}
+    wspec: {},
+    dark: {
+      type: Boolean,
+      default: false
+    },
+    scheme: {
+      type: String,
+      default: 'schemeGreens'
+    }
   },
   data() {
     return {
-      graph: null
+      graph: null,
+      overlap: 7 // TODO Prop
     };
   },
   mounted() {
@@ -29,6 +38,11 @@ export default {
       // Rendering is triggered when data changed
       // To force re-render if only options changed, call $refs.child.render
       this.render();
+    },
+    dark: function() {
+      this.$nextTick(() => {
+        this.render();
+      });
     }
   },
   methods: {
@@ -38,8 +52,21 @@ export default {
         this.render();
       });
     },
+    getColor(i) {
+      if (!this.dark) {
+        // For Light scheme, get color in straight order
+        return d3[this.scheme][Math.max(3, this.overlap)][i + Math.max(0, 3 - this.overlap)];
+      } else {
+        // For dark scheme, need to take color in reverse order
+        let csize = Math.max(3, this.overlap);
+        let cidx = csize - 1 - (i + Math.max(0, 3 - this.overlap));
+        return d3[this.scheme][csize][cidx];
+      }
+    },
     render() {
       log.info('Rendering d3 ...');
+
+      let comp = this;
 
       // Clear whole content of container
       while (this.$refs.container.lastChild) {
@@ -48,29 +75,15 @@ export default {
 
       let data = this.wdata.data;
 
+      // TODO Update to use properties
       let step = 23;
-      let scheme = 'schemeOranges';
+      //let scheme = 'schemeOranges';
       let overlap = 7;
 
       let margin = { top: 30, right: 10, bottom: 0, left: 10 };
 
       let width = this.$refs.container.clientWidth - 40;
       let height = data.length * (step + 1) + margin.top + margin.bottom;
-
-      // TODO dark / light switch
-
-      // For Light scheme
-      //let color = i => d3[scheme][Math.max(3, overlap)][i + Math.max(0, 3 - overlap)];
-
-      // For dark scheme, need to take color in reverse order
-
-      let color = i => {
-        let csize = Math.max(3, overlap);
-        let cidx = csize - 1 - (i + Math.max(0, 3 - overlap));
-        //console.log(`Color for ${i}: overlap: ${overlap}: size: ${csize}, idx: ${cidx}`);
-        //return d3[scheme][Math.max(3, overlap)][i + Math.max(0, 3 - overlap)];
-        return d3[scheme][csize][cidx];
-      };
 
       let x = d3
         .scaleUtc()
@@ -135,6 +148,7 @@ export default {
         .attr('x', 4)
         .attr('y', (d, i) => (i + 0.5) * (step + 1) + margin.top)
         .attr('dy', '0.35em')
+        .attr('fill', 'currentColor')
         .text(d => d.key);
 
       const rule = svg
@@ -162,7 +176,7 @@ export default {
           context.translate(0, (i + 1) * step);
           context.beginPath();
           area(d.values);
-          context.fillStyle = color(i);
+          context.fillStyle = comp.getColor(i); // color(i);
           context.fill();
           context.restore();
         }

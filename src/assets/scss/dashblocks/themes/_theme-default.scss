@@ -1,5 +1,12 @@
-@import "../dbdashboard";
+@import '../dbdashboard';
 
-.db-dashboard {
-  @include db-dashboard
+.db-dashboard.db-theme-default {
+  @include db-dashboard;
+}
+
+.db-dashboard.db-theme-default.db-dark {
+  color: white;
+  & .db-widget-container {
+    border: 1px solid material-color('grey', '800');
+  }
 }

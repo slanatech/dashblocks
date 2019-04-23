@@ -7,6 +7,7 @@
       :wspec="widget"
       :wdata="getWidgetData(widget)"
       :style="widget.style"
+      :dark="dark"
       @db-event="handleDbEvent"
     >
     </db-widget-container>
@@ -23,7 +24,11 @@ export default {
   },
   props: {
     dbspec: Object,
-    dbdata: Object
+    dbdata: Object,
+    dark: {
+      type: Boolean,
+      default: false
+    }
   },
   watch: {
     /*
