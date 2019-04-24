@@ -5,8 +5,12 @@
 }
 
 .db-dashboard.db-theme-default.db-dark {
-  color: white;
+  color: $light;
   & .db-widget-container {
     border: 1px solid material-color('grey', '800');
+  }
+
+  & .dygraph-axis-label {
+    color: $light;
   }
 }

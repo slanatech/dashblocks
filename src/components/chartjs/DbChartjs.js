@@ -1,5 +1,5 @@
 import Chart from 'chart.js';
-import Colors from '../dbcolors';
+import dbColors from '../dbcolors';
 
 // TODO Issue - does not resize properly in Firefox
 
@@ -76,9 +76,11 @@ export function generateChart(chartId, chartType) {
       // TEMP TODO Optimize
       // Set default colors if not specified
       let dsidx = 0;
+      // TODO Dark ?
+      let defaultColors = dbColors.getColors(false);
       for (let ds of this.chartdata.datasets) {
         if (!('backgroundColor' in ds)) {
-          ds.backgroundColor = Colors.defaultColors[dsidx];
+          ds.backgroundColor = defaultColors[dsidx];
         }
         dsidx++;
       }

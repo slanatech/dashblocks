@@ -1,9 +1,10 @@
 <template>
   <div class="dbc-dygraphs-dth">
-    <db-dygraphs ref="dygraph" :_updated="_updated" :data="data" :options="graphOptions"> </db-dygraphs>
+    <db-dygraphs ref="dygraph" :_updated="_updated" :data="data" :options="graphOptions" :dark="dark"> </db-dygraphs>
   </div>
 </template>
 <script>
+// NOTE: WORK IN PROGRESS
 //import merge from "deepmerge";
 import DygraphInteraction from 'dygraphs';
 import DbDygraphs from './DbDygraphs';
@@ -23,6 +24,10 @@ export default {
     },
     options: {
       type: Object
+    },
+    dark: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

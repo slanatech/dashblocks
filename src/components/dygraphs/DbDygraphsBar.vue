@@ -1,5 +1,12 @@
 <template>
-  <db-dygraphs ref="dygraph" :_updated="_updated" :data="data" :options="graphOptions" @db-event="handleDbEvent">
+  <db-dygraphs
+    ref="dygraph"
+    :_updated="_updated"
+    :data="data"
+    :options="graphOptions"
+    :dark="dark"
+    @db-event="handleDbEvent"
+  >
   </db-dygraphs>
 </template>
 <script>
@@ -24,6 +31,10 @@ export default {
     },
     options: {
       type: Object
+    },
+    dark: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

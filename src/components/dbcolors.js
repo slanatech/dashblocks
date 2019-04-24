@@ -1,7 +1,36 @@
-// Colors definition
+// DashBlocks Colors
 
+// Base color sets from d3
+import * as d3ScaleChromatic from 'd3-scale-chromatic';
+//import log from './log';
+
+// TODO More D3 colors
+// TODO Color definitions based on base set - normal, warning, alarm ...
+// TODO Gradients
+// TODO Light / Dark themes support
+// TODO Make it a class, export instance, add methods like getColors that would return colors for current theme
+
+// See http://tools.medialab.sciences-po.fr/iwanthue/index.php
+// https://medium.com/@Elijah_Meeks/color-advice-for-data-visualization-with-d3-js-33b5adc41c90
+
+/* DashBlocks Colors */
+class DbColors {
+  constructor() {
+    // TODO //
+  }
+
+  getColors(dark) {
+    return dark ? d3ScaleChromatic.schemePastel1 : d3ScaleChromatic.schemeSet1;
+  }
+}
+
+let dbColors = new DbColors();
+export default dbColors;
+
+//const defaultColors = d3ScaleChromatic.schemeDark2;
 // D3 - https://github.com/d3/d3-scale-chromatic/blob/master/src/categorical/category10.js
-const defaultColors = [
+/*
+const defaultColorsA = [
   '#1f77b4', // muted blue
   '#ff7f0e', // safety orange
   '#2ca02c', // cooked asparagus green
@@ -13,31 +42,4 @@ const defaultColors = [
   '#bcbd22', // curry yellow-green
   '#17becf' // blue-teal
 ];
-
-const defaultColorsMaterial = [
-  '#0288D1', // light-blue darken-2
-  '#F57C00', // orange darken-2
-  '#689F38', // light-green darken-2
-  '#D32F2F', // red darken-2
-  '#7B1FA2', // purple darken-2
-  '#5D4037', // brown darken-2
-  '#F06292', // pink lighten-2
-  '#455A64', // blue-grey darken-2
-  '#FBC02D', // yellow darken-2
-  '#0288D1' // light-blue darken-2
-];
-
-// TODO More D3 colors
-
-// TODO Color definitions based on base set - normal, warning, alarm ...
-
-// TODO Gradients
-
-// TODO Light / Dark themes support
-
-// TODO Make it a class, export instance, add methods like getColors that would return colors for current theme
-
-export default {
-  defaultColors,
-  defaultColorsMaterial
-};
+*/

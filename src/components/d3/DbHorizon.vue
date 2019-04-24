@@ -15,7 +15,7 @@ export default {
     },
     scheme: {
       type: String,
-      default: 'schemeGreens'
+      default: 'schemePuBuGn'
     }
   },
   data() {
