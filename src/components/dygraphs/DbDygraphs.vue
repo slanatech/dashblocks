@@ -79,7 +79,21 @@ export default {
   methods: {
     render() {
       //console.log("Rendering Dygraph ...");
-      this.graph = new Dygraphs(this.$refs.container, this.data, this.graphOptions);
+      this.graph = new Dygraphs(this.$refs.container, this.getData(), this.graphOptions);
+    },
+    getData() {
+      // pre-process data if needed
+      if (!Array.isArray(this.data)) {
+        return this.data;
+      }
+      if (this.data.length <= 0) {
+        return this.data;
+      }
+      if (Array.isArray(this.data[0])) {
+        return this.data;
+      }
+      let idx = 0;
+      return this.data.map(x => [idx++, x]);
     },
     scheduleUpdate(optionsUpdate) {
       this.needUpdate = true;
@@ -95,7 +109,7 @@ export default {
       }
       this.needUpdate = false;
       log.info('DbDygraphs: updating data ...');
-      this.graph.updateOptions({ file: this.data });
+      this.graph.updateOptions({ file: this.getData() });
       if (this.needOptionsUpdate) {
         this.graph.updateOptions(this.graphOptions);
         this.needOptionsUpdate = false;

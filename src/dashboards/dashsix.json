@@ -30,6 +30,38 @@
           "legend": "always"
         }
       }
+    },
+    {
+      "id": "3",
+      "name": "w3",
+      "type": "DbDygraphsSparkLine",
+      "cspan": 4,
+      "properties": {
+        "smoothing": 0.5
+      }
+    },
+    {
+      "id": "4",
+      "name": "w4",
+      "type": "DbDygraphsSparkLine",
+      "cspan": 4,
+      "properties": {
+        "options": {
+          "colors": ["gray"],
+          "strokeWidth": 0,
+          "fillGraph": true,
+          "fillAlpha": 0.2
+        }
+      }
+    },
+    {
+      "id": "5",
+      "name": "w5",
+      "type": "DbDygraphsSparkLine",
+      "cspan": 4,
+      "properties": {
+        "smoothing": 0.5
+      }
     }
   ]
 }

@@ -12,6 +12,7 @@ import DbPlotly from './plotly/DbPlotly';
 import DbPlotlyLine from './plotly/DbPlotlyLine';
 import DbDygraphsBar from './dygraphs/DbDygraphsBar';
 import DbDygraphsLine from './dygraphs/DbDygraphsLine';
+import DbDygraphsSparkLine from './dygraphs/DbDygraphsSparkLine';
 import DbDygraphsDateTimeHistogram from './dygraphs/DbDygraphsDateTimeHistogram';
 
 export default {
@@ -29,5 +30,6 @@ export default {
   DbPlotlyLine,
   DbDygraphsBar,
   DbDygraphsLine,
+  DbDygraphsSparkLine,
   DbDygraphsDateTimeHistogram
 };

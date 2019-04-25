@@ -47,6 +47,18 @@ export default {
                 legend: 'always'
               }
             }
+          },
+          {
+            id: '3',
+            name: 'w3',
+            type: 'DbDygraphsLine',
+            cspan: 16,
+            height: 250,
+            properties: {
+              options: {
+                stackedGraph: false
+              }
+            }
           }
         ]
       },
@@ -65,6 +77,7 @@ export default {
 
       let dthData = [];
       let dthData2 = [];
+      let dthData3 = [];
       let sTS = Date.now() - 100 * 3600 * 1000;
 
       for (let i = 0; i < 100; i++) {
@@ -73,6 +86,7 @@ export default {
         let r = Math.random();
         dthData.push([d, r, r + 0.5]);
         dthData2.push([d, Math.random(), Math.random()]);
+        dthData3.push(Math.random());
       }
 
       this.dbdata.setWData('w1', {
@@ -83,6 +97,10 @@ export default {
         data: dthData2
       });
 
+      this.dbdata.setWData('w3', {
+        data: dthData3
+      });
+
       let cntr = 101;
 
       setInterval(
@@ -90,8 +108,10 @@ export default {
           // Update first half of the values in the first chart
           for (let i = 0; i < 50; i++) {
             comp.dbdata['w1'].data[i][1] = Math.random();
+            comp.dbdata['w3'].data[i] = Math.random();
           }
           comp.dbdata.touch('w1');
+          comp.dbdata.touch('w3');
 
           // Add new value to second chart
           let x = new Date(sTS + cntr * 3600 * 1000);
