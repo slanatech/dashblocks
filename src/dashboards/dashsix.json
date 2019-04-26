@@ -19,10 +19,27 @@
       "id": "2",
       "name": "w2",
       "type": "DbDygraphsLine",
-      "cspan": 16,
-      "height": 250,
+      "cspan": 8,
+      "height": 300,
       "properties": {
         "options": {
+          "stackedGraph": false,
+          "title": "Random value Chart",
+          "ylabel": "Probability",
+          "labels" : ["Date","AAA","BBB"],
+          "legend": "always"
+        }
+      }
+    },
+    {
+      "id": "2",
+      "name": "w6",
+      "type": "DbDygraphsLine",
+      "cspan": 8,
+      "height": 300,
+      "properties": {
+        "options": {
+          "showRangeSelector": true,
           "stackedGraph": false,
           "title": "Random value Chart",
           "ylabel": "Probability",

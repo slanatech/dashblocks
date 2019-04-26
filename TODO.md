@@ -19,9 +19,63 @@ Consider making template parameterized, i.e. pass axis name (see plotly props)
 
 ##  Dashboards 
 
-- [ ] Overlay - dashboard on top of video, picture, etc - on a boarder
+- [ ] Overlay - dashboard on top of video, picture, etc - on a boarder & bottom
+- [ ] Dynamically generated dashboard based on data. I.e. multiple pie charts. 
+
+##  Test Data
+
+- [ ] Datasets, aggregation lib - use in sample dashboards
+- [ ] Time-series sample dataset - i.e. sales over time 
+
+##  Documentation 
+
+- [ ] Self-documenting components - jsdoc ?
+
+##  Pages  
+
+- [ ] github pages with doc - vuepress
+- [ ] Demo project - separate repo
 
 
 ## Issues
 
+
+## Style, Themes and Colors
+
+- [ ] more color sets 
+- [ ] Dark mode support across all widgets
+- [ ] Examples of custom theme
+
+
+## Dashboard widget 
+- [ ] Title
+
  
+## Chart Types / Components
+
+### D3
+- [ ] Horizon: show values
+- [ ] Sankey
+- [ ] Sunburst  
+- [ ] Showcase dashboard  
+
+### Chart.js
+- [ ] Showcase dashboard
+
+### Plotly 
+- [ ] Showcase dashboard
+
+### Dygraphs
+- [ ] Showcase dashboard
+
+### Dashblocks
+- [ ] Number 
+- [ ] Percent
+- [ ] Multiple values - rows with sparklines
+- [ ] Showcase dashboard
+
+### Other
+- [ ] Table - goodtable ?
+- [ ] Markdown 
+- [ ] Showcase dashboard
+

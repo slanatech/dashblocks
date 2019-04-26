@@ -59,6 +59,10 @@ export default {
         data: dthData2
       });
 
+      this.dbdata.setWData('w6', {
+        data: dthData2
+      });
+
       this.dbdata.setWData('w3', {
         //data: [[1,1],[2,2],[3,3],[4,3],[5,2]]
         data: dthDataS
