@@ -6,6 +6,7 @@ import DashFour from './views/DashFour.vue';
 import DashFive from './views/DashFive.vue';
 import DashSix from './views/DashSix.vue';
 import DygraphsDynamic from './views/DygraphsDynamic';
+import ChartJsShowcase from './views/ChartJsShowcase';
 
 Vue.use(Router);
 
@@ -50,6 +51,11 @@ export default new Router({
       path: '/dygraphsdynamic',
       name: 'Dygraphs - Dynamic Updates',
       component: DygraphsDynamic
+    },
+    {
+      path: '/chartjs',
+      name: 'Chart.js Showcase',
+      component: ChartJsShowcase
     }
   ]
 });

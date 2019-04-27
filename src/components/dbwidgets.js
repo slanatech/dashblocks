@@ -3,7 +3,17 @@ import WidgetOne from './WidgetOne.vue';
 import WidgetTwo from './WidgetTwo.vue';
 import WidgetBar from './WidgetBar.vue';
 import DbHorizon from './d3/DbHorizon';
-import { DbChartjsBar, DbChartjsLine } from './chartjs/DbChartjs';
+import {
+  DbChartjsBar,
+  DbChartjsHorizontalBar,
+  DbChartjsDoughnut,
+  DbChartjsLine,
+  DbChartjsPie,
+  DbChartjsPolarArea,
+  DbChartjsRadar,
+  DbChartjsBubble,
+  DbChartjsScatter
+} from './chartjs/DbChartjs';
 import DbNumber from './db/DbNumber';
 import DbEasyPie from './db/DbEasyPie';
 import DbTrendLine from './db/DbTrendLine';
@@ -21,7 +31,14 @@ export default {
   WidgetBar,
   DbHorizon,
   DbChartjsBar,
+  DbChartjsHorizontalBar,
+  DbChartjsDoughnut,
   DbChartjsLine,
+  DbChartjsPie,
+  DbChartjsPolarArea,
+  DbChartjsRadar,
+  DbChartjsBubble,
+  DbChartjsScatter,
   DbNumber,
   DbEasyPie,
   DbTrendLine,

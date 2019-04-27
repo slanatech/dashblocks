@@ -1,0 +1,90 @@
+{
+  "layout": {
+    "type": "grid"
+  },
+  "widgets": [
+    {
+      "id": "1",
+      "name": "w1",
+      "type": "DbChartjsLine",
+      "cspan": 4,
+      "height": 250,
+      "properties": {
+        "options": {
+          "maintainAspectRatio": false
+        }
+      }
+    },
+    {
+      "id": "2",
+      "name": "w2",
+      "type": "DbChartjsBar",
+      "cspan": 4,
+      "height": 250
+    },
+    {
+      "id": "3",
+      "name": "w3",
+      "type": "DbChartjsHorizontalBar",
+      "cspan": 4
+    },
+    {
+      "id": "4",
+      "name": "w4",
+      "type": "DbChartjsPie",
+      "cspan": 4
+    },
+    {
+      "id": "5",
+      "name": "w5",
+      "type": "DbChartjsDoughnut",
+      "cspan": 4,
+      "height": 250
+    },
+    {
+      "id": "6",
+      "name": "w6",
+      "type": "DbChartjsPolarArea",
+      "cspan": 4,
+      "height": 250
+    },
+    {
+      "id": "7",
+      "name": "w7",
+      "type": "DbChartjsRadar",
+      "cspan": 4,
+      "height": 250
+    },
+    {
+      "id": "8",
+      "name": "w8",
+      "type": "DbChartjsBar",
+      "cspan": 4,
+      "height": 250
+    },
+    {
+      "id": "9",
+      "name": "w9",
+      "type": "DbChartjsBubble",
+      "cspan": 8,
+      "height": 300
+    },
+    {
+      "id": "10",
+      "name": "w10",
+      "type": "DbChartjsScatter",
+      "cspan": 8,
+      "height": 300,
+      "properties": {
+        "options": {
+          "scales": {
+            "xAxes": [{
+              "type": "linear",
+              "position": "bottom"
+            }]
+          }
+        }
+      }
+    }
+  ]
+}

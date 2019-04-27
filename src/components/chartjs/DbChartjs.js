@@ -1,5 +1,6 @@
 import Chart from 'chart.js';
 import dbColors from '../dbcolors';
+import log from '../log';
 
 // TODO Issue - does not resize properly in Firefox
 
@@ -26,6 +27,10 @@ export function generateChart(chartId, chartType) {
     },
 
     props: {
+      _updated: {
+        type: Number,
+        default: 0
+      },
       chartId: {
         default: chartId,
         type: String
@@ -51,16 +56,23 @@ export function generateChart(chartId, chartType) {
           return [];
         }
       },
-      wspec: Object,
-      wdata: Object
+      dark: {
+        default: false,
+        type: Boolean
+      },
+      data: Object,
+      options: {
+        type: Object
+      }
     },
 
     data() {
       return {
         _chart: null,
         _plugins: this.plugins,
-        chartdata: null,
-        options: {
+        // TEMP TODO Computed
+        defaultColors: dbColors.getColors(this.dark),
+        optionsB: {
           responsive: true,
           maintainAspectRatio: false,
           onClick: (evt, item) => {
@@ -70,24 +82,101 @@ export function generateChart(chartId, chartType) {
       };
     },
 
-    mounted() {
-      // TODO Reconsider - how not to make a copy of data ?
-      this.chartdata = JSON.parse(JSON.stringify(this.wdata));
-      // TEMP TODO Optimize
-      // Set default colors if not specified
-      let dsidx = 0;
-      // TODO Dark ?
-      let defaultColors = dbColors.getColors(false);
-      for (let ds of this.chartdata.datasets) {
-        if (!('backgroundColor' in ds)) {
-          ds.backgroundColor = defaultColors[dsidx];
-        }
-        dsidx++;
+    computed: {
+      // Augment passed options with defaults
+      graphOptions: function() {
+        return Object.assign({}, this.defaultOptions, this.options);
+      },
+      defaultOptions: function() {
+        return {
+          responsive: true,
+          maintainAspectRatio: false,
+          onClick: (evt, item) => {
+            this.onClick(evt, item);
+          }
+        };
       }
-      this.renderChart(this.chartdata, this.options);
+    },
+
+    watch: {
+      _updated: function() {
+        log.debug('DbChartjs: _updated prop changed');
+        this.scheduleUpdate(false);
+      },
+      data: {
+        handler() {
+          log.debug('DbChartjs: data prop changed');
+          this.scheduleUpdate(false);
+        },
+        deep: true
+      },
+      dark: function() {
+        this.scheduleUpdate(true);
+      }
+    },
+
+    mounted() {
+      this.preProcess();
+
+      this.renderChart(this.data, this.graphOptions);
     },
 
     methods: {
+      scheduleUpdate() {
+        // TODO //
+        log.debug('DbChartjs: schedule update');
+        this.$nextTick(() => {
+          if (this.$data._chart) this.$data._chart.update();
+        });
+      },
+
+      preProcess() {
+        // Set default colors if not specified
+        // For chart.js, need to set colors in datasets  - see
+        // https://github.com/chartjs/Chart.js/issues/815
+        if (!this.data || !('datasets' in this.data) || !Array.isArray(this.data.datasets)) {
+          return;
+        }
+
+        for (let idx = 0; idx < this.data.datasets.length; idx++) {
+          //this.setColorProp(this.data.datasets[idx], 'backgroundColor', idx);
+          //this.setColorProp(this.data.datasets[idx], 'borderColor', idx);
+          this.setupDataset(this.data.datasets[idx], idx);
+        }
+      },
+      setColorProp(ds, prop, idx) {
+        if (!(prop in ds)) {
+          if (['pie-chart', 'doughnut-chart', 'polar-chart'].includes(this.chartId)) {
+            // TODO If there are multiple datasets in pie / doughnut, use different set for each one
+            // TODO Dark - border ?
+            if (prop !== 'borderColor') {
+              ds[prop] = this.defaultColors; // Set array
+            }
+          } else {
+            let cc = dbColors.hex2RGBA(this.defaultColors[idx], 0.5);
+            ds[prop] = cc; // this.defaultColors[idx];
+          }
+        }
+      },
+      // Set params and colors for dataset, if not explicitly specified
+      setupDataset(ds, idx) {
+        if ('borderColor' in ds || 'backgroundColor' in ds) {
+          return; // Colors set in dataset
+        }
+        // TODO Dark
+        // Depending on chart type
+        if (['pie-chart', 'doughnut-chart', 'polar-chart'].includes(this.chartId)) {
+          ds.borderWidth = ds.borderWidth || 3;
+          //ds.borderColor =  "rgba(0, 0, 0, 0.2)";
+          //ds.segmentStrokeWidth = 20;
+          //ds.segmentStrokeColor = "rgba(255, 255, 255, 0)";
+          ds.backgroundColor = this.defaultColors.map(x => dbColors.hex2RGBA(x, 0.5));
+        } else {
+          ds.borderWidth = ds.borderWidth || 1;
+          ds.borderColor = this.defaultColors[idx];
+          ds.backgroundColor = dbColors.hex2RGBA(this.defaultColors[idx], 0.5);
+        }
+      },
       addPlugin(plugin) {
         this.$data._plugins.push(plugin);
       },

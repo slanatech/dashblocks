@@ -1,5 +1,5 @@
 <template>
-  <div><db-dashboard v-if="ready" :dbspec="dbspec" :dbdata="dbdata"> </db-dashboard></div>
+  <div><db-dashboard v-if="ready" :dbspec="dbspec" :dbdata="dbdata" :dark="isDark"> </db-dashboard></div>
 </template>
 
 <script>
@@ -65,6 +65,11 @@ export default {
       testData: new TestData(),
       ready: false
     };
+  },
+  computed: {
+    isDark() {
+      return this.$store.state.switchDark;
+    }
   },
   mounted() {
     // Initialize dashboard data

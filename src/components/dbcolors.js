@@ -2,6 +2,7 @@
 
 // Base color sets from d3
 import * as d3ScaleChromatic from 'd3-scale-chromatic';
+import * as d3Color from 'd3-color';
 //import log from './log';
 
 // TODO More D3 colors
@@ -20,7 +21,14 @@ class DbColors {
   }
 
   getColors(dark) {
-    return dark ? d3ScaleChromatic.schemePastel1 : d3ScaleChromatic.schemeSet1;
+    //return dark ? d3ScaleChromatic.schemePastel1 : d3ScaleChromatic.schemeSet1;
+    return dark ? d3ScaleChromatic.schemePastel1 : d3ScaleChromatic.schemeCategory10;
+  }
+
+  hex2RGBA(hex, opacity) {
+    let c = d3Color.color(hex);
+    c.opacity = opacity;
+    return c + '';
   }
 }
 

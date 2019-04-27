@@ -118,9 +118,9 @@ export default {
         {
           icon: 'bubble_chart',
           iconClass: 'teal lighten-2 white--text',
-          title: 'Dashboard Two',
-          subtitle: 'Another try',
-          href: '/about'
+          title: 'Chart.JS',
+          subtitle: 'showcase',
+          href: '/chartjs'
         },
         {
           icon: 'insert_chart',
