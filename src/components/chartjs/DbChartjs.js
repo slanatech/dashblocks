@@ -93,6 +93,50 @@ export function generateChart(chartId, chartType) {
           maintainAspectRatio: false,
           onClick: (evt, item) => {
             this.onClick(evt, item);
+          },
+          legendSSS: {
+            labels: {
+              fontColor: '#FFF'
+            }
+          },
+          scaleRad: {
+            // TODO Only set up for specific chart types !
+            angleLines: {
+              lineWidth: 1,
+              color: 'rgba(255, 255, 255, 0.5)'
+            },
+            gridLines: {
+              color: 'rgba(255, 255, 255, 0.5)',
+              zeroLineColor: '#FFF'
+            },
+            ticks: {
+              showLabelBackdrop: false, // TODO Have it false for Dark !
+              fontColor: this.getAxesColor()
+            }
+          },
+          scalesSSS: {
+            // TODO Only set up for specific chart types !
+            xAxes: [
+              {
+                gridLines: {
+                  color: 'rgba(255, 255, 255, 0.1)',
+                  zeroLineColor: '#EEE'
+                },
+                ticks: {
+                  fontColor: this.getAxesColor()
+                }
+              }
+            ],
+            yAxes: [
+              {
+                gridLines: {
+                  color: 'rgba(255, 255, 255, 0.2)'
+                },
+                ticks: {
+                  fontColor: this.getAxesColor()
+                }
+              }
+            ]
           }
         };
       }
@@ -123,7 +167,7 @@ export function generateChart(chartId, chartType) {
 
     methods: {
       scheduleUpdate() {
-        // TODO //
+        // TODO Support updating options
         log.debug('DbChartjs: schedule update');
         this.$nextTick(() => {
           if (this.$data._chart) this.$data._chart.update();
@@ -176,6 +220,9 @@ export function generateChart(chartId, chartType) {
           ds.borderColor = this.defaultColors[idx];
           ds.backgroundColor = dbColors.hex2RGBA(this.defaultColors[idx], 0.5);
         }
+      },
+      getAxesColor() {
+        return this.dark ? '#FFF' : '#666';
       },
       addPlugin(plugin) {
         this.$data._plugins.push(plugin);

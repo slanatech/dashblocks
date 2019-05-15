@@ -1,5 +1,8 @@
 @import '../dbdashboard';
 
+
+// TODO How to override variables for dark scheme ?
+
 .db-dashboard.db-theme-default {
   @include db-dashboard;
 }
