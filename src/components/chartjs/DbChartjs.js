@@ -1,5 +1,6 @@
 import Chart from 'chart.js';
 import dbColors from '../dbcolors';
+import dbUtils from '../dbutils';
 import log from '../log';
 
 // TODO Issue - does not resize properly in Firefox
@@ -70,6 +71,7 @@ export function generateChart(chartId, chartType) {
       return {
         _chart: null,
         _plugins: this.plugins,
+        chartOptions: {},
         // TEMP TODO Computed
         defaultColors: dbColors.getColors(this.dark),
         optionsB: {
@@ -93,7 +95,8 @@ export function generateChart(chartId, chartType) {
           maintainAspectRatio: false,
           onClick: (evt, item) => {
             this.onClick(evt, item);
-          },
+          }
+          /*
           legendSSS: {
             labels: {
               fontColor: '#FFF'
@@ -138,6 +141,7 @@ export function generateChart(chartId, chartType) {
               }
             ]
           }
+           */
         };
       }
     },
@@ -161,8 +165,7 @@ export function generateChart(chartId, chartType) {
 
     mounted() {
       this.preProcess();
-
-      this.renderChart(this.data, this.graphOptions);
+      this.renderChart(this.data, this.chartOptions);
     },
 
     methods: {
@@ -170,11 +173,19 @@ export function generateChart(chartId, chartType) {
         // TODO Support updating options
         log.debug('DbChartjs: schedule update');
         this.$nextTick(() => {
-          if (this.$data._chart) this.$data._chart.update();
+          this.preProcess();
+          if (this.$data._chart) {
+            this.$data._chart.options = this.chartOptions;
+            this.$data._chart.update();
+          }
         });
       },
 
       preProcess() {
+        // Process options
+        this.setupOptions();
+
+        // Process datasets
         // Set default colors if not specified
         // For chart.js, need to set colors in datasets  - see
         // https://github.com/chartjs/Chart.js/issues/815
@@ -183,31 +194,16 @@ export function generateChart(chartId, chartType) {
         }
 
         for (let idx = 0; idx < this.data.datasets.length; idx++) {
-          //this.setColorProp(this.data.datasets[idx], 'backgroundColor', idx);
-          //this.setColorProp(this.data.datasets[idx], 'borderColor', idx);
           this.setupDataset(this.data.datasets[idx], idx);
         }
       },
-      setColorProp(ds, prop, idx) {
-        if (!(prop in ds)) {
-          if (['pie-chart', 'doughnut-chart', 'polar-chart'].includes(this.chartId)) {
-            // TODO If there are multiple datasets in pie / doughnut, use different set for each one
-            // TODO Dark - border ?
-            if (prop !== 'borderColor') {
-              ds[prop] = this.defaultColors; // Set array
-            }
-          } else {
-            let cc = dbColors.hex2RGBA(this.defaultColors[idx], 0.5);
-            ds[prop] = cc; // this.defaultColors[idx];
-          }
-        }
-      },
+
       // Set params and colors for dataset, if not explicitly specified
       setupDataset(ds, idx) {
         if ('borderColor' in ds || 'backgroundColor' in ds) {
           return; // Colors set in dataset
         }
-        // TODO Dark
+        // TODO Dark/Light switch - make sure colors are updated when we set them, not passed in options
         // Depending on chart type
         if (['pie-chart', 'doughnut-chart', 'polar-chart'].includes(this.chartId)) {
           ds.borderWidth = ds.borderWidth || 3;
@@ -221,6 +217,38 @@ export function generateChart(chartId, chartType) {
           ds.backgroundColor = dbColors.hex2RGBA(this.defaultColors[idx], 0.5);
         }
       },
+
+      setupOptions() {
+        let opts = Object.assign({}, this.defaultOptions, this.options);
+        let isRadial = ['radar-chart', 'polar-chart'].includes(this.chartId);
+
+        // Process Axes
+        if (isRadial) {
+          dbUtils.ensureProperty(opts, 'scale', {});
+          dbUtils.ensureProperty(opts.scale, 'angleLines', {});
+          dbUtils.ensureProperty(opts.scale.angleLines, 'lineWidth', 1);
+          dbUtils.ensureProperty(
+            opts.scale.angleLines,
+            'color',
+            this.dark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'
+          );
+
+          dbUtils.ensureProperty(opts.scale, 'gridLines', {});
+          dbUtils.ensureProperty(
+            opts.scale.gridLines,
+            'color',
+            this.dark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'
+          );
+
+          dbUtils.ensureProperty(opts.scale, 'ticks', {});
+          dbUtils.ensureProperty(opts.scale.ticks, 'showLabelBackdrop', !this.dark);
+          dbUtils.ensureProperty(opts.scale.ticks, 'fontColor', this.getAxesColor());
+        } else {
+          // TODO setup
+        }
+        this.chartOptions = opts;
+      },
+
       getAxesColor() {
         return this.dark ? '#FFF' : '#666';
       },
