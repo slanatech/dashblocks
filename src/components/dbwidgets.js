@@ -20,6 +20,7 @@ import DbTrendLine from './db/DbTrendLine';
 import DbTrendBar from './db/DbTrendBar';
 import DbPlotly from './plotly/DbPlotly';
 import DbPlotlyLine from './plotly/DbPlotlyLine';
+import DbPlotlyPie from './plotly/DbPlotlyPie';
 import DbDygraphsBar from './dygraphs/DbDygraphsBar';
 import DbDygraphsLine from './dygraphs/DbDygraphsLine';
 import DbDygraphsSparkLine from './dygraphs/DbDygraphsSparkLine';
@@ -45,6 +46,7 @@ export default {
   DbTrendBar,
   DbPlotly,
   DbPlotlyLine,
+  DbPlotlyPie,
   DbDygraphsBar,
   DbDygraphsLine,
   DbDygraphsSparkLine,

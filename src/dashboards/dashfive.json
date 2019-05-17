@@ -114,8 +114,8 @@
       "id": "8",
       "name": "w8",
       "type": "DbPlotlyLine",
-      "cspan": 16,
-      "rspan": 2,
+      "cspan": 10,
+      "height": 300,
       "properties": {
         "layout": {
           "template": "plotly_dark",
@@ -134,7 +134,35 @@
           }
         }
       }
+    },
+    {
+      "id": "9",
+      "name": "w9",
+      "type": "DbPlotlyPie",
+      "cspan": 6,
+      "height": 300,
+      "properties": {
+        "layout": {
+          "legend": {
+            "orientation": "h"
+          },
+          "paper_bgcolor":"rgba(0,0,0,0)",
+          "plot_bgcolor":"rgba(0,0,0,0)",
+          "modebar": {
+            "bgcolor": "rgba(0,0,0,0)",
+            "color": "rgba(0,0,0,0.5)"
+          },
+          "margin": {
+            "l": 60,
+            "r": 40,
+            "b": 40,
+            "t": 40,
+            "pad": 5
+          }
+        }
+      }
     }
+
 
   ]
 }

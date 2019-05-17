@@ -81,6 +81,14 @@ export default {
           }
         ]
       });
+      this.dbdata.setWData('w9', {
+        data: [
+          {
+            values: [19, 26, 55],
+            labels: ['A', 'B', 'C']
+          }
+        ]
+      });
 
       let dthData = [];
       let sTS = Date.now() - 100 * 3600 * 1000;
