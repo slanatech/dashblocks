@@ -1,6 +1,18 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div id="app">
     <v-app id="inspire" :dark="switchDark">
+      <v-navigation-drawer fixed v-model="drawerRight" right clipped app width="400">
+        <code-viewer></code-viewer>
+      </v-navigation-drawer>
+
+      <v-toolbar dense fixed app clipped-right>
+        <v-toolbar-side-icon @click.stop="drawer = !drawer;"></v-toolbar-side-icon>
+        <v-toolbar-title>{{ currentRouteName }}</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <div><v-switch v-model="switchDark" label="Dark" hide-details></v-switch></div>
+        <v-btn icon @click.stop="drawerRight = !drawerRight;"> <v-icon>code</v-icon> </v-btn>
+      </v-toolbar>
+
       <v-navigation-drawer fixed v-model="drawer" :mini-variant.sync="mini" app>
         <v-toolbar flat class="transparent">
           <v-list class="pa-0">
@@ -64,14 +76,6 @@
         </v-list>
       </v-navigation-drawer>
 
-      <v-toolbar dense fixed app>
-        <v-toolbar-side-icon @click.stop="drawer = !drawer;"></v-toolbar-side-icon>
-        <v-toolbar-title>{{ currentRouteName }}</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-btn icon> <v-icon>more_vert</v-icon> </v-btn>
-        <div><v-switch v-model="switchDark" label="Dark" hide-details></v-switch></div>
-      </v-toolbar>
-
       <v-content>
         <v-container fluid fill-height>
           <v-layout>
@@ -86,11 +90,14 @@
 </template>
 
 <script>
+import CodeViewer from './views/CodeViewer';
 export default {
+  components: { CodeViewer },
   data() {
     return {
       drawer: true,
       mini: true,
+      drawerRight: false,
       items2: [
         {
           icon: 'bar_chart',

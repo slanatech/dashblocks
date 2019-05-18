@@ -24,6 +24,7 @@ export default {
     };
   },
   created() {
+    this.$store.dispatch('setDashboardSpec', { spec: JSON.stringify(this.dbspec, null, '\t') });
     // Start initialization
     this.initialize();
   },

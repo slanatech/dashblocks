@@ -5,12 +5,20 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    switchDark: false
+    switchDark: false,
+    dashboardSpec: ''
   },
   mutations: {
     setSwitchDark(state, value) {
       state.switchDark = value;
+    },
+    SET_DB_SPEC(state, { spec }) {
+      state.dashboardSpec = spec;
     }
   },
-  actions: {}
+  actions: {
+    setDashboardSpec({ commit }, { spec }) {
+      commit('SET_DB_SPEC', { spec: spec });
+    }
+  }
 });
