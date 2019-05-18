@@ -2,6 +2,7 @@ import Chart from 'chart.js';
 import dbColors from '../dbcolors';
 import dbUtils from '../dbutils';
 import log from '../log';
+import merge from 'deepmerge';
 
 // TODO Issue - does not resize properly in Firefox
 
@@ -95,53 +96,12 @@ export function generateChart(chartId, chartType) {
           maintainAspectRatio: false,
           onClick: (evt, item) => {
             this.onClick(evt, item);
-          }
-          /*
-          legendSSS: {
+          },
+          legend: {
             labels: {
-              fontColor: '#FFF'
+              fontColor: this.dark ? '#FFF' : '#000' // TODO Get from dbcolors
             }
-          },
-          scaleRad: {
-            // TODO Only set up for specific chart types !
-            angleLines: {
-              lineWidth: 1,
-              color: 'rgba(255, 255, 255, 0.5)'
-            },
-            gridLines: {
-              color: 'rgba(255, 255, 255, 0.5)',
-              zeroLineColor: '#FFF'
-            },
-            ticks: {
-              showLabelBackdrop: false, // TODO Have it false for Dark !
-              fontColor: this.getAxesColor()
-            }
-          },
-          scalesSSS: {
-            // TODO Only set up for specific chart types !
-            xAxes: [
-              {
-                gridLines: {
-                  color: 'rgba(255, 255, 255, 0.1)',
-                  zeroLineColor: '#EEE'
-                },
-                ticks: {
-                  fontColor: this.getAxesColor()
-                }
-              }
-            ],
-            yAxes: [
-              {
-                gridLines: {
-                  color: 'rgba(255, 255, 255, 0.2)'
-                },
-                ticks: {
-                  fontColor: this.getAxesColor()
-                }
-              }
-            ]
           }
-           */
         };
       }
     },
@@ -158,35 +118,44 @@ export function generateChart(chartId, chartType) {
         },
         deep: true
       },
+      options: {
+        handler() {
+          log.debug('DbChartjs: options prop changed');
+          this.scheduleUpdate(true);
+        },
+        deep: true
+      },
       dark: function() {
+        log.debug('DbChartjs: dark prop changed');
         this.scheduleUpdate(true);
       }
     },
 
     mounted() {
-      this.preProcess();
+      this.preProcess(true);
       this.renderChart(this.data, this.chartOptions);
     },
 
     methods: {
-      scheduleUpdate() {
-        // TODO Support updating options
+      scheduleUpdate(updateOptions) {
         log.debug('DbChartjs: schedule update');
         this.$nextTick(() => {
-          this.preProcess();
+          this.preProcess(updateOptions);
           if (this.$data._chart) {
-            this.$data._chart.options = this.chartOptions;
+            if (updateOptions) {
+              this.$data._chart.options = this.chartOptions;
+            }
             this.$data._chart.update();
           }
         });
       },
 
-      preProcess() {
-        // Process options
-        this.setupOptions();
+      preProcess(updateOptions) {
+        if (updateOptions) {
+          this.setupOptions();
+        }
 
-        // Process datasets
-        // Set default colors if not specified
+        // Process datasets: set default colors if not specified
         // For chart.js, need to set colors in datasets  - see
         // https://github.com/chartjs/Chart.js/issues/815
         if (!this.data || !('datasets' in this.data) || !Array.isArray(this.data.datasets)) {
@@ -206,8 +175,9 @@ export function generateChart(chartId, chartType) {
         // TODO Dark/Light switch - make sure colors are updated when we set them, not passed in options
         // Depending on chart type
         if (['pie-chart', 'doughnut-chart', 'polar-chart'].includes(this.chartId)) {
-          ds.borderWidth = ds.borderWidth || 3;
-          //ds.borderColor =  "rgba(0, 0, 0, 0.2)";
+          ds.borderWidth = 1; //ds.borderWidth || 0;
+          //ds.borderColor = "rgba(0, 0, 0, 0.2)";
+          ds.borderColor = 'rgba(255, 255, 255, 0.2)';
           //ds.segmentStrokeWidth = 20;
           //ds.segmentStrokeColor = "rgba(255, 255, 255, 0)";
           ds.backgroundColor = this.defaultColors.map(x => dbColors.hex2RGBA(x, 0.5));
@@ -219,35 +189,86 @@ export function generateChart(chartId, chartType) {
       },
 
       setupOptions() {
-        let opts = Object.assign({}, this.defaultOptions, this.options);
-        let isRadial = ['radar-chart', 'polar-chart'].includes(this.chartId);
+        log.debug('DbChartjs: setting up options');
 
-        // Process Axes
-        if (isRadial) {
-          dbUtils.ensureProperty(opts, 'scale', {});
-          dbUtils.ensureProperty(opts.scale, 'angleLines', {});
-          dbUtils.ensureProperty(opts.scale.angleLines, 'lineWidth', 1);
-          dbUtils.ensureProperty(
-            opts.scale.angleLines,
-            'color',
-            this.dark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'
-          );
+        let opts = null;
 
-          dbUtils.ensureProperty(opts.scale, 'gridLines', {});
-          dbUtils.ensureProperty(
-            opts.scale.gridLines,
-            'color',
-            this.dark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'
-          );
-
-          dbUtils.ensureProperty(opts.scale, 'ticks', {});
-          dbUtils.ensureProperty(opts.scale.ticks, 'showLabelBackdrop', !this.dark);
-          dbUtils.ensureProperty(opts.scale.ticks, 'fontColor', this.getAxesColor());
+        if (['radar-chart', 'polar-chart'].includes(this.chartId)) {
+          opts = merge.all([
+            this.defaultOptions,
+            {
+              scale: {
+                angleLines: {
+                  lineWidth: 1,
+                  color: this.dark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'
+                },
+                gridLines: {
+                  color: this.dark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)',
+                  zeroLineColor: '#FFF'
+                },
+                ticks: {
+                  showLabelBackdrop: !this.dark,
+                  fontColor: this.getAxesColor()
+                }
+              }
+            },
+            this.options || {} // What's passed in options will override defaults
+          ]);
+        } else if (['pie-chart', 'doughnut-chart'].includes(this.chartId)) {
+          opts = merge(this.defaultOptions, this.options || {});
         } else {
-          // TODO setup
+          opts = merge(this.defaultOptions, this.options || {});
+          dbUtils.ensureProperty(opts, 'scales', {});
+          dbUtils.ensureProperty(opts.scales, 'xAxes', [{}]);
+          opts.scales.xAxes = opts.scales.xAxes.map(x => this.setupScale(x));
+          dbUtils.ensureProperty(opts.scales, 'yAxes', [{}]);
+          opts.scales.yAxes = opts.scales.yAxes.map(x => this.setupScale(x));
         }
+
         this.chartOptions = opts;
       },
+
+      setupScale(axe) {
+        return merge(
+          {
+            gridLines: {
+              color: this.dark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)',
+              zeroLineColor: '#EEE'
+            },
+            ticks: {
+              fontColor: this.getAxesColor()
+            }
+          },
+          axe
+        );
+      },
+
+      /*
+      scalesSSS: {
+        // TODO Only set up for specific chart types !
+        xAxes: [
+          {
+            gridLines: {
+              color: 'rgba(255, 255, 255, 0.1)',
+              zeroLineColor: '#EEE'
+            },
+            ticks: {
+              fontColor: this.getAxesColor()
+            }
+          }
+        ],
+        yAxes: [
+          {
+            gridLines: {
+              color: 'rgba(255, 255, 255, 0.2)'
+            },
+            ticks: {
+              fontColor: this.getAxesColor()
+            }
+          }
+        ]
+      }
+       */
 
       getAxesColor() {
         return this.dark ? '#FFF' : '#666';
@@ -301,3 +322,30 @@ export default {
   DbChartjsBubble,
   DbChartjsScatter
 };
+
+// Process Axes
+/*
+if (isRadial) {
+  dbUtils.ensureProperty(opts, 'scale', {});
+  dbUtils.ensureProperty(opts.scale, 'angleLines', {});
+  dbUtils.ensureProperty(opts.scale.angleLines, 'lineWidth', 1);
+  dbUtils.ensureProperty(
+    opts.scale.angleLines,
+    'color',
+    this.dark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'
+  );
+
+  dbUtils.ensureProperty(opts.scale, 'gridLines', {});
+  dbUtils.ensureProperty(
+    opts.scale.gridLines,
+    'color',
+    this.dark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'
+  );
+
+  dbUtils.ensureProperty(opts.scale, 'ticks', {});
+  dbUtils.ensureProperty(opts.scale.ticks, 'showLabelBackdrop', !this.dark);
+  dbUtils.ensureProperty(opts.scale.ticks, 'fontColor', this.getAxesColor());
+} else {
+  // TODO setup
+}
+*/
