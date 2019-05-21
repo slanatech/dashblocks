@@ -1,5 +1,8 @@
 <template>
-  <div :style="{ position: 'absolute', height: '100%', width: '100%' }"></div>
+  <div :style="{ position: 'absolute', height: '100%', width: '100%' }">
+    <v-btn fixed dark fab top right color="pink" @click="handleUpdateSpec"> <v-icon>refresh</v-icon> </v-btn>
+    <div ref="editor" :style="{ position: 'absolute', height: '100%', width: '100%' }"></div>
+  </div>
 </template>
 <script>
 let ace = require('brace');
@@ -17,11 +20,24 @@ export default {
       editor: null,
       editorUpdating: false,
       mapping: null,
-      currentHitIdx: null
+      currentHitIdx: null,
+      saving: false
     };
   },
-  watch: {},
-  computed: {},
+  watch: {
+    dbSpecText: function(val) {
+      if (!this.saving) {
+        this.editor.setValue(val, 1);
+      } else {
+        this.saving = false;
+      }
+    }
+  },
+  computed: {
+    dbSpecText() {
+      return this.$store.state.dashboardSpec;
+    }
+  },
   mounted: function() {
     let vm = this;
     let lang = this.lang || 'json';
@@ -32,7 +48,7 @@ export default {
     require('brace/theme/chrome');
     require('brace/ext/searchbox');
 
-    let editor = (vm.editor = ace.edit(this.$el));
+    let editor = (vm.editor = ace.edit(this.$refs.editor));
     vm.editorUpdating = false;
 
     this.$emit('init', editor);
@@ -46,7 +62,14 @@ export default {
     editor.setTheme('ace/theme/' + theme);
     editor.$blockScrolling = Infinity;
 
-    editor.setValue(this.$store.state.dashboardSpec, 1);
+    editor.setValue(this.dbSpecText, 1);
+    this.editor = editor;
+  },
+  methods: {
+    handleUpdateSpec: function() {
+      this.saving = true;
+      this.$store.dispatch('setDashboardSpec', { spec: this.editor.getValue() });
+    }
   }
 };
 </script>

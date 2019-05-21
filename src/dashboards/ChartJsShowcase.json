@@ -11,7 +11,12 @@
       "height": 250,
       "properties": {
         "options": {
-          "maintainAspectRatio": false
+          "maintainAspectRatio": false,
+          "legend": {
+            "labels": {
+              "fontColor": "red"
+            }
+          }
         }
       }
     },
