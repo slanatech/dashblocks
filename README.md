@@ -3,7 +3,7 @@
 ## Declarative Interactive Dashboards
 
 
-> Note: under active development
+> under active development
 
 
 ## License
