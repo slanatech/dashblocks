@@ -167,6 +167,37 @@ export function generateChart(chartId, chartType) {
         }
       },
 
+      updateData() {
+        // TODO Consider just using merge here, then detect if new datasets were added, if so - pre-process them
+
+        if (!this.data) {
+          return;
+        }
+
+        if ('labels' in this.data) {
+          this.chartData.labels = this.data.labels;
+        }
+
+        if (!('datasets' in this.data) || !Array.isArray(this.data.datasets)) {
+          return;
+        }
+
+        for (let idx = 0; idx < this.data.datasets.length; idx++) {
+          let ds = this.data.datasets[idx];
+          if (idx < this.chartData.datasets.length) {
+            this.chartData.datasets[idx].data = ds.data;
+            this.chartData.datasets[idx].label = ds.label;
+          } else {
+            // Adding new dataset dynamically - setup it once
+            this.chartData.datasets.push({
+              data: ds.data,
+              label: ds.label
+            });
+            this.setupDataset(this.chartData.datasets[idx], idx);
+          }
+        }
+      },
+
       // Set params and colors for dataset, if not explicitly specified
       setupDataset(ds, idx) {
         if ('borderColor' in ds || 'backgroundColor' in ds) {
@@ -216,6 +247,10 @@ export function generateChart(chartId, chartType) {
           ]);
         } else if (['pie-chart', 'doughnut-chart'].includes(this.chartId)) {
           opts = merge(this.defaultOptions, this.options || {});
+          // Enables custom label generation
+          //utils.ensureProperty(opts, 'legend', {});
+          //utils.ensureProperty(opts.legend, 'labels', {});
+          //utils.ensureProperty(opts.legend.labels, 'generateLabels', this.generatePieLabels);
         } else {
           opts = merge(this.defaultOptions, this.options || {});
           dbUtils.ensureProperty(opts, 'scales', {});
@@ -280,6 +315,39 @@ export function generateChart(chartId, chartType) {
         if (this.$data._chart) {
           return this.$data._chart.generateLegend();
         }
+      },
+      // TODO Custom labels generation - consider if needs to be used
+      generateLabels: function(chart) {
+        var data = chart.data;
+        if (data.labels.length && data.datasets.length) {
+          return data.labels.map(function(label, i) {
+            var meta = chart.getDatasetMeta(0);
+            var ds = data.datasets[0];
+            var arc = meta.data[i];
+            var custom = (arc && arc.custom) || {};
+            var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+            var arcOpts = chart.options.elements.arc;
+            var fill = custom.backgroundColor
+              ? custom.backgroundColor
+              : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+            var stroke = custom.borderColor
+              ? custom.borderColor
+              : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+            var bw = custom.borderWidth
+              ? custom.borderWidth
+              : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+            return {
+              // And finally :
+              text: ds.data[i] + ' ' + label,
+              fillStyle: fill,
+              strokeStyle: stroke,
+              lineWidth: bw,
+              hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+              index: i
+            };
+          });
+        }
+        return [];
       },
       renderChart(data, options) {
         this.$nextTick(() => {
