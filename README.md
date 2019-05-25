@@ -2,13 +2,22 @@
 
 > Note: under active development
 
+![](https://img.shields.io/badge/vue-2.x-brightgreen.svg)
+
 ## Declarative Interactive Dashboards
+
+[DEMO](https://slanatech.github.io/dashblocks)
 
 Dashblocks enables easily creating complex interactive dashboards simply by declaring dashboard structure as json or javascript object.
 
-Dashblocks uses popular charting libraries to render various kinds of chars: d3, Chart.js, Dygraphs, Plotly.js ...
+Dashblocks uses popular charting libraries to render chars: d3, Chart.js, Dygraphs, Plotly.js ...
 
-For example, this dashboard specification: 
+For example, this dashboard:
+
+![dashboard](screenshots/dashboard.png?raw=true)
+
+
+created by this dashboard declaration: 
 ```javascript
 {
         layout: {
@@ -60,14 +69,9 @@ For example, this dashboard specification:
             height: 250
           }
         ]
-      }
+}
 ```
-   
-Creates this dashboard:
-
-![dashboard](screenshots/dashboard.png?raw=true)
-
-
+  
 
 ## License
  
