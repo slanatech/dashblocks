@@ -1,13 +1,10 @@
 <template>
-  <div class="home"><DashTwo /></div>
+  <div class="home"></div>
 </template>
 
 <script>
-import DashTwo from '@/components/DashTwo.vue';
 export default {
   name: 'home',
-  components: {
-    DashTwo
-  }
+  components: {}
 };
 </script>

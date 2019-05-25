@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import DbDashboard from '@/components/DbDashboard.vue';
-import DbData from '../dbdata';
+import DbDashboard from '@/components/dashboard/DbDashboard.vue';
+import DbData from '../components/dbdata';
 import dashFourSpec from '../dashboards/dashfive.json';
 
 export default {

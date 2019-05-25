@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import DbLayouts from './dblayouts';
-import log from './log';
+import DbLayouts from '../dblayouts';
+import log from '../log';
 
 export default {
   name: 'DbDashboard',

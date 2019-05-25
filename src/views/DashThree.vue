@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import DbDashboard from '@/components/DbDashboard.vue';
-import DbData from '../dbdata';
+import DbDashboard from '@/components/dashboard/DbDashboard.vue';
+import DbData from '../components/dbdata';
 import * as d3 from 'd3';
 import dashThreeSpec from '../dashboards/dashthree.json';
 
