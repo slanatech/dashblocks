@@ -1,4 +1,6 @@
 import Chart from 'chart.js';
+// eslint-disable-next-line
+import ChartjsPluginLabels from 'chartjs-plugin-labels';
 import dbColors from '../dbcolors';
 import dbUtils from '../dbutils';
 import log from '../log';
@@ -73,23 +75,13 @@ export function generateChart(chartId, chartType) {
         _chart: null,
         _plugins: this.plugins,
         chartOptions: {},
+        chartData: {},
         // TEMP TODO Computed
-        defaultColors: dbColors.getColors(this.dark),
-        optionsB: {
-          responsive: true,
-          maintainAspectRatio: false,
-          onClick: (evt, item) => {
-            this.onClick(evt, item);
-          }
-        }
+        defaultColors: dbColors.getColors(this.dark)
       };
     },
 
     computed: {
-      // Augment passed options with defaults
-      graphOptions: function() {
-        return Object.assign({}, this.defaultOptions, this.options);
-      },
       defaultOptions: function() {
         return {
           responsive: true,
@@ -103,43 +95,53 @@ export function generateChart(chartId, chartType) {
             }
           }
         };
+      },
+      defaultColors: function() {
+        return dbColors.getColors(this.dark);
       }
     },
 
     watch: {
       _updated: function() {
         log.debug('DbChartjs: _updated prop changed');
-        this.scheduleUpdate(false);
+        this.scheduleUpdate(true, false);
       },
       data: {
         handler() {
           log.debug('DbChartjs: data prop changed');
-          this.scheduleUpdate(false);
+          this.scheduleUpdate(true, false);
         },
         deep: true
       },
       options: {
         handler() {
           log.debug('DbChartjs: options prop changed');
-          this.scheduleUpdate(true);
+          this.scheduleUpdate(false, true);
         },
         deep: true
       },
       dark: function() {
         log.debug('DbChartjs: dark prop changed');
-        this.scheduleUpdate(true);
+        this.scheduleUpdate(false, true);
       }
     },
 
     mounted() {
+      // Make a full copy of data:
+      // Chartjs augments datasets with _meta data, which may lead to watch loop
+      // as well as, updating properties passed to component is not a good idea
+      this.chartData = JSON.parse(JSON.stringify(this.data));
       this.preProcess(true);
-      this.renderChart(this.data, this.chartOptions);
+      this.renderChart(this.chartData, this.chartOptions);
     },
 
     methods: {
-      scheduleUpdate(updateOptions) {
+      scheduleUpdate(updateData, updateOptions) {
         log.debug('DbChartjs: schedule update');
         this.$nextTick(() => {
+          if (updateData) {
+            this.updateData();
+          }
           this.preProcess(updateOptions);
           if (this.$data._chart) {
             if (updateOptions) {
@@ -158,18 +160,16 @@ export function generateChart(chartId, chartType) {
         // Process datasets: set default colors if not specified
         // For chart.js, need to set colors in datasets  - see
         // https://github.com/chartjs/Chart.js/issues/815
-        if (!this.data || !('datasets' in this.data) || !Array.isArray(this.data.datasets)) {
+        if (!this.chartData || !('datasets' in this.chartData) || !Array.isArray(this.chartData.datasets)) {
           return;
         }
 
-        for (let idx = 0; idx < this.data.datasets.length; idx++) {
-          this.setupDataset(this.data.datasets[idx], idx);
+        for (let idx = 0; idx < this.chartData.datasets.length; idx++) {
+          this.setupDataset(this.chartData.datasets[idx], idx);
         }
       },
 
       updateData() {
-        // TODO Consider just using merge here, then detect if new datasets were added, if so - pre-process them
-
         if (!this.data) {
           return;
         }
@@ -179,20 +179,22 @@ export function generateChart(chartId, chartType) {
         }
 
         if (!('datasets' in this.data) || !Array.isArray(this.data.datasets)) {
+          this.chartData.datasets = [];
           return;
         }
 
         for (let idx = 0; idx < this.data.datasets.length; idx++) {
           let ds = this.data.datasets[idx];
           if (idx < this.chartData.datasets.length) {
-            this.chartData.datasets[idx].data = ds.data;
-            this.chartData.datasets[idx].label = ds.label;
+            // Preserve _meta which is generated and maintained by chartjs
+            /// Merge in new data / props passed via data prop
+            let merged = Object.assign({ _meta: this.chartData.datasets[idx]._meta }, merge({}, ds));
+            this.chartData.datasets[idx] = merged;
+            //this.chartData.datasets[idx].data = merged; //merge([],ds.data); // ???
+            //this.chartData.datasets[idx].label = ds.label;
           } else {
             // Adding new dataset dynamically - setup it once
-            this.chartData.datasets.push({
-              data: ds.data,
-              label: ds.label
-            });
+            this.chartData.datasets.push(merge({}, ds));
             this.setupDataset(this.chartData.datasets[idx], idx);
           }
         }
@@ -203,7 +205,8 @@ export function generateChart(chartId, chartType) {
         if ('borderColor' in ds || 'backgroundColor' in ds) {
           return; // Colors set in dataset
         }
-        // TODO Dark/Light switch - make sure colors are updated when we set them, not passed in options
+        // TODO Dark/Light switch - make sure colors are updated when we set them, and not updated when passed in options
+        // TODO Use meta key: _db
         // Depending on chart type
         if (['pie-chart', 'doughnut-chart', 'polar-chart'].includes(this.chartId)) {
           ds.borderWidth = 1; //ds.borderWidth || 0;

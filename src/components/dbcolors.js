@@ -14,6 +14,8 @@ import * as d3Color from 'd3-color';
 // See http://tools.medialab.sciences-po.fr/iwanthue/index.php
 // https://medium.com/@Elijah_Meeks/color-advice-for-data-visualization-with-d3-js-33b5adc41c90
 
+//const d3Colors = [ '#1f77b4','#ff7f0e','#2ca02c','#d62728','#9467bd','#8c564b','#e377c2','#7f7f7f','#bcbd22','#17becf'];
+
 const grafanaColors = [
   '#7EB26D', // 0: pale green
   '#EAB839', // 1: mustard

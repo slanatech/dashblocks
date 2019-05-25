@@ -7,7 +7,7 @@ import DbDashboard from '@/components/DbDashboard.vue';
 import DbData from '../dbdata';
 
 export default {
-  name: 'DashboardFour',
+  name: 'DashblocksShowcase',
   components: {
     DbDashboard
   },
@@ -36,11 +36,82 @@ export default {
             }
           },
           {
+            id: '8',
+            name: 'w8',
+            type: 'DbEasyPie',
+            cspan: 2,
+            height: 120,
+            properties: { barColor: '#2ca02c', lineWidth: 8 }
+          },
+          {
+            id: '9',
+            name: 'w9',
+            type: 'DbEasyPie',
+            cspan: 2,
+            height: 120,
+            properties: { barColor: '#2ca02c', lineWidth: 8 }
+          },
+          {
+            id: '10',
+            name: 'w10',
+            type: 'DbEasyPie',
+            cspan: 2,
+            height: 120,
+            properties: { barColor: '#ff7f0e', lineWidth: 8 }
+          },
+          {
+            id: '11',
+            name: 'w11',
+            type: 'DbEasyPie',
+            cspan: 2,
+            height: 120,
+            properties: { barColor: '#ff7f0e', lineWidth: 8 }
+          },
+          {
+            id: '12',
+            name: 'w12',
+            type: 'DbEasyPie',
+            cspan: 2,
+            height: 120,
+            properties: { barColor: '#2ca02c', lineWidth: 8 }
+          },
+          {
+            id: '13',
+            name: 'w13',
+            type: 'DbEasyPie',
+            cspan: 2,
+            height: 120,
+            properties: { barColor: '#2ca02c', lineWidth: 8 }
+          },
+          {
+            id: '14',
+            name: 'w14',
+            type: 'DbEasyPie',
+            cspan: 2,
+            height: 120,
+            properties: { barColor: '#d62728', lineWidth: 8 }
+          },
+          {
+            id: '15',
+            name: 'w15',
+            type: 'DbEasyPie',
+            cspan: 2,
+            height: 120,
+            properties: { barColor: '#d62728', lineWidth: 8 }
+          },
+          {
             id: '3',
             name: 'w3',
             type: 'DbChartjsPie',
             cspan: 4,
             height: 250
+          },
+          {
+            id: '5',
+            name: 'w5',
+            type: 'DbChartjsBubble',
+            cspan: 8,
+            rspan: 2
           },
           {
             id: '4',
@@ -132,12 +203,52 @@ export default {
         }
       });
 
+      let bubbleData = {
+        labels: ['January', 'February', 'March', 'April'],
+        datasets: [
+          {
+            label: 'Data One',
+            data: []
+          },
+          {
+            label: 'Data Two',
+            data: []
+          }
+        ]
+      };
+
+      for (let i = 0; i < 40; i++) {
+        bubbleData.datasets[0].data.push({
+          x: this.getRand(200),
+          y: this.getRand(50),
+          r: this.getRand(30)
+        });
+        bubbleData.datasets[1].data.push({
+          x: this.getRand(200),
+          y: this.getRand(100),
+          r: this.getRand(50)
+        });
+      }
+
+      this.dbdata.setWData('w5', {
+        data: bubbleData
+      });
+
       this.dbdata.setWData('w6', {
         data: JSON.parse(JSON.stringify(dataTwoSeries))
       });
       this.dbdata.setWData('w7', {
         data: JSON.parse(JSON.stringify(dataTwoSeries))
       });
+
+      this.dbdata.setWData('w8', { value: 15 });
+      this.dbdata.setWData('w9', { value: 35 });
+      this.dbdata.setWData('w10', { value: 52 });
+      this.dbdata.setWData('w11', { value: 64 });
+      this.dbdata.setWData('w12', { value: 10 });
+      this.dbdata.setWData('w13', { value: 25 });
+      this.dbdata.setWData('w14', { value: 72 });
+      this.dbdata.setWData('w15', { value: 84 });
     },
     getRand: function(max) {
       return Math.floor(Math.random() * Math.floor(max));

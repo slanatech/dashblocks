@@ -1,23 +1,22 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
 import DashThree from './views/DashThree.vue';
 import DashFour from './views/DashFour.vue';
 import DashFive from './views/DashFive.vue';
 import DashSix from './views/DashSix.vue';
 import DygraphsDynamic from './views/DygraphsDynamic';
 import ChartJsShowcase from './views/ChartJsShowcase';
+import DashblocksShowcase from './views/DashblocksShowcase';
 
 Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
   base: '/dashblocks/', //process.env.BASE_URL,
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Home
+      name: 'Dashblocks Dashboard',
+      component: DashblocksShowcase
     },
     {
       path: '/about',

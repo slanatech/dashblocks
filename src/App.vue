@@ -118,8 +118,8 @@ export default {
         {
           icon: 'bar_chart',
           iconClass: 'teal lighten-2 white--text',
-          title: 'Dashboard One',
-          subtitle: 'Take one ...',
+          title: 'Dashblocks',
+          subtitle: 'Dashboard Showcase',
           href: '/'
         },
         {

@@ -45,6 +45,7 @@
     "dygraphs": "^2.1.0",
     "vue-chartjs":"^3.4.2",
     "chart.js":"^2.8.0",
+    "chartjs-plugin-labels": "^1.1.0",
     "d3": "^5.9.2",
     "plotly.js-dist": "^1.47.3",
     "ramda": "^0.26.1",

@@ -117,11 +117,14 @@ export default {
       this.dbdata.setWData('w9', { data: d9 });
       this.dbdata.setWData('w10', { data: d10 });
 
+      //let bw = 1;
       // Dynamic updates
       setInterval(
         function(comp) {
           let v = comp.dbdata['w2'].data.datasets[0].data[0];
           comp.dbdata['w2'].data.datasets[0].data[0] = v + 10;
+          // We can add dynamically any prop to dataset entry ...
+          //comp.dbdata['w2'].data.datasets[0].borderWidth = bw++;
           comp.dbdata.touch('w2');
         },
         1000,
