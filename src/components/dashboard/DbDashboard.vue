@@ -36,6 +36,14 @@ export default {
   computed: {
     // TBD
   },
+  watch: {
+    dbspec: function() {
+      log.info('Dashboard specification updated');
+      this.$nextTick(() => {
+        window.dispatchEvent(new Event('resize'));
+      });
+    }
+  },
   created() {
     log.info('Dashboard created');
     // Set log level based on props

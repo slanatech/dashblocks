@@ -75,9 +75,7 @@ export function generateChart(chartId, chartType) {
         _chart: null,
         _plugins: this.plugins,
         chartOptions: {},
-        chartData: {},
-        // TEMP TODO Computed
-        defaultColors: dbColors.getColors(this.dark)
+        chartData: {}
       };
     },
 

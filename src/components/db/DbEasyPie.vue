@@ -66,17 +66,9 @@ export default {
   mounted() {
     window.addEventListener('resize', this.handleResize);
     this.render();
-    /*
-    const addWatcher = propName => {
-      this.$watch(propName, val => {
-        this.pieChart.options[propName] = val;
-        this.update(this.percent);
-      });
-    };
-    ['barColor', 'trackColor', 'scaleColor', 'scaleLength', 'lineCap', 'lineWidth', 'size', 'rotate'].forEach(
-      addWatcher
-    );
-    */
+  },
+  beforeDestroy: function() {
+    window.removeEventListener('resize', this.handleResize);
   },
   methods: {
     update(val) {
@@ -89,7 +81,7 @@ export default {
     initSize() {
       if (this.size != 0) {
         this.pieSize = this.size;
-      } else {
+      } else if (this.$refs.chart) {
         let cH = this.$refs.chart.clientHeight;
         let cW = this.$refs.chart.clientWidth;
         this.pieSize = cH > cW ? cW : cH;
@@ -101,7 +93,9 @@ export default {
       });
     },
     render() {
-      //const self = this;
+      if (!this.$refs.chart) {
+        return;
+      }
       this.initSize();
       if (this.pieChart) {
         // Remove canvas element
