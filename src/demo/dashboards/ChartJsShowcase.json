@@ -4,8 +4,7 @@
   },
   "widgets": [
     {
-      "id": "1",
-      "name": "w1",
+      "id": "w1",
       "type": "DbChartjsLine",
       "cspan": 4,
       "height": 250,
@@ -21,62 +20,53 @@
       }
     },
     {
-      "id": "2",
-      "name": "w2",
+      "id": "w2",
       "type": "DbChartjsBar",
       "cspan": 4,
       "height": 250
     },
     {
-      "id": "3",
-      "name": "w3",
+      "id": "w3",
       "type": "DbChartjsHorizontalBar",
       "cspan": 4
     },
     {
-      "id": "4",
-      "name": "w4",
+      "id": "w4",
       "type": "DbChartjsPie",
       "cspan": 4
     },
     {
-      "id": "5",
-      "name": "w5",
+      "id": "w5",
       "type": "DbChartjsDoughnut",
       "cspan": 4,
       "height": 250
     },
     {
-      "id": "6",
-      "name": "w6",
+      "id": "w6",
       "type": "DbChartjsPolarArea",
       "cspan": 4,
       "height": 250
     },
     {
-      "id": "7",
-      "name": "w7",
+      "id": "w7",
       "type": "DbChartjsRadar",
       "cspan": 4,
       "height": 250
     },
     {
-      "id": "8",
-      "name": "w8",
+      "id": "w8",
       "type": "DbChartjsBar",
       "cspan": 4,
       "height": 250
     },
     {
-      "id": "9",
-      "name": "w9",
+      "id": "w9",
       "type": "DbChartjsBubble",
       "cspan": 8,
       "height": 300
     },
     {
-      "id": "10",
-      "name": "w10",
+      "id": "w10",
       "type": "DbChartjsScatter",
       "cspan": 8,
       "height": 300,

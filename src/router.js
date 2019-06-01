@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import DashThree from './views/DashThree.vue';
-import DashFour from './views/DashFour.vue';
-import DashFive from './views/DashFive.vue';
-import DashSix from './views/DashSix.vue';
-import DygraphsDynamic from './views/DygraphsDynamic';
-import ChartJsShowcase from './views/ChartJsShowcase';
-import DashblocksShowcase from './views/DashblocksShowcase';
+import DashThree from './demo/views/DashThree.vue';
+import DashFour from './demo/views/DashFour.vue';
+import DashFive from './demo/views/DashFive.vue';
+import DashSix from './demo/views/DashSix.vue';
+import DygraphsDynamic from './demo/views/DygraphsDynamic';
+import ChartJsShowcase from './demo/views/ChartJsShowcase';
+import DashblocksShowcase from './demo/views/DashblocksShowcase';
 
 Vue.use(Router);
 
@@ -24,7 +24,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      component: () => import(/* webpackChunkName: "about" */ './demo/views/About.vue')
     },
     {
       path: '/dashthree',

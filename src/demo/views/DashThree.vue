@@ -7,15 +7,17 @@
 
 <script>
 import DbDashboard from '@/components/dashboard/DbDashboard.vue';
-import DbData from '../components/dbdata';
+import DbData from '@/components/dbdata';
 import * as d3 from 'd3';
-import dashThreeSpec from '../dashboards/dashthree.json';
+import dashThreeSpec from '@/demo/dashboards/dashthree.json';
+import { demodashboard } from '@/demo/mixins/demodashboard';
 
 export default {
   name: 'home',
   components: {
     DbDashboard
   },
+  mixins: [demodashboard],
   data() {
     return {
       dbDashboardComponent: null, // Lazy rendering, we'll need to wait for data to be loaded
@@ -27,19 +29,6 @@ export default {
     this.$store.dispatch('setDashboardSpec', { spec: JSON.stringify(this.dbspec, null, '\t') });
     // Start initialization
     this.initialize();
-  },
-  computed: {
-    isDark() {
-      return this.$store.state.switchDark;
-    },
-    dbSpecText() {
-      return this.$store.state.dashboardSpec;
-    }
-  },
-  watch: {
-    dbSpecText: function(val) {
-      this.dbspec = JSON.parse(val);
-    }
   },
   methods: {
     initialize: async function() {

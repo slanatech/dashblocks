@@ -20,55 +20,50 @@ For example, this dashboard:
 created by this dashboard declaration: 
 ```javascript
 {
-        layout: {
-          type: 'grid'
-        },
-        widgets: [
-          {
-            id: '2',
-            name: 'w2',
-            type: 'DbDygraphsBar',
-            cspan: 16,
-            height: 250,
-            properties: {
-              options: {
-                stackedGraph: true,
-                title: 'Traffic over time',
-                ylabel: 'Requests, Mil.',
-                labels: ['Date', 'Success', 'Error'],
-                legend: 'always'
-              }
-            }
-          },
-          {
-            id: '3',
-            name: 'w3',
-            type: 'DbChartjsPie',
-            cspan: 4,
-            height: 250
-          },
-          {
-            id: '4',
-            name: 'w4',
-            type: 'DbChartjsPie',
-            cspan: 4,
-            height: 250
-          },
-          {
-            id: '6',
-            name: 'w6',
-            type: 'DbChartjsHorizontalBar',
-            cspan: 4,
-            height: 250
-          },
-          {
-            id: '7',
-            name: 'w7',
-            type: 'DbChartjsBar',
-            cspan: 4,
-            height: 250
-          }
-        ]
+  layout: {
+    type: 'grid'
+  },
+  widgets: [
+    {
+      id: 'w2',
+      type: 'DbDygraphsBar',
+      cspan: 16,
+      height: 250,
+      properties: {
+        options: {
+          stackedGraph: true,
+          title: 'Traffic over time',
+          ylabel: 'Requests, Mil.',
+          labels: ['Date', 'Success', 'Error'],
+          legend: 'always'
+        }
+      }
+    },
+    {
+      id: 'w3',
+      type: 'DbChartjsPie',
+      cspan: 4,
+      height: 250
+    },
+    {
+      id: 'w4',
+      type: 'DbChartjsPie',
+      cspan: 4,
+      height: 250
+    },
+    {
+      id: 'w6',
+      type: 'DbChartjsHorizontalBar',
+      cspan: 4,
+      height: 250
+    },
+    {
+      id: 'w7',
+      type: 'DbChartjsBar',
+      cspan: 4,
+      height: 250
+    }
+  ]
 }
 ```
 

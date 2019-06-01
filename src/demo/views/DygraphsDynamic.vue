@@ -4,14 +4,16 @@
 
 <script>
 import DbDashboard from '@/components/dashboard/DbDashboard.vue';
-import DbData from '../components/dbdata';
-import TestData from '../data/testdata';
+import DbData from '@/components/dbdata';
+import TestData from '@/demo/data/testdata';
+import { demodashboard } from '@/demo/mixins/demodashboard';
 
 export default {
   name: 'DygraphsDynamic',
   components: {
     DbDashboard
   },
+  mixins: [demodashboard],
   data() {
     return {
       dbdata: new DbData(),
@@ -21,8 +23,7 @@ export default {
         },
         widgets: [
           {
-            id: '1',
-            name: 'w1',
+            id: 'w1',
             type: 'DbDygraphsBar',
             cspan: 16,
             height: 250,
@@ -33,8 +34,7 @@ export default {
             }
           },
           {
-            id: '2',
-            name: 'w2',
+            id: 'w2',
             type: 'DbDygraphsLine',
             cspan: 16,
             height: 250,
@@ -49,8 +49,7 @@ export default {
             }
           },
           {
-            id: '3',
-            name: 'w3',
+            id: 'w3',
             type: 'DbDygraphsLine',
             cspan: 16,
             height: 250,
@@ -66,12 +65,8 @@ export default {
       ready: false
     };
   },
-  computed: {
-    isDark() {
-      return this.$store.state.switchDark;
-    }
-  },
   mounted() {
+    this.$store.dispatch('setDashboardSpec', { spec: JSON.stringify(this.dbspec, null, '\t') });
     // Initialize dashboard data
     this.initialize();
     this.ready = true;

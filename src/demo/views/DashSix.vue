@@ -4,15 +4,17 @@
 
 <script>
 import DbDashboard from '@/components/dashboard/DbDashboard.vue';
-import DbData from '../components/dbdata';
-import dashSixSpec from '../dashboards/dashsix.json';
-import TestData from '../data/testdata';
+import DbData from '@/components/dbdata';
+import dashSixSpec from '@/demo/dashboards/dashsix.json';
+import TestData from '@/demo/data/testdata';
+import { demodashboard } from '@/demo/mixins/demodashboard';
 
 export default {
   name: 'DashSix',
   components: {
     DbDashboard
   },
+  mixins: [demodashboard],
   data() {
     return {
       dbdata: new DbData(),
@@ -20,19 +22,6 @@ export default {
       testData: new TestData(),
       ready: false
     };
-  },
-  computed: {
-    isDark() {
-      return this.$store.state.switchDark;
-    },
-    dbSpecText() {
-      return this.$store.state.dashboardSpec;
-    }
-  },
-  watch: {
-    dbSpecText: function(val) {
-      this.dbspec = JSON.parse(val);
-    }
   },
   mounted() {
     this.$store.dispatch('setDashboardSpec', { spec: JSON.stringify(this.dbspec, null, '\t') });

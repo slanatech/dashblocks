@@ -4,13 +4,15 @@
 
 <script>
 import DbDashboard from '@/components/dashboard/DbDashboard.vue';
-import DbData from '../components/dbdata';
+import DbData from '@/components/dbdata';
+import { demodashboard } from '@/demo/mixins/demodashboard';
 
 export default {
   name: 'DashboardFour',
   components: {
     DbDashboard
   },
+  mixins: [demodashboard],
   data() {
     return {
       dbdata: new DbData(),
@@ -20,8 +22,7 @@ export default {
         },
         widgets: [
           {
-            id: '2',
-            name: 'w2',
+            id: 'w2',
             type: 'DbDygraphsBar',
             cspan: 16,
             height: 250,
@@ -36,29 +37,25 @@ export default {
             }
           },
           {
-            id: '3',
-            name: 'w3',
+            id: 'w3',
             type: 'DbChartjsPie',
             cspan: 4,
             height: 250
           },
           {
-            id: '4',
-            name: 'w4',
+            id: 'w4',
             type: 'DbChartjsPie',
             cspan: 4,
             height: 250
           },
           {
-            id: '6',
-            name: 'w6',
+            id: 'w6',
             type: 'DbChartjsHorizontalBar',
             cspan: 4,
             height: 250
           },
           {
-            id: '7',
-            name: 'w7',
+            id: 'w7',
             type: 'DbChartjsBar',
             cspan: 4,
             height: 250
@@ -67,19 +64,6 @@ export default {
       },
       ready: false
     };
-  },
-  computed: {
-    isDark() {
-      return this.$store.state.switchDark;
-    },
-    dbSpecText() {
-      return this.$store.state.dashboardSpec;
-    }
-  },
-  watch: {
-    dbSpecText: function(val) {
-      this.dbspec = JSON.parse(val);
-    }
   },
   mounted() {
     this.$store.dispatch('setDashboardSpec', { spec: JSON.stringify(this.dbspec, null, '\t') });

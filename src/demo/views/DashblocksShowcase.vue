@@ -4,13 +4,15 @@
 
 <script>
 import DbDashboard from '@/components/dashboard/DbDashboard.vue';
-import DbData from '../components/dbdata';
+import DbData from '../../components/dbdata';
+import { demodashboard } from '../mixins/demodashboard';
 
 export default {
   name: 'DashblocksShowcase',
   components: {
     DbDashboard
   },
+  mixins: [demodashboard],
   data() {
     return {
       dbdata: new DbData(),
@@ -20,8 +22,7 @@ export default {
         },
         widgets: [
           {
-            id: '2',
-            name: 'w2',
+            id: 'w2',
             type: 'DbDygraphsBar',
             cspan: 16,
             height: 250,
@@ -36,100 +37,87 @@ export default {
             }
           },
           {
-            id: '8',
-            name: 'w8',
+            id: 'w8',
             type: 'DbEasyPie',
             cspan: 2,
             height: 120,
             properties: { barColor: '#2ca02c', lineWidth: 8 }
           },
           {
-            id: '9',
-            name: 'w9',
+            id: 'w9',
             type: 'DbEasyPie',
             cspan: 2,
             height: 120,
             properties: { barColor: '#2ca02c', lineWidth: 8 }
           },
           {
-            id: '10',
-            name: 'w10',
+            id: 'w10',
             type: 'DbEasyPie',
             cspan: 2,
             height: 120,
             properties: { barColor: '#ff7f0e', lineWidth: 8 }
           },
           {
-            id: '11',
-            name: 'w11',
+            id: 'w11',
             type: 'DbEasyPie',
             cspan: 2,
             height: 120,
             properties: { barColor: '#ff7f0e', lineWidth: 8 }
           },
           {
-            id: '12',
-            name: 'w12',
+            id: 'w12',
             type: 'DbEasyPie',
             cspan: 2,
             height: 120,
             properties: { barColor: '#2ca02c', lineWidth: 8 }
           },
           {
-            id: '13',
-            name: 'w13',
+            id: 'w13',
             type: 'DbEasyPie',
             cspan: 2,
             height: 120,
             properties: { barColor: '#2ca02c', lineWidth: 8 }
           },
           {
-            id: '14',
-            name: 'w14',
+            id: 'w14',
             type: 'DbEasyPie',
             cspan: 2,
             height: 120,
             properties: { barColor: '#d62728', lineWidth: 8 }
           },
           {
-            id: '15',
-            name: 'w15',
+            id: 'w15',
             type: 'DbEasyPie',
             cspan: 2,
             height: 120,
             properties: { barColor: '#d62728', lineWidth: 8 }
           },
           {
-            id: '3',
-            name: 'w3',
+            id: 'w3',
             type: 'DbChartjsPie',
             cspan: 4,
             height: 250
           },
           {
-            id: '5',
-            name: 'w5',
+            id: 'w5',
             type: 'DbChartjsBubble',
             cspan: 8,
             rspan: 2
           },
           {
-            id: '4',
-            name: 'w4',
+            id: 'w4',
             type: 'DbChartjsPie',
             cspan: 4,
             height: 250
           },
           {
-            id: '6',
-            name: 'w6',
+            id: 'w6',
             type: 'DbChartjsHorizontalBar',
             cspan: 4,
             height: 250
           },
           {
-            id: '7',
-            name: 'w7',
+            id: 'w7',
             type: 'DbChartjsBar',
             cspan: 4,
             height: 250
@@ -138,19 +126,6 @@ export default {
       },
       ready: false
     };
-  },
-  computed: {
-    isDark() {
-      return this.$store.state.switchDark;
-    },
-    dbSpecText() {
-      return this.$store.state.dashboardSpec;
-    }
-  },
-  watch: {
-    dbSpecText: function(val) {
-      this.dbspec = JSON.parse(val);
-    }
   },
   mounted() {
     this.$store.dispatch('setDashboardSpec', { spec: JSON.stringify(this.dbspec, null, '\t') });

@@ -1,9 +1,9 @@
 // We need colors and variables
-@import "../assets/scss/dashblocks/material-colors";
-@import "../assets/scss/dashblocks/variables";
+@import "../../assets/scss/dashblocks/material-colors";
+@import "../../assets/scss/dashblocks/variables";
 
 // We need base dashboard style
-@import '../assets/scss/dashblocks/dbdashboard';
+@import '../../assets/scss/dashblocks/dbdashboard';
 
 // We override what is needed in out theme
 .db-dashboard.db-theme-custom {

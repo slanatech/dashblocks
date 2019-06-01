@@ -4,55 +4,47 @@
   },
   "widgets": [
     {
-      "id": "0",
-      "name": "w0",
+      "id": "w0",
       "type": "DbTrendLine",
       "cspan": 16
     },
     {
-      "id": "1",
-      "name": "w1",
+      "id": "w1",
       "type": "WidgetOne",
       "cspan": 2,
       "rspan": 2
     },
     {
-      "id": "2",
-      "name": "w2",
+      "id": "w2",
       "type": "WidgetOne",
       "cspan": 2,
       "rspan": 1
     },
     {
-      "id": "3",
-      "name": "w3",
+      "id": "w3",
       "type": "DbChartjsLine",
       "cspan": 4,
       "height": 350
     },
     {
-      "id": "4",
-      "name": "w4",
+      "id": "w4",
       "type": "DbChartjsBar",
       "cspan": 4,
       "height": 350
     },
     {
-      "id": "5",
-      "name": "w5",
+      "id": "w5",
       "type": "DbChartjsBar",
       "cspan": 4
     },
     {
-      "id": "1",
-      "name": "w1",
+      "id": "w1",
       "type": "DbNumber",
       "cspan": 4,
       "height": 300
     },
     {
-      "id": "1",
-      "name": "w6",
+      "id": "w6",
       "type": "DbEasyPie",
       "cspan": 4,
       "properties": {
@@ -61,8 +53,7 @@
       }
     },
     {
-      "id": "7",
-      "name": "w7",
+      "id": "w7",
       "type": "DbTrendLine",
       "cspan": 6
     }

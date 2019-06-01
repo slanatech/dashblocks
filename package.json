@@ -43,7 +43,6 @@
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.6.10",
     "dygraphs": "^2.1.0",
-    "vue-chartjs":"^3.4.2",
     "chart.js":"^2.8.0",
     "chartjs-plugin-labels": "^1.1.0",
     "d3": "^5.9.2",

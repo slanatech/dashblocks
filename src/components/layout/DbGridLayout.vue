@@ -56,7 +56,7 @@ export default {
     },
     getWidgetData: function(widget) {
       //return Object.assign({},this.dbdata[widget.name]);
-      return this.dbdata[widget.name];
+      return this.dbdata[widget.id];
     },
     handleDbEvent(payload) {
       // Pass up to dashboard

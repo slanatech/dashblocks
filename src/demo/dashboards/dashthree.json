@@ -4,8 +4,7 @@
   },
   "widgets": [
     {
-      "id": "1",
-      "name": "w1",
+      "id": "w1",
       "type": "DbHorizon",
       "cspan": 16
     }

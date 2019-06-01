@@ -4,8 +4,7 @@
   },
   "widgets": [
     {
-      "id": "1",
-      "name": "w1",
+      "id": "w1",
       "type": "DbDygraphsBar",
       "cspan": 16,
       "height": 250,
@@ -16,8 +15,7 @@
       }
     },
     {
-      "id": "2",
-      "name": "w2",
+      "id": "w2",
       "type": "DbDygraphsLine",
       "cspan": 8,
       "height": 300,
@@ -32,8 +30,7 @@
       }
     },
     {
-      "id": "2",
-      "name": "w6",
+      "id": "w6",
       "type": "DbDygraphsLine",
       "cspan": 8,
       "height": 300,
@@ -49,8 +46,7 @@
       }
     },
     {
-      "id": "3",
-      "name": "w3",
+      "id": "w3",
       "type": "DbDygraphsSparkLine",
       "cspan": 4,
       "properties": {
@@ -58,8 +54,7 @@
       }
     },
     {
-      "id": "4",
-      "name": "w4",
+      "id": "w4",
       "type": "DbDygraphsSparkLine",
       "cspan": 4,
       "properties": {
@@ -72,8 +67,7 @@
       }
     },
     {
-      "id": "5",
-      "name": "w5",
+      "id": "w5",
       "type": "DbDygraphsSparkLine",
       "cspan": 4,
       "properties": {

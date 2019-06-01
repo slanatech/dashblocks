@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import CodeViewer from './views/CodeViewer';
+import CodeViewer from './demo/views/CodeViewer';
 export default {
   components: { CodeViewer },
   data() {

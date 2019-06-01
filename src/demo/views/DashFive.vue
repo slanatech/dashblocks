@@ -9,33 +9,22 @@
 
 <script>
 import DbDashboard from '@/components/dashboard/DbDashboard.vue';
-import DbData from '../components/dbdata';
-import dashFourSpec from '../dashboards/dashfive.json';
+import DbData from '@/components/dbdata';
+import dashFourSpec from '@/demo/dashboards/dashfive.json';
+import { demodashboard } from '@/demo/mixins/demodashboard';
 
 export default {
   name: 'DashFive',
   components: {
     DbDashboard
   },
+  mixins: [demodashboard],
   data() {
     return {
       dbdata: new DbData(),
       dbspec: dashFourSpec,
       ready: false
     };
-  },
-  computed: {
-    isDark() {
-      return this.$store.state.switchDark;
-    },
-    dbSpecText() {
-      return this.$store.state.dashboardSpec;
-    }
-  },
-  watch: {
-    dbSpecText: function(val) {
-      this.dbspec = JSON.parse(val);
-    }
   },
   created() {
     this.$store.dispatch('setDashboardSpec', { spec: JSON.stringify(this.dbspec, null, '\t') });

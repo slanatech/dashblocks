@@ -4,8 +4,7 @@
   },
   "widgets": [
     {
-      "id": "a",
-      "name": "wa",
+      "id": "wa",
       "type": "DbDygraphsBar",
       "cspan": 16,
       "height": 250,
@@ -16,8 +15,7 @@
       }
     },
     {
-      "id": "0",
-      "name": "w0",
+      "id": "w0",
       "type": "DbTrendLine",
       "cspan": 4,
       "properties": {
@@ -26,26 +24,22 @@
       }
     },
     {
-      "id": "1",
-      "name": "w0",
+      "id": "w0",
       "type": "DbTrendLine",
       "cspan": 4
     },
     {
-      "id": "2",
-      "name": "w1",
+      "id": "w1",
       "type": "DbTrendBar",
       "cspan": 4
     },
     {
-      "id": "3",
-      "name": "w2",
+      "id": "w2",
       "type": "DbTrendBar",
       "cspan": 4
     },
     {
-      "id": "4",
-      "name": "w4",
+      "id": "w4",
       "type": "DbNumber",
       "cspan": 4,
       "properties": {
@@ -56,8 +50,7 @@
       }
     },
     {
-      "id": "5",
-      "name": "w5",
+      "id": "w5",
       "type": "DbNumber",
       "cspan": 4,
       "properties": {
@@ -68,8 +61,7 @@
       }
     },
     {
-      "id": "6",
-      "name": "w6",
+      "id": "w6",
       "type": "DbNumber",
       "cspan": 4,
       "properties": {
@@ -80,8 +72,7 @@
       }
     },
     {
-      "id": "7",
-      "name": "w7",
+      "id": "w7",
       "type": "DbPlotly",
       "cspan": 16,
       "rspan": 2,
@@ -111,8 +102,7 @@
       }
     },
     {
-      "id": "8",
-      "name": "w8",
+      "id": "w8",
       "type": "DbPlotlyLine",
       "cspan": 10,
       "height": 300,
@@ -136,8 +126,7 @@
       }
     },
     {
-      "id": "9",
-      "name": "w9",
+      "id": "w9",
       "type": "DbPlotlyPie",
       "cspan": 6,
       "height": 300,
