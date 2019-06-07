@@ -1,8 +1,28 @@
-import DbDygraphs from './dygraphs/DbDygraphs.vue';
+import DbData from './dbdata';
+import DbColors from './dbcolors';
+import DbUtils from './dbutils';
+import DbDashboard from './dashboard/DbDashboard';
+//import DbDygraphsBar from './dygraphs/DbDygraphsBar';
+import '../assets/scss/dashblocks.scss';
 
-const dbComponents = {
-  DbDygraphs
+const DashBlocks = {
+  install(Vue) {
+    Vue.component('DbDashboard', DbDashboard);
+    //Vue.component('DbDygraphsBar', DbDygraphsBar);
+    /*
+    Vue.component('db-dygraphs-bundle', function(resolve) {
+      // This special require syntax will instruct Webpack to
+      // automatically split your built code into bundles which
+      // are loaded over Ajax requests.
+      require(['./dygraphs/DbDygraphsBar'], resolve);
+    });
+    */
+  }
 };
+
+export { DbData, DbColors, DbUtils, DbDashboard, DashBlocks };
+
+//export default DashBlocks;
 
 /* TODO Consider this, make reasonable bundles of components based on underlying library
 
@@ -15,6 +35,7 @@ Vue.component('async-webpack-example', function (resolve) {
 
  */
 
+/*
 const DashBlocks = {
   install(Vue) {
     Object.keys(dbComponents).forEach(name => {
@@ -22,8 +43,7 @@ const DashBlocks = {
     });
   }
 };
-
-export default DashBlocks;
+*/
 
 /*
 Object.keys(DashBlocks).forEach(name => {

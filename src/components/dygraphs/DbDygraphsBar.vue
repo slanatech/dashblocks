@@ -12,13 +12,14 @@
 <script>
 //import merge from "deepmerge";
 import DygraphInteraction from 'dygraphs';
-import DbDygraphs from './DbDygraphs';
+//import DbDygraphs from './DbDygraphs';
 //import log from '../log';
 
 export default {
   name: 'DbDygraphsBar',
   components: {
-    DbDygraphs
+    //DbDygraphs
+    DbDygraphs: () => import('./DbDygraphs')
   },
   props: {
     _updated: {
