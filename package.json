@@ -134,5 +134,10 @@
       "vue-cli-service lint",
       "git add"
     ]
+  },
+  "release-it": {
+    "github": {
+      "release": true
+    }
   }
 }
