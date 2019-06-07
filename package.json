@@ -25,7 +25,8 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "prettier": "prettier --single-quote --write src/**/*.js src/**/*.vue",
-    "release": "release-it"
+    "release": "release-it",
+    "release-ci": "release-it --ci"
   },
   "files": [
     "dist/*",
