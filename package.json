@@ -1,6 +1,6 @@
 {
   "name": "dashblocks",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "private": false,
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
     "test": "yarn run test:unit",
     "prettier": "prettier --single-quote --write src/**/*.js src/**/*.vue",
     "release": "release-it",
-    "release-ci": "release-it --dry-run"
+    "release-ci": "release-it --ci"
   },
   "files": [
     "dist/*",
