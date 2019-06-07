@@ -15,18 +15,18 @@
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --dest demo",
     "build-lib": "vue-cli-service build --target lib --name dashblocks ./src/components/index.js",
     "build-wc": "vue-cli-service build --target wc --name dashblocks 'src/components/**/*.vue'",
     "build-wc-async": "vue-cli-service build --target wc-async --name dash-blocks 'src/components/**/*.vue'",
     "demo:build": "vue-cli-service build --dest demo",
     "demo:deploy": "yarn run demo:build && ./scripts/demodeploy.sh",
+    "build": "yarn run build-lib",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "test": "yarn run test:unit",
     "prettier": "prettier --single-quote --write src/**/*.js src/**/*.vue",
-    "release": "./node_modules/.bin/release-it",
+    "release": "release-it",
     "release-ci": "release-it --dry-run"
   },
   "files": [
