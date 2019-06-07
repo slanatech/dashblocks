@@ -143,10 +143,9 @@
     },
     "hooks": {
       "before:init": [
-        "yarn run lint",
+        "yarn run build",
         "yarn test"
       ],
-      "after:git:release": "yarn run build",
       "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
     }
   }
