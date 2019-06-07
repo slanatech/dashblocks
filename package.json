@@ -24,9 +24,10 @@
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
+    "test": "yarn run test:unit",
     "prettier": "prettier --single-quote --write src/**/*.js src/**/*.vue",
-    "release": "release-it",
-    "release-ci": "release-it --ci"
+    "release": "./node_modules/.bin/release-it",
+    "release-ci": "release-it --dry-run"
   },
   "files": [
     "dist/*",
