@@ -6,11 +6,11 @@
       </v-navigation-drawer>
 
       <v-toolbar dense fixed app clipped-right>
-        <v-toolbar-side-icon @click.stop="drawer = !drawer;"></v-toolbar-side-icon>
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <v-toolbar-title>{{ currentRouteName }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <div><v-switch v-model="switchDark" label="Dark" hide-details></v-switch></div>
-        <v-btn icon @click.stop="drawerRight = !drawerRight;"> <v-icon>code</v-icon> </v-btn>
+        <v-btn icon @click.stop="drawerRight = !drawerRight"> <v-icon>code</v-icon> </v-btn>
       </v-toolbar>
 
       <v-navigation-drawer fixed v-model="drawer" :mini-variant.sync="mini" app>
@@ -22,7 +22,7 @@
               <v-list-tile-content> <v-list-tile-title>DASHBLOCKS</v-list-tile-title> </v-list-tile-content>
 
               <v-list-tile-action>
-                <v-btn icon @click.stop="mini = !mini;"> <v-icon>chevron_left</v-icon> </v-btn>
+                <v-btn icon @click.stop="mini = !mini"> <v-icon>chevron_left</v-icon> </v-btn>
               </v-list-tile-action>
             </v-list-tile>
           </v-list>
