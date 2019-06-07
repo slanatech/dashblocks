@@ -66,9 +66,6 @@ created by this dashboard declaration:
   ]
 }
 ```
-
-
-
 ## Roadmap 
 
 Roadmap and plans roughly defined in [TODO](TODO.md)  
