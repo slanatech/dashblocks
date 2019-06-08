@@ -56,6 +56,9 @@
 
 ### Plotly 
 - [ ] Showcase dashboard
+- [ ] Consider: use more customized bundle ( specific modules ) instead of all-in-one. 
+      plotly.js-dist is too big to include in bundle ( ~6M )   
+       
 
 ### Dygraphs
 - [ ] Showcase dashboard

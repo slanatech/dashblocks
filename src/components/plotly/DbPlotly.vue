@@ -2,6 +2,7 @@
   <div ref="plotlychart" />
 </template>
 <script>
+// TODO Consider: use more customized bundle ( specific modules ) instead of all-in-one
 import Plotly from 'plotly.js-dist';
 import log from '../log';
 export default {

@@ -15,7 +15,7 @@
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build-lib": "vue-cli-service build --target lib --name dashblocks ./src/components/index.js",
+    "build-lib": "vue-cli-service build --target lib --report --name dashblocks ./src/components/index.js",
     "build-wc": "vue-cli-service build --target wc --name dashblocks 'src/components/**/*.vue'",
     "build-wc-async": "vue-cli-service build --target wc-async --name dash-blocks 'src/components/**/*.vue'",
     "demo:build": "vue-cli-service build --dest demo",
@@ -43,7 +43,8 @@
   "dependencies": {
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
-    "vuex": "^3.1.0"
+    "vuex": "^3.1.0",
+    "plotly.js-dist": "^1.47.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.6.0",
@@ -67,7 +68,6 @@
     "loglevel": "^1.6.1",
     "moment": "^2.24.0",
     "node-sass": "^4.11.0",
-    "plotly.js-dist": "^1.47.3",
     "ramda": "^0.26.1",
     "release-it": "^12.3.0",
     "sass-loader": "^7.1.0",
