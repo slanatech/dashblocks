@@ -7,6 +7,8 @@ import DbDashboard from '@/components/dashboard/DbDashboard.vue';
 import DbData from '@/components/dbdata';
 import { demodashboard } from '@/demo/mixins/demodashboard';
 
+import flareData from '@/demo/data/flare.json';
+
 export default {
   name: 'DashboardFour',
   components: {
@@ -43,22 +45,16 @@ export default {
             height: 250
           },
           {
-            id: 'w4',
-            type: 'DbChartjsPie',
-            cspan: 4,
-            height: 250
-          },
-          {
-            id: 'w6',
-            type: 'DbChartjsHorizontalBar',
-            cspan: 4,
-            height: 250
-          },
-          {
             id: 'w7',
             type: 'DbChartjsBar',
             cspan: 4,
             height: 250
+          },
+          {
+            id: 'w10',
+            type: 'DbSunburst',
+            cspan: 8,
+            height: 600
           }
         ]
       },
@@ -129,6 +125,10 @@ export default {
       });
       this.dbdata.setWData('w7', {
         data: JSON.parse(JSON.stringify(dataTwoSeries))
+      });
+
+      this.dbdata.setWData('w10', {
+        data: flareData
       });
     },
     getRand: function(max) {

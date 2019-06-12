@@ -1,5 +1,6 @@
 // Import all Db Widgets
 import DbHorizon from './d3/DbHorizon';
+import DbSunburst from './d3/DbSunburst';
 import {
   DbChartjsBar,
   DbChartjsHorizontalBar,
@@ -25,6 +26,7 @@ import DbDygraphsDateTimeHistogram from './dygraphs/DbDygraphsDateTimeHistogram'
 
 export default {
   DbHorizon,
+  DbSunburst,
   DbChartjsBar,
   DbChartjsHorizontalBar,
   DbChartjsDoughnut,
