@@ -52,9 +52,12 @@ export default {
           },
           {
             id: 'w10',
-            type: 'DbSunburst',
+            type: 'DbSunburstZ',
             cspan: 8,
-            height: 600
+            height: 800,
+            properties: {
+              colorScheme: 'interpolateRainbow'
+            }
           }
         ]
       },
