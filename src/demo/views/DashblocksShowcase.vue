@@ -6,6 +6,7 @@
 import DbDashboard from '@/components/dashboard/DbDashboard.vue';
 import DbData from '../../components/dbdata';
 import { demodashboard } from '../mixins/demodashboard';
+import flareData from '@/demo/data/flare.json';
 
 export default {
   name: 'DashblocksShowcase',
@@ -25,7 +26,7 @@ export default {
             id: 'w2',
             type: 'DbDygraphsBar',
             cspan: 16,
-            height: 250,
+            height: 220,
             properties: {
               options: {
                 stackedGraph: true,
@@ -93,16 +94,13 @@ export default {
             properties: { barColor: '#d62728', lineWidth: 8 }
           },
           {
-            id: 'w3',
-            type: 'DbChartjsPie',
-            cspan: 4,
-            height: 250
-          },
-          {
-            id: 'w5',
-            type: 'DbChartjsBubble',
-            cspan: 8,
-            rspan: 2
+            id: 'w16',
+            type: 'DbSunburstZ',
+            cspan: 6,
+            rspan: 2,
+            properties: {
+              colorScheme: 'interpolateRainbow'
+            }
           },
           {
             id: 'w4',
@@ -111,10 +109,10 @@ export default {
             height: 250
           },
           {
-            id: 'w6',
-            type: 'DbChartjsHorizontalBar',
-            cspan: 4,
-            height: 250
+            id: 'w5',
+            type: 'DbChartjsBubble',
+            cspan: 6,
+            rspan: 2
           },
           {
             id: 'w7',
@@ -232,6 +230,10 @@ export default {
       this.dbdata.setWData('w13', { value: 25 });
       this.dbdata.setWData('w14', { value: 72 });
       this.dbdata.setWData('w15', { value: 84 });
+
+      this.dbdata.setWData('w16', {
+        data: flareData
+      });
     },
     getRand: function(max) {
       return Math.floor(Math.random() * Math.floor(max));
