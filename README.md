@@ -15,6 +15,10 @@ Dashblocks enables easily creating sophisticated interactive dashboards simply b
 
 Dashblocks uses popular charting libraries to render chars: d3, Chart.js, Dygraphs, Plotly.js
 
+
+![dashboard](screenshots/dashboard.png?raw=true)
+
+
 Dashblocks aims to simplify enabling robust In-App Analytics: 
 
 * Use declarative approach to define dashboard layout
@@ -23,11 +27,6 @@ Dashblocks aims to simplify enabling robust In-App Analytics:
 * Enable interactivity by providing event handling on dashboard level
 * Streamline dynamic updates of dashboard data, for example based on user interaction with dashboard
 * Even dynamically generate Dashboard itself based on the data - thanks to declarative approach   
-
-
-![dashboard](screenshots/dashboard.png?raw=true)
-
-
 
 
 ## Installation 

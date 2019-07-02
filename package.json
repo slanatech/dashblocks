@@ -69,6 +69,7 @@
     "moment": "^2.24.0",
     "node-sass": "^4.11.0",
     "ramda": "^0.26.1",
+    "shelljs": "^0.8.3",
     "release-it": "^12.3.0",
     "sass-loader": "^7.1.0",
     "vue-sidebar-menu": "^3.7.0",
