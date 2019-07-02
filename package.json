@@ -12,6 +12,16 @@
     "url": "https://github.com/slanatech/dashblocks/issues",
     "email": "sv2@slana.tech"
   },
+  "description": "Enable Analytics in your Apps: Declarative Interactive Dashboards",
+  "keywords": [
+    "dashboard",
+    "analytics",
+    "d3",
+    "chartjs",
+    "dygraphs",
+    "plotly",
+    "vue"
+  ],
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
