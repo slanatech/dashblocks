@@ -1,4 +1,4 @@
-# dashblocks
+# dashblocks | [DEMO](https://slanatech.github.io/dashblocks)
 
 #### Enable Analytics in your App 
 
@@ -10,7 +10,6 @@
 
 ## Declarative Interactive Dashboards 
 
-[DEMO](https://slanatech.github.io/dashblocks)
 
 Dashblocks enables easily creating sophisticated interactive dashboards simply by declaring dashboard structure as json or javascript object.
 
@@ -182,6 +181,12 @@ And here is what you get:
 
 ![sample](screenshots/sample_dashboard.png?raw=true)
  
+
+More samples: 
+
+* [dashblock-template](https://github.com/slanatech/dashblocks-template) - Dashblocks template app 
+* [dashblocks demo app](https://github.com/slanatech/dashblocks/tree/master/src/demo)   
+
 
 ## Roadmap 
 
