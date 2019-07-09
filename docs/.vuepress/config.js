@@ -1,15 +1,15 @@
 module.exports = {
-  base: '/vue-monorepo-boilerplate/',
+  base: '/dashblocks/',
   locales: {
     '/': {
       lang: 'en-US',
-      title: 'vue-monorepo-boilerplate',
-      description: 'Fullstack Vue App Monorepo Boilerplate'
+      title: 'dashblocks',
+      description: 'Enable Analytics in your Apps'
     }
   },
   serviceWorker: true,
   themeConfig: {
-    repo: 'slanatech/vue-monorepo-boilerplate',
+    repo: 'slanatech/dashblocks',
     docsDir: 'docs',
     editLinks: true,
     sidebarDepth: 1,
@@ -30,21 +30,30 @@ module.exports = {
           },
           {
             text: 'Changelog',
-            link: 'https://github.com/vue-monorepo-boilerplate/blob/dev/CHANGELOG.md'
+            link: 'https://github.com/dashblocks/blob/dev/CHANGELOG.md'
           }
         ],
         sidebar: {
-          '/guide/': [
-            '/guide/'
-          ],
+          '/guide/': ['/guide/','gettingstarted'],
           '/components/': [
             {
               title: 'Components',
-              collapsable: true
+              collapsable: false,
+              children: ['']
+            },
+            {
+              title: 'd3',
+              collapsable: true,
+              children: ['d3/DbHorizon.vue','d3/dbTest2']
+            },
+            {
+              title: 'chartjs',
+              collapsable: true,
+              children: ['chartjs/test']
             }
           ]
         }
       }
     }
   }
-}
+};
