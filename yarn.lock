@@ -6651,7 +6651,7 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-linkify-it@^2.0.0:
+linkify-it@^2.0.0, linkify-it@^2.0.3:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-2.1.0.tgz#c4caf38a6cd7ac2212ef3c7d2bde30a91561f9db"
   dependencies:
@@ -7059,6 +7059,12 @@ markdown-it@^8.4.1:
     linkify-it "^2.0.0"
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
+
+markdown-linkify@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/markdown-linkify/-/markdown-linkify-1.0.3.tgz#afdaa43230b1243bd92159a76e98feed677d75b9"
+  dependencies:
+    linkify-it "^2.0.3"
 
 math-random@^1.0.1:
   version "1.0.4"

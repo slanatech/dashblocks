@@ -1,20 +1,19 @@
 ---
-title:  "<%= displayName%>"
+title:  "<%= name%>"
 ---
-# <%= displayName%>
+# <%= name%>
 
-> <%= description ? description : displayName + ' component'%>
+<%= description ? description : name + ' component'%>
 
-|Name           |Type     |Description
-|:--------------|:--------|:----------
+
+#### Properties
+
+|Name           |Type     |Required|Default |Description
+|:--------------|:--------|:-------|:-------|:----------
 <%
-if (props) {
-    for(let propName of Object.keys(props)) {
-        var prop = props[propName];
-        var propType = ('type' in prop) ? 'type' : 't';
-        var propDesc = ('description' in prop) ? prop.description : 'd';
-
+for(let prop of props) {
 -%>
-|`<%= propName%>`|<%= propType%>|<%= propDesc%>
-<% }
-} -%>
+|**<%- prop.name%>**|<%- prop.type%>|<%- prop.required%>|<%- prop.default%>|<%- prop.description%>
+<% 
+}
+-%>

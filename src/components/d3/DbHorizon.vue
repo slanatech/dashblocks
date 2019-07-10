@@ -4,15 +4,34 @@
 <script>
 import * as d3 from 'd3';
 import log from '../log';
-
+/**
+ * D3 Horizon Chart.
+ * Based on https://observablehq.com/@d3/horizon-chart
+ * @example ../../demo/views/DashThree.md
+ * @displayName DbHorizon
+ */
 export default {
+  name: 'DbHorizon',
   props: {
     wdata: {},
     wspec: {},
+    /**
+     * Enable dark mode
+     *
+     * `true,false`
+     */
     dark: {
       type: Boolean,
       default: false
     },
+    /**
+     * Color scheme
+     * Use one of Discrete Diverging color schemes from d3-scale-chromatic:
+     *
+     * `schemeBrBG,schemePRGn, ...`
+     *
+     * See https://github.com/d3/d3-scale-chromatic
+     */
     scheme: {
       type: String,
       default: 'schemePuBuGn'
