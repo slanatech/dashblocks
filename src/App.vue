@@ -112,6 +112,16 @@ export default {
               href: '/dashsix'
             }
           ]
+        },
+        {
+          icon: 'bar_chart',
+          title: 'Samples',
+          items: [
+            {
+              title: 'DBHorizon',
+              href: '/dbhorizonsamples'
+            }
+          ]
         }
       ],
       items: [

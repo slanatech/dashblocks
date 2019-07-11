@@ -7,6 +7,7 @@ import DashSix from './demo/views/DashSix.vue';
 import DygraphsDynamic from './demo/views/DygraphsDynamic';
 import ChartJsShowcase from './demo/views/ChartJsShowcase';
 import DashblocksShowcase from './demo/views/DashblocksShowcase';
+import DbHorizonSamples from './demo/views/samples/DbHorizonSamples';
 
 Vue.use(Router);
 
@@ -55,6 +56,11 @@ export default new Router({
       path: '/chartjs',
       name: 'Chart.js Showcase',
       component: ChartJsShowcase
+    },
+    {
+      path: '/dbhorizonsamples',
+      name: 'DbHorizon Samples',
+      component: DbHorizonSamples
     }
   ]
 });

@@ -1,5 +1,5 @@
 <template>
-  <div ref="container" class="dbc-d3"></div>
+  <div ref="container" class="db-d3-horizon"></div>
 </template>
 <script>
 import * as d3 from 'd3';
@@ -13,8 +13,15 @@ import log from '../log';
 export default {
   name: 'DbHorizon',
   props: {
-    wdata: {},
     wspec: {},
+    _updated: {
+      type: Number,
+      default: 0
+    },
+    data: {
+      type: Array,
+      default: () => []
+    },
     /**
      * Enable dark mode
      *
@@ -92,7 +99,7 @@ export default {
         this.$refs.container.removeChild(this.$refs.container.lastChild);
       }
 
-      let data = this.wdata.data;
+      let data = this.data;
 
       // TODO Update to use properties
       let step = 23;
@@ -224,9 +231,10 @@ export default {
 };
 </script>
 <style>
-.dbc-d3 {
+.db-d3-horizon {
   width: 100%;
   height: 95%;
   display: block;
+  position: relative;
 }
 </style>
