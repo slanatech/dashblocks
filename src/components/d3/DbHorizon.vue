@@ -7,20 +7,45 @@ import log from '../log';
 /**
  * D3 Horizon Chart.
  * Based on https://observablehq.com/@d3/horizon-chart
- * @example ../../demo/views/DashThree.md
- * @displayName DbHorizon
+ *
+ * DbHorizon accepts data in the following format:
+ *
+ *```json
+ * [
+ *   {key:'Series1', values:[{date:new Date(),value: 1},{date:new Date(),value: 2}]},
+ *   {key:'Series2', values:[{date:new Date(),value: 2},{date:new Date(),value: 1}]}
+ * ]
+ *```
+ *
+ * @example ../../demo/views/samples/DbHorizonSamples.vue
  */
 export default {
   name: 'DbHorizon',
   props: {
-    wspec: {},
     _updated: {
       type: Number,
       default: 0
     },
+    /**
+     * Chart Data
+     */
     data: {
       type: Array,
       default: () => []
+    },
+    /**
+     * Height of each series in pixels.
+     */
+    seriesHeight: {
+      type: Number,
+      default: 23
+    },
+    /**
+     * Number of overlapping color steps, in range 1-9
+     */
+    colorSteps: {
+      type: Number,
+      default: 7
     },
     /**
      * Enable dark mode
@@ -47,23 +72,26 @@ export default {
   data() {
     return {
       graph: null,
-      overlap: 7 // TODO Prop
+      overlap: 7
     };
   },
   mounted() {
     window.addEventListener('resize', this.handleResize);
-    this.render();
+    this.$nextTick(() => {
+      this.render();
+    });
   },
   beforeDestroy: function() {
     log.info('beforeDestroy!');
     window.removeEventListener('resize', this.handleResize);
   },
   watch: {
-    wdata: function() {
-      // TODO ???
+    data: function() {
       // Rendering is triggered when data changed
       // To force re-render if only options changed, call $refs.child.render
-      this.render();
+      this.$nextTick(() => {
+        this.render();
+      });
     },
     dark: function() {
       this.$nextTick(() => {
@@ -101,10 +129,10 @@ export default {
 
       let data = this.data;
 
-      // TODO Update to use properties
-      let step = 23;
-      //let scheme = 'schemeOranges';
-      let overlap = 7;
+      let step = this.seriesHeight;
+      // color steps range is 1-9
+      this.overlap = this.colorSteps < 1 ? 1 : this.colorSteps > 9 ? 9 : this.colorSteps;
+      let overlap = this.overlap;
 
       let margin = { top: 30, right: 10, bottom: 0, left: 10 };
 

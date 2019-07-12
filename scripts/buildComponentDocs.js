@@ -1,3 +1,7 @@
+/*
+ * Build Components documentation based on JSDoc comments in component files
+ *
+ */
 const path = require('path');
 const fs = require('fs');
 const ejs = require('ejs');
@@ -22,6 +26,10 @@ const componentFiles = [
   }
 ];
 
+function camelCaseToDash(str) {
+  return str.replace(/([a-zA-Z])(?=[A-Z])/g, '$1-').toLowerCase();
+}
+
 function parseComponentFile(componentFile) {
   // TODO Options ?
   let parseResult = parse(componentFile);
@@ -45,11 +53,46 @@ function processProps(componentData) {
   return propsArray;
 }
 
-function renderComponentDoc(componentData) {
+// Pre-process component examples
+// TODO Generate proper imports of sample components for vuepress ( enhanceApp.js )
+function processExamples(componentData, filePath, fileName) {
+  let result = [];
+
+  let examplesData = pathOr(null, ['tags', 'examples'], componentData);
+  if (!examplesData || !Array.isArray(examplesData) || examplesData.length <= 0) {
+    return result;
+  }
+
+  for (let example of examplesData) {
+    let exampleContent = pathOr(null, ['content'], example);
+    if (exampleContent) {
+      let exampleFileName = path.join(filePath, exampleContent);
+      let exampleBaseName = path.basename(exampleFileName, '.vue');
+      let exampleComponent = camelCaseToDash(exampleBaseName);
+      try {
+        let exampleFileContent = fs.readFileSync(exampleFileName);
+        let exampleCode = exampleFileContent.toString();
+        result.push({
+          code: exampleCode,
+          component: exampleComponent,
+          filePath: filePath,
+          fileName: fileName
+        });
+      } catch (e) {
+        // NOOP //
+      }
+    }
+  }
+
+  return result;
+}
+
+function renderComponentDoc(componentData, filePath, fileName) {
   let renderData = {
     name: pathOr('', ['displayName'], componentData),
     description: linkify(pathOr('', ['description'], componentData)),
-    props: processProps(componentData)
+    props: processProps(componentData),
+    examples: processExamples(componentData, filePath, fileName)
   };
 
   let renderedDoc = ejs.render(templateString, renderData);
@@ -58,11 +101,13 @@ function renderComponentDoc(componentData) {
 
 function processComponents() {
   for (let componentFile of componentFiles) {
-    let fullFN = path.join(basePath, componentFile.folder, componentFile.name);
+    let filePath = path.join(basePath, componentFile.folder);
+
+    let fullFN = path.join(filePath, componentFile.name);
 
     let parseResult = parseComponentFile(fullFN);
 
-    let renderResult = renderComponentDoc(parseResult);
+    let renderResult = renderComponentDoc(parseResult, filePath, componentFile.name);
 
     let docFN = path.join(baseDocsPath, componentFile.folder, componentFile.name + '.md');
 

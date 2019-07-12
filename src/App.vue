@@ -114,7 +114,7 @@ export default {
           ]
         },
         {
-          icon: 'bar_chart',
+          icon: 'view_list',
           title: 'Samples',
           items: [
             {

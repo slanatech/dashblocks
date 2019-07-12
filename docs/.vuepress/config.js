@@ -7,6 +7,9 @@ module.exports = {
       description: 'Enable Analytics in your Apps'
     }
   },
+  markdown: {
+    lineNumbers: true
+  },
   serviceWorker: true,
   themeConfig: {
     repo: 'slanatech/dashblocks',
