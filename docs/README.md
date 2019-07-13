@@ -20,6 +20,7 @@ features:
 - title: CI/CD
   details: Travis CI
 footer: MIT Licensed | Copyright © 2018 slana.tech
+pageClass: dashblocks-landing
 ---
 
 ## Quick start
