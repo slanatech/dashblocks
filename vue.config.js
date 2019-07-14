@@ -1,4 +1,5 @@
 // vue.config.js
+const path = require('path');
 const webpack = require('webpack');
 
 // We will not include plotly.js-dist into lib bundle, to keep lib size reasonable.
@@ -23,6 +24,11 @@ module.exports = {
     plugins: [
       // Ignore all locale files of moment.js
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
-    ]
+    ],
+    resolve: {
+      alias: {
+        dashblocks: path.resolve(__dirname, 'src/components/')
+      }
+    }
   }
 };

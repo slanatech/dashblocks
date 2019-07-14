@@ -20,10 +20,12 @@ function breakify(str) {
 }
 
 const componentFiles = [
-  {
-    folder: 'd3',
-    name: 'DbHorizon.vue'
-  }
+  { folder: 'd3', name: 'DbHorizon.vue' },
+  { folder: 'd3', name: 'DbSankey.vue' },
+  { folder: 'd3', name: 'DbSunburst.vue' },
+  { folder: 'dygraphs', name: 'DbDygraphs.vue' },
+  { folder: 'dygraphs', name: 'DbDygraphsBar.vue' },
+  { folder: 'dygraphs', name: 'DbDygraphsLine.vue' }
 ];
 
 function camelCaseToDash(str) {
@@ -108,6 +110,10 @@ function processComponents() {
     let parseResult = parseComponentFile(fullFN);
 
     let renderResult = renderComponentDoc(parseResult, filePath, componentFile.name);
+
+    if (!fs.existsSync(path.join(baseDocsPath, componentFile.folder))) {
+      fs.mkdirSync(path.join(baseDocsPath, componentFile.folder));
+    }
 
     let docFN = path.join(baseDocsPath, componentFile.folder, componentFile.name + '.md');
 

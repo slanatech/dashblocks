@@ -95,7 +95,7 @@ export default {
           },
           {
             id: 'w16',
-            type: 'DbSunburstZ',
+            type: 'DbSunburst',
             cspan: 6,
             rspan: 2,
             properties: {

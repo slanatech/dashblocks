@@ -84,7 +84,6 @@
     "release-it": "^12.3.0",
     "sass-loader": "^7.1.0",
     "shelljs": "^0.8.3",
-    "vue-resize-directive": "^1.2.0",
     "vue-sidebar-menu": "^3.7.0",
     "vue-template-compiler": "^2.6.10",
     "vuebars": "^0.1.3",

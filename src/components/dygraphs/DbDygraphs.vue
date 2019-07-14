@@ -3,10 +3,9 @@
 </template>
 <script>
 import dbColors from '../dbcolors';
-import Dygraphs from 'dygraphs';
 import 'dygraphs/dist/dygraph.css';
 import log from '../log';
-
+let Dygraphs = null;
 export default {
   name: 'DbDygraphs',
   props: {
@@ -56,8 +55,12 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(() => {
-      this.render();
+    import('dygraphs').then(module => {
+      log.info('dygraphs: imported');
+      Dygraphs = module.default;
+      this.$nextTick(() => {
+        this.render();
+      });
     });
   },
   watch: {

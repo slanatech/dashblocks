@@ -1,4 +1,5 @@
 import DbHorizonSamples from '../../src/demo/views/samples/DbHorizonSamples';
+import SampleDashboard from '../../src/demo/views/SampleDashboard';
 
 export default ({
   Vue, // the version of Vue being used in the VuePress app
@@ -7,4 +8,5 @@ export default ({
   siteData // site metadata
 }) => {
   Vue.component('DbHorizonSamples', DbHorizonSamples);
+  Vue.component('SampleDashboard', SampleDashboard);
 };

@@ -3,8 +3,9 @@
 </template>
 <script>
 // TODO Consider: use more customized bundle ( specific modules ) instead of all-in-one
-import Plotly from 'plotly.js-dist';
+//import Plotly from 'plotly.js-dist';
 import log from '../log';
+let Plotly = null;
 export default {
   name: 'DbPlotly',
   props: {
@@ -29,8 +30,12 @@ export default {
     };
   },
   mounted() {
-    this.$nextTick(() => {
-      this.render();
+    import('plotly.js-dist').then(module => {
+      log.info('DbPlotly: imported');
+      Plotly = module;
+      this.$nextTick(() => {
+        this.render();
+      });
     });
   },
   watch: {

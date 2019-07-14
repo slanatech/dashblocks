@@ -10,7 +10,7 @@
   </db-dygraphs>
 </template>
 <script>
-import DygraphInteraction from 'dygraphs';
+//import DygraphInteraction from 'dygraphs';
 import DbDygraphs from './DbDygraphs';
 //import log from '../log';
 export default {
@@ -58,7 +58,8 @@ export default {
         includeZero: true,
         highlightCircleSize: 0,
         legend: 'never',
-        interactionModel: DygraphInteraction.nonInteractiveModel,
+        // TODO Consider if needs to be enabled; need to import asyncronously so vuepress compiles
+        //interactionModel: DygraphInteraction.nonInteractiveModel,
         plotter: this.smoothing > 0 ? this.smoothPlotter : null,
         axes: {
           x: {

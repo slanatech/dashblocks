@@ -1,3 +1,14 @@
+const fs = require('fs');
+const path = require('path');
+const webpack = require('webpack');
+
+const isDirectory = source => fs.lstatSync(source).isDirectory();
+const isNotDirectory = source => !fs.lstatSync(source).isDirectory();
+const getDirectories = source =>
+  fs.readdirSync(source).map(name => path.join(source, name)).filter(isDirectory);
+const getFiles = source =>
+  fs.readdirSync(source).map(name => path.join(source, name)).filter(isNotDirectory);
+
 module.exports = {
   base: '/dashblocks/',
   locales: {
@@ -37,8 +48,9 @@ module.exports = {
           }
         ],
         sidebar: {
-          '/guide/': ['/guide/','gettingstarted'],
-          '/components/': [
+          '/guide/': ['/guide/', 'firstdashboard'],
+          '/components/': getComponentsSidebar()
+            /*[
             {
               title: 'Components',
               collapsable: false,
@@ -47,16 +59,55 @@ module.exports = {
             {
               title: 'd3',
               collapsable: true,
-              children: ['d3/DbHorizon.vue','d3/dbTest2']
-            },
-            {
-              title: 'chartjs',
-              collapsable: true,
-              children: ['chartjs/test']
+              children: ['d3/DbHorizon.vue']
             }
-          ]
+          ]*/
         }
+      }
+    }
+  },
+  configureWebpack: {
+    plugins: [
+      // Ignore all locale files of moment.js
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+    ],
+    resolve: {
+      alias: {
+        dashblocks: path.resolve(__dirname, '../../src/components/')
       }
     }
   }
 };
+
+function getComponentsSidebar() {
+  let result = [
+    {
+      title: 'Components',
+      collapsable: false,
+      children: ['']
+    }
+  ];
+
+  // Enumerate all folders
+  let dirs = getDirectories(path.join(__dirname,'..','components'));
+  console.log(`Directories: ${JSON.stringify(dirs)}`);
+  for(let dir of dirs){
+    let dirname = path.basename(dir);
+    let files = getFiles(dir);
+    let children = [];
+    for(let file of files){
+      let filename = path.basename(file);
+      children.push(`${dirname}/${filename}`);
+    }
+
+    result.push(
+      {
+        title: dirname,
+        collapsable: true,
+        children: children
+      }
+    );
+  }
+
+  return result;
+}

@@ -52,7 +52,7 @@ export default {
           },
           {
             id: 'w10',
-            type: 'DbSunburstZ',
+            type: 'DbSunburst',
             cspan: 8,
             height: 800,
             properties: {

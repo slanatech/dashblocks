@@ -1,422 +1,291 @@
-/* DbSunburst: Sunburst visualization Inspired by https://github.com/David-Desmaisons/Vue.D3.sunburst */
+/* DbSunburst: Sunburst visualization based on https://observablehq.com/@git-ashish/d3-sunburst-zoomable */
 <template>
-  <div class="graph">
-    <!-- Use this slot to add information on top or bottom of the graph
-    <slot name="legend" :width="width" :colorGetter="colorGetter" :nodes="graphNodes" :actions="actions">
-    </slot>-->
-
-    <div class="viewport" v-resize.throttle.250="resize">
-      <!-- Use this slot to add information on top of the graph
-      <slot name="top" :colorGetter="colorGetter" :nodes="graphNodes" :actions="actions">
-      </slot>-->
-
-      <!-- Use this slot to add behaviors to the sunburst
-      <slot :nodes="graphNodes" :actions="actions">
-      </slot>-->
-    </div>
-  </div>
+  <div ref="container" class="db-sunburst"></div>
 </template>
 <script>
-/*eslint no-unused-vars: ["error", { "varsIgnorePattern": "transition" }]*/
-
-import resize from 'vue-resize-directive';
-import { select } from 'd3-selection';
-import { scaleLinear, scaleSqrt } from 'd3-scale';
-import { hierarchy, partition } from 'd3-hierarchy';
-import { interpolate } from 'd3-interpolate';
-import { arc } from 'd3-shape';
-import * as d3ScaleChromatic from 'd3-scale-chromatic';
-import { scaleOrdinal } from 'd3-scale';
-
-import { transition } from 'd3-transition';
-//import { colorSchemes } from '../infra/colorSchemes';
-
-function recursiveName(node) {
-  const res = node
-    .ancestors()
-    .map(node => node.data.name)
-    .join('-');
-  return res;
-}
-
-function copyCurrentValues(to, from) {
-  const { x0, x1, y0, y1 } = from;
-  to._current = { x0, x1, y0, y1 };
-}
-
-function arc2Tween(arcSunburst, d, indx) {
-  const positionsKeys = ['x0', 'x1', 'y0', 'y1'];
-  const interpolates = {};
-  positionsKeys.forEach(key => {
-    interpolates[key] = interpolate(this._current[key], d[key]);
-  });
-  copyCurrentValues(this, d);
-
-  return function(t) {
-    const tmp = {};
-    positionsKeys.forEach(key => {
-      tmp[key] = interpolates[key](t);
-    });
-    return arcSunburst(tmp, indx);
-  };
-}
-
-const useNameForColor = d => d.name;
+import * as d3 from 'd3';
+import log from '../log';
 
 export default {
-  name: 'DbSunburst',
-
+  name: 'DbSunburstZ',
   props: {
-    /**
-     * Sunburst data where children property is a array containing children.
-     */
-    data: {
-      type: Object,
-      required: false
+    wdata: {},
+    wspec: {},
+    dark: {
+      type: Boolean,
+      default: false
     },
-    /**
-     * D3 color scheme to be used.
-     */
     colorScheme: {
       type: String,
-      required: false,
-      // TODO
-      default() {
-        return 'schemeAccent';
-      }
-    },
-    /**
-     * Function used to map an item and its color.
-     * (nodeD3: Object) => category: Number | String
-     * By default use the node name
-     */
-    getCategoryForColor: {
-      type: Function,
-      required: false,
-      default: useNameForColor
-    },
-    /**
-     * Minimal arc angle to be displayed (in radian).
-     */
-    minAngleDisplayed: {
-      type: Number,
-      required: false,
-      default: 0.005
-    },
-    /**
-     * Function used to identify an arc, will be used during graph updates.
-     * (nodeD3: Object) => id: String
-     * @default id based on recursive agregation of node parent name
-     */
-    arcIdentification: {
-      type: Function,
-      required: false,
-      default: recursiveName
-    },
-    /**
-     *  Duration for in animation in milliseconds
-     */
-    inAnimationDuration: {
-      type: Number,
-      required: false,
-      default: 100
-    },
-    /**
-     *  Duration for out animation in milliseconds
-     */
-    outAnimationDuration: {
-      type: Number,
-      required: false,
-      default: 1000
+      default: 'interpolateRainbow'
     }
   },
-
-  directives: {
-    resize
-  },
-
   data() {
-    const scaleX = scaleLinear()
-      .range([0, 2 * Math.PI])
-      .clamp(true);
-
-    const scaleY = scaleSqrt().range([0, 1]);
-
-    this.arcSunburst = arc()
-      .startAngle(d => scaleX(d.x0))
-      .endAngle(d => scaleX(d.x1))
-      .innerRadius(d => Math.max(0, scaleY(d.y0)))
-      .outerRadius(d => Math.max(0, scaleY(d.y1)));
-
-    this.scaleX = scaleX;
-    this.scaleY = scaleY;
-
     return {
-      /**
-       * @private
-       */
-      graphNodes: {
-        clicked: null,
-        mouseOver: null,
-        zoomed: null,
-        root: null,
-        highlighted: null
-      },
-
-      /**
-       * @private
-       */
-      width: null,
-
-      /**
-       * @private
-       */
-      height: null
+      graph: null,
+      svg: null,
+      g: null
     };
   },
-
   mounted() {
-    const [viewport] = this.$el.getElementsByClassName('viewport');
-    this.viewport = viewport;
-    this.vis = select(viewport)
-      .append('svg')
-      .style('overflow', 'visible')
-      .attr('class', 'root')
-      .attr('width', '100%')
-      .attr('height', '100%')
-      .append('g');
-
-    select(viewport).on('mouseleave', () => {
-      this.graphNodes.mouseOver = null;
-    });
-
-    this.resize();
+    window.addEventListener('resize', this.handleResize);
+    this.render();
   },
-
+  beforeDestroy: function() {
+    log.info('beforeDestroy!');
+    window.removeEventListener('resize', this.handleResize);
+  },
+  watch: {
+    wdata: function() {
+      // TODO ???
+      // Rendering is triggered when data changed
+      // To force re-render if only options changed, call $refs.child.render
+      this.render();
+    },
+    dark: function() {
+      this.$nextTick(() => {
+        this.render();
+      });
+    }
+  },
   methods: {
-    /**
-     * @private
-     */
-    getSize() {
-      var width = this.viewport.clientWidth;
-      var height = this.viewport.clientHeight;
-      return { width, height };
+    handleResize(/*event*/) {
+      this.$nextTick(() => {
+        this.sizeSvg();
+      });
+    },
+    // Resize svg efficiently, without re-render, based on current BBox
+    sizeSvg() {
+      if (this.svg && this.g) {
+        const box = this.g.node().getBBox();
+        this.svg
+          .attr('width', box.width)
+          .attr('height', box.height)
+          .attr('viewBox', `${box.x} ${box.y} ${box.width} ${box.height}`);
+      }
+    },
+    getColor(i) {
+      if (!this.dark) {
+        // For Light scheme, get color in straight order
+        return d3[this.scheme][Math.max(3, this.overlap)][i + Math.max(0, 3 - this.overlap)];
+      } else {
+        // For dark scheme, need to take color in reverse order
+        let csize = Math.max(3, this.overlap);
+        let cidx = csize - 1 - (i + Math.max(0, 3 - this.overlap));
+        return d3[this.scheme][csize][cidx];
+      }
+    },
+    partition(data, radius) {
+      return d3.partition().size([2 * Math.PI, radius])(
+        d3
+          .hierarchy(data)
+          .sum(d => d.size)
+          .sort((a, b) => b.value - a.value)
+      );
     },
 
-    /**
-     * @private
-     */
-    onData(data) {
-      if (!data) {
-        this.vis.selectAll('path').remove();
-        Object.keys(this.graphNodes).forEach(k => (this.graphNodes[k] = null));
-        return;
+    // TODO To common utils
+    DOMsvg(width, height) {
+      let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('viewBox', [0, 0, width, height]);
+      svg.setAttribute('width', width);
+      svg.setAttribute('height', height);
+      return svg;
+    },
+
+    render() {
+      log.info('Rendering d3 SunburstZ ...');
+
+      // Clear whole content of container
+      this.svg = null;
+      this.g = null;
+      while (this.$refs.container.lastChild) {
+        this.$refs.container.removeChild(this.$refs.container.lastChild);
       }
 
-      this.root = hierarchy(data)
-        .sum(d => d.size)
-        .sort((a, b) => b.value - a.value);
+      let data = this.wdata.data;
 
-      this.nodes = partition()(this.root)
-        .descendants()
-        .filter(d => Math.abs(this.scaleX(d.x1 - d.x0)) > this.minAngleDisplayed);
+      // These are initial dimensions. It'll scale later after adding to DOM and based on actual BBox of parent
+      let radius = 465;
+      let width = 930;
 
-      const pathes = this.getPathes();
-      const colorGetter = this.colorGetter;
-      const mouseOver = this.mouseOver.bind(this);
-      const click = this.click.bind(this);
-      const { arcSunburst } = this;
+      let color = d3.scaleOrdinal().range(d3.quantize(d3[this.colorScheme], data.children.length + 1));
 
-      pathes
+      const root = this.partition(data, radius);
+      const aHistory = [];
+
+      let oLastZoomed = root;
+
+      root.each(d => (d.current = d));
+
+      const svg = d3
+        .select(this.DOMsvg(width, width))
+        .style('width', '100%')
+        .style('height', '100%')
+        .style('padding', '10px')
+        .style('font', '10px Roboto')
+        .style('box-sizing', 'border-box');
+
+      const g = svg.append('g');
+
+      let arc = d3
+        .arc()
+        .startAngle(d => d.x0)
+        .endAngle(d => d.x1)
+        .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))
+        .padRadius(radius / 2)
+        .innerRadius(d => d.y0)
+        .outerRadius(d => d.y1 - 1);
+
+      let paths = g
+        .append('g')
+        .attr('fill-opacity', 0.6)
+        .selectAll('path')
+        .data(root.descendants())
         .enter()
         .append('path')
-        .style('opacity', 1)
-        .on('mouseover', mouseOver)
-        .on('click', click)
-        .each(function(d) {
-          copyCurrentValues(this, d);
+        .attr('fill', d => {
+          while (d.depth > 1) d = d.parent;
+          return !d.depth ? 'none' : color(d.data.name);
         })
-        .merge(pathes)
-        .style('fill', d => colorGetter(d.data))
-        .transition('enter')
-        .duration(this.inAnimationDuration)
-        .attrTween('d', function(d, index) {
-          return arc2Tween.call(this, arcSunburst, d, index);
+        .attr('fill-opacity', d => (d.children ? 0.6 : 0.4))
+        .attr('d', arc)
+        .attr('id', function(d, i) {
+          return 'cp-' + i;
         });
 
-      pathes.exit().remove();
+      // TODO format - reconsider
+      let format = d3.format(',d');
 
-      this.graphNodes.root = this.nodes[0];
-    },
+      paths.append('title').text(
+        d =>
+          `${d
+            .ancestors()
+            .map(d => d.data.name)
+            .reverse()
+            .join('/')}\n${format(d.value)}`
+      );
 
-    /**
-     * @private
-     */
-    getPathes() {
-      return this.vis.selectAll('path').data(this.nodes, this.arcIdentification);
-    },
+      paths
+        .filter(d => d.children)
+        .style('cursor', 'pointer')
+        .on('click', clicked);
 
-    /**
-     * @private
-     */
-    resize() {
-      const { width, height } = this.getSize();
-      this.vis
-        .attr('width', width)
-        .attr('height', height)
-        .attr('transform', `translate(${width / 2}, ${height / 2} )`);
-
-      this.radius = Math.min(width, height) / 2;
-      const [scaleYMin] = this.scaleY.range();
-      this.scaleY.range([scaleYMin, this.radius]);
-
-      this.onData(this.data);
-      this.width = width;
-      this.height = height;
-    },
-
-    /**
-     * @private
-     */
-    reDraw() {
-      this.onData(this.data);
-    },
-
-    /**
-     * @private
-     */
-    mouseOver(value) {
-      this.graphNodes.mouseOver = value;
-      /**
-       * Fired when mouse is over a sunburst node.
-       * @param {Object} value - {node, sunburst} The corresponding node and sunburst component
-       */
-      this.$emit('mouseOverNode', { node: value, sunburst: this });
-    },
-
-    /**
-     * @private
-     */
-    click(value) {
-      this.graphNodes.clicked = value;
-      /**
-       * Fired when sunburst node is clicked.
-       * @param {Object} value - {node, sunburst} The corresponding node and sunburst component
-       */
-      this.$emit('clickNode', { node: value, sunburst: this });
-    },
-
-    /**
-     * Highlight the arc path leading to a given node.
-     * @param {Object} node the D3 node to highlight
-     * @param {Number} opacity opacity of the none highlighted nodes, default to 0.3
-     */
-    highlightPath(node, opacity = 0.3) {
-      const sequenceArray = node.ancestors();
-
-      this.vis
-        .selectAll('path')
-        .filter(d => sequenceArray.indexOf(d) === -1)
-        .transition()
-        .duration(this.inAnimationDuration)
-        .style('opacity', opacity);
-
-      this.vis
-        .selectAll('path')
-        .filter(d => sequenceArray.indexOf(d) >= 0)
-        .style('opacity', 1);
-
-      this.graphNodes.highlighted = node;
-    },
-
-    /**
-     * Zoom to a given node.
-     * @param {Object} node the D3 node to zoom to.
-     */
-    zoomToNode(node) {
-      this.vis
-        .transition('zoom')
-        .duration(750)
-        .tween('scale', () => {
-          const xd = interpolate(this.scaleX.domain(), [node.x0, node.x1]);
-          const yd = interpolate(this.scaleY.domain(), [node.y0, 1]);
-          const yr = interpolate(this.scaleY.range(), [node.y0 ? 20 : 0, this.radius]);
-
-          return t => {
-            this.scaleX.domain(xd(t));
-            this.scaleY.domain(yd(t)).range(yr(t));
-          };
+      const labels = g
+        .append('g')
+        .attr('pointer-events', 'none')
+        .attr('text-anchor', 'middle')
+        .selectAll('text')
+        .data(root.descendants().filter(d => d.depth))
+        .enter()
+        .append('text')
+        .attr('transform', d => labelTransform(d))
+        .attr('fill-opacity', d => +labelVisible(d))
+        .attr('dy', '0.35em')
+        .attr('clip-path', function(d, i) {
+          return 'url(#cp-' + i + ')';
         })
-        .selectAll('path')
-        .attrTween('d', nd => () => this.arcSunburst(nd));
+        .text(d => arcText(d, d.data.name));
 
-      this.graphNodes.zoomed = node;
-    },
+      function labelVisible(d) {
+        return d.x1 - d.x0 > 0 && ((d.y0 + d.y1) / 2) * (d.x1 - d.x0) > 10;
+      }
 
-    /**
-     * Reset the highlighted path
-     */
-    resetHighlight() {
-      this.vis
-        .selectAll('path')
-        .transition()
-        .duration(this.outAnimationDuration)
-        .style('opacity', 1);
-    }
-  },
+      function labelTransform(d) {
+        const x = (((d.x0 + d.x1) / 2) * 180) / Math.PI;
+        const y = (d.y0 + d.y1) / 2;
+        return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
+      }
 
-  computed: {
-    /**
-     * @private
-     */
-    actions() {
-      return {
-        highlightPath: this.highlightPath.bind(this),
-        zoomToNode: this.zoomToNode.bind(this),
-        resetHighlight: this.resetHighlight.bind(this)
-      };
-    },
+      // Label of an arc
+      function arcText(d, sKey) {
+        // TODO Consider optimizing and using
+        /*
+        var CHAR_SPACE = 7,
+          deltaAngle = d.x1 - d.x0,
+          r = Math.max(0, (d.y0 + d.y1) / 2),
+          perimeter = r * deltaAngle,
+          iMinLength = 3; // minimum length of label
+        let iMaxLength = Math.floor(perimeter / CHAR_SPACE);
+        iMaxLength = iMaxLength < iMinLength ? 0 : iMaxLength;
+        */
+        // Need to tune it better
+        return sKey; //(sKey || '').toString().slice(0, iMaxLength);
+      }
 
-    /**
-     * @private
-     */
-    colorGetter() {
-      //const colorScale = colorSchemes[this.colorScheme].scale;
-      //return d => colorScale(this.getCategoryForColor(d));
-      const colorScale = scaleOrdinal(d3ScaleChromatic.schemeCategory10);
-      return d => colorScale(this.getCategoryForColor(d));
-    }
-  },
+      function clicked(p) {
+        /**
+         * First time, mark the clicked node as zoomed;
+         * Second time, un-mark the node as zoomed.
+         * When an already zoomed node is clicked, lets zoom out to its parent or root.
+         */
+        let target;
 
-  watch: {
-    data: {
-      handler(current) {
-        this.onData(current);
-      },
-      deep: true
-    },
+        // determine actual node to highlight
+        // root will have no parent
+        if (p.depth > 1) {
+          target = p.bZoomed ? p : p.children ? p : p.parent;
+        } else {
+          target = p;
+        }
 
-    colorGetter(value) {
-      this.getPathes().style('fill', value);
-    },
+        if (target.bZoomed) {
+          delete target.bZoomed;
+          target = oLastZoomed = aHistory.pop();
 
-    minAngleDisplayed() {
-      this.reDraw();
+          if (!aHistory.length) {
+            root.bHighlighted = true;
+            target = oLastZoomed = root;
+          }
+        } else {
+          target.bZoomed = true;
+          if (oLastZoomed) {
+            aHistory.push(oLastZoomed);
+          }
+          oLastZoomed = target;
+        }
+
+        root.each(function(d) {
+          d.target = {
+            x0: Math.max(0, Math.min(1, (d.x0 - target.x0) / (target.x1 - target.x0))) * 2 * Math.PI,
+            x1: Math.max(0, Math.min(1, (d.x1 - target.x0) / (target.x1 - target.x0))) * 2 * Math.PI,
+            y0: Math.max(0, d.y0 - target.y0),
+            y1: Math.max(0, d.y1 - target.y0)
+          };
+        });
+
+        const t = g.transition().duration(750);
+
+        // Transition the data on all arcs, even the ones that aren’t visible,
+        // so that if this transition is interrupted, entering arcs will start
+        // the next transition from the desired position.
+        paths
+          .transition(t)
+          .tween('data', d => {
+            const i = d3.interpolate(d.current, d.target);
+            return t => (d.current = i(t));
+          })
+          .attrTween('d', d => () => arc(d.current));
+
+        labels
+          .transition(t)
+          .attr('fill-opacity', d => +labelVisible(d.target))
+          .attrTween('transform', d => () => labelTransform(d.current));
+      }
+
+      this.$refs.container.appendChild(svg.node());
+
+      this.svg = svg;
+      this.g = g;
+      this.sizeSvg();
     }
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.graph {
+<style>
+.db-sunburst {
+  width: 100%;
   height: 100%;
-  width: 100%;
-  display: flex;
-  flex-flow: column wrap;
-}
-
-.viewport {
-  width: 100%;
-  flex: 1 1 auto;
+  display: block;
 }
 </style>

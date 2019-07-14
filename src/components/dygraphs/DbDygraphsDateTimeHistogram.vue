@@ -6,7 +6,7 @@
 <script>
 // NOTE: WORK IN PROGRESS
 //import merge from "deepmerge";
-import DygraphInteraction from 'dygraphs';
+//import DygraphInteraction from 'dygraphs';
 import DbDygraphs from './DbDygraphs';
 export default {
   name: 'DbDygraphsDateTimeHistogram',
@@ -38,7 +38,8 @@ export default {
         legend: 'follow',
         includeZero: true,
         panEdgeFraction: 0.00000001,
-        interactionModel: DygraphInteraction.defaultInteractionModel,
+        // TODO Consider if needs to be enabled; need to import asyncronously so vuepress compiles
+        //interactionModel: DygraphInteraction.defaultInteractionModel,
         axes: {
           x: {
             drawGrid: false

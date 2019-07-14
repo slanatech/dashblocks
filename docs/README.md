@@ -19,26 +19,15 @@ features:
   details: Docker image build with fullstack app
 - title: CI/CD
   details: Travis CI
-footer: MIT Licensed | Copyright © 2018 slana.tech
+footer: MIT Licensed | Copyright © 2019 slana.tech
 pageClass: dashblocks-landing
 ---
 
 ## Quick start
 
 ```bash
-# 1. Clone the repository.
-git clone https://github.com/slanatech/vue-monorepo-boilerplate.git my-new-project
+# 1. Install
+npm install dashblocks --save
 
-# 2. Enter your newly-cloned folder
-cd my-new-project
-
-# 3. Bootstrap
-yarn run bootstrap
-
-# 4. Run Build in all packages 
-yarn run build
-
-# 5. Dev: Run Server and in parallel start UI Serve with hot reload 
-yarn run dev
 
 ```

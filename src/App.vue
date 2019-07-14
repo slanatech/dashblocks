@@ -118,6 +118,10 @@ export default {
           title: 'Samples',
           items: [
             {
+              title: 'First Dashboard',
+              href: '/sampledashboard'
+            },
+            {
               title: 'DBHorizon',
               href: '/dbhorizonsamples'
             }

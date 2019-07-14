@@ -11,7 +11,7 @@
 </template>
 <script>
 //import merge from "deepmerge";
-import DygraphInteraction from 'dygraphs';
+//import DygraphInteraction from 'dygraphs';
 //import DbDygraphs from './DbDygraphs';
 //import log from '../log';
 
@@ -44,7 +44,8 @@ export default {
         legend: 'follow',
         includeZero: true,
         panEdgeFraction: 0.00000001,
-        interactionModel: DygraphInteraction.defaultInteractionModel,
+        // TODO Consider if needs to be enabled; need to import asyncronously so vuepress compiles
+        //interactionModel: DygraphInteraction.defaultInteractionModel,
         axes: {
           x: {
             drawGrid: false
