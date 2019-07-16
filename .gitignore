@@ -3,6 +3,7 @@ node_modules
 /dist
 /demo
 /docs/.vuepress/dist
+/pages
 
 /tests/e2e/videos/
 /tests/e2e/screenshots/

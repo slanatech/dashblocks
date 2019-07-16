@@ -13,7 +13,7 @@ import DbHorizonSamples from './demo/views/samples/DbHorizonSamples';
 Vue.use(Router);
 
 export default new Router({
-  base: '/dashblocks/', //process.env.BASE_URL,
+  base: '/dashblocks/demo/', //process.env.BASE_URL,
   routes: [
     {
       path: '/',

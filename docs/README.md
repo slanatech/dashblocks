@@ -7,27 +7,23 @@ meta:
   - name: google-site-verification
     content: 1a3AJnjk7DhVoOQtRPd001OjW9bRrAgIgsIVlZApcgE
 features:
-- title: Monorepo
-  details: Managing monorepo packages with Lerna and Yarn workspaces
-- title: FullStack
-  details: UI, Server, Common module
-- title: Vue
-  details: Vue SPA using Vue-cli 3 
-- title: Vuepress
-  details: Docs using Vuepress
-- title: Docker
-  details: Docker image build with fullstack app
-- title: CI/CD
-  details: Travis CI
+- title: Declarative
+  details: Use declarative approach to define dashboard layout - Javascript object or JSON
+- title: Out of the box
+  details: Provide reasonable out of the box defaults for all chart types, such as colors
+- title: Light and Dark
+  details: Support Light and Dark themes out of the box 
+- title: Interactive
+  details: Enable interactivity by providing event handling on dashboard level
+- title: Dynamic
+  details: Streamline dynamic updates of dashboard data, for example based on user interaction with dashboard
+- title: Data Driven
+  details: Even dynamically generate Dashboard itself based on the data - thanks to declarative approach
 footer: MIT Licensed | Copyright © 2019 slana.tech
 pageClass: dashblocks-landing
 ---
+<div class="hero">
+<p class="action"><a href="/dashblocks/demo/" target="_blank" class="nav-link action-button">See the Demo →</a></p>
+</div
 
-## Quick start
-
-```bash
-# 1. Install
-npm install dashblocks --save
-
-
-```
+![sample](dashboard_dark.png)

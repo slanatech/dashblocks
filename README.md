@@ -1,4 +1,4 @@
-# dashblocks | [DEMO](https://slanatech.github.io/dashblocks)
+# dashblocks | [DOCS](https://slanatech.github.io/dashblocks) | [DEMO](https://slanatech.github.io/dashblocks/demo)
 
 #### Enable Analytics in your Apps 
 
@@ -14,6 +14,8 @@
 Dashblocks enables easily creating sophisticated interactive dashboards simply by declaring dashboard structure as json or javascript object.
 
 Dashblocks uses popular charting libraries to render chars: d3, Chart.js, Dygraphs, Plotly.js
+
+[DEMO](https://slanatech.github.io/dashblocks/demo)
 
 
 ![dashboard](screenshots/dashboard.png?raw=true)

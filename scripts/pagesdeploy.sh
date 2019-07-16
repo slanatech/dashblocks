@@ -4,7 +4,7 @@
 set -e
 
 # navigate into the build output directory
-cd demo
+cd pages
 
 git init
 git add -A
