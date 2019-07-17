@@ -23,7 +23,7 @@ footer: MIT Licensed | Copyright © 2019 slana.tech
 pageClass: dashblocks-landing
 ---
 <div class="hero">
-<p class="action"><a href="/dashblocks/demo/" target="_blank" class="nav-link action-button">See the Demo →</a></p>
+<p class="action"><a href="/demo/" target="_blank" class="nav-link action-button">See the Demo →</a></p>
 </div
 
 ![sample](dashboard_dark.png)

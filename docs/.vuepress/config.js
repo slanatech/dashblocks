@@ -10,7 +10,7 @@ const getFiles = source =>
   fs.readdirSync(source).map(name => path.join(source, name)).filter(isNotDirectory);
 
 module.exports = {
-  base: '/dashblocks/',
+  base: '/',
   locales: {
     '/': {
       lang: 'en-US',

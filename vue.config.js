@@ -16,7 +16,7 @@ function getProdExternals() {
 }
 
 module.exports = {
-  publicPath: '/dashblocks/demo/',
+  publicPath: '/demo/',
   devServer: {
     proxy: 'http://localhost:3400'
   },
