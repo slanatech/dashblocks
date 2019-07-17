@@ -5,7 +5,7 @@ actionText: Get Started →
 actionLink: /guide/
 meta:
   - name: google-site-verification
-    content: 1a3AJnjk7DhVoOQtRPd001OjW9bRrAgIgsIVlZApcgE
+    content: ypsB9NFIxGEr1b5D0BoZ0dyVzt8lLkilkI0dO755M54
 features:
 - title: Declarative
   details: Use declarative approach to define dashboard layout - Javascript object or JSON
