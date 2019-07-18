@@ -76,7 +76,7 @@
         </v-list>
       </v-navigation-drawer>
 
-      <v-content>
+      <!--<v-content>
         <v-container fluid fill-height>
           <v-layout>
             <v-flex>
@@ -84,6 +84,9 @@
             </v-flex>
           </v-layout>
         </v-container>
+      </v-content>-->
+      <v-content>
+        <router-view />
       </v-content>
     </v-app>
   </div>
@@ -170,6 +173,13 @@ export default {
           title: 'Dashboard Six',
           subtitle: '',
           href: '/dashsix'
+        },
+        {
+          icon: 'insert_chart',
+          iconClass: 'teal lighten-2 white--text',
+          title: 'Playground',
+          subtitle: '',
+          href: '/playground'
         }
       ]
     };

@@ -57,7 +57,9 @@ export default {
       return wClass;
     },
     getWidgetStyle: function() {
-      let wStyle = 'min-height: 50px; position: relative;';
+      // display:flex + width:100% below - Important ! Firefox resizing
+      // TODO Check if additional flex props needs to be set ( i.e. 0 0 auto ... )
+      let wStyle = 'min-height: 50px; position: relative;display:flex;';
       if ('style' in this.wspec) {
         wStyle += this.wspec.style;
       }
@@ -68,7 +70,9 @@ export default {
       return props; //pathOr({}, ['properties'], this.wspec);
     },
     getItemStyle: function() {
-      let iStyle = 'position: relative;min-height:100%;';
+      // display:flex + width:100% below - Important ! Firefox resizing
+      // TODO Check if additional flex props needs to be set ( i.e. 0 0 auto ... )
+      let iStyle = 'position: relative;min-height:100%;width:100%;';
       // TODO pass item-specific styles ?
       if ('height' in this.wspec) {
         iStyle += 'height:' + this.wspec.height + 'px;';

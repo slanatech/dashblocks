@@ -9,6 +9,7 @@ import ChartJsShowcase from './demo/views/ChartJsShowcase';
 import DashblocksShowcase from './demo/views/DashblocksShowcase';
 import SampleDashboard from './demo/views/SampleDashboard';
 import DbHorizonSamples from './demo/views/samples/DbHorizonSamples';
+import Playground from './demo/views/Playground';
 
 Vue.use(Router);
 
@@ -67,6 +68,11 @@ export default new Router({
       path: '/dbhorizonsamples',
       name: 'DbHorizon Samples',
       component: DbHorizonSamples
+    },
+    {
+      path: '/playground',
+      name: 'Playground',
+      component: Playground
     }
   ]
 });
