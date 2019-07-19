@@ -3129,10 +3129,6 @@ css-declaration-sorter@^4.0.1:
     postcss "^7.0.1"
     timsort "^0.3.0"
 
-css-element-queries@^1.0.2:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/css-element-queries/-/css-element-queries-1.2.0.tgz#081373d7f30302adad46b7c29b83b85f8ef8f62c"
-
 css-loader@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-1.0.1.tgz#6885bb5233b35ec47b006057da01cc640b6b79fe"
@@ -3379,6 +3375,10 @@ d3-array@1, d3-array@^1.1.1, d3-array@^1.2.0:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-1.2.4.tgz#635ce4d5eea759f6f605863dbcfc30edc737f71f"
 
+"d3-array@>=1 <=2":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-2.2.0.tgz#a9e966b8f8d78f0888d98db1fb840fc8da8ac5c7"
+
 d3-axis@1:
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/d3-axis/-/d3-axis-1.0.12.tgz#cdf20ba210cfbb43795af33756886fb3638daac9"
@@ -3496,6 +3496,13 @@ d3-random@1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/d3-random/-/d3-random-1.1.2.tgz#2833be7c124360bf9e2d3fd4f33847cfe6cab291"
 
+d3-sankey@^0.12.1:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/d3-sankey/-/d3-sankey-0.12.1.tgz#f4a655227ee90211befcd32074aeb275e73f92ba"
+  dependencies:
+    d3-array ">=1 <=2"
+    d3-shape "^1.2.0"
+
 d3-scale-chromatic@1:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/d3-scale-chromatic/-/d3-scale-chromatic-1.3.3.tgz#dad4366f0edcb288f490128979c3c793583ed3c0"
@@ -3518,7 +3525,7 @@ d3-selection@1, d3-selection@^1.1.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/d3-selection/-/d3-selection-1.4.0.tgz#ab9ac1e664cf967ebf1b479cc07e28ce9908c474"
 
-d3-shape@1:
+d3-shape@1, d3-shape@^1.2.0:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/d3-shape/-/d3-shape-1.3.5.tgz#e81aea5940f59f0a79cfccac012232a8987c6033"
   dependencies:
@@ -5611,10 +5618,6 @@ interpret@^1.0.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.2.0.tgz#d5061a6224be58e8083985f5014d844359576296"
 
-intersection-observer@^0.5.0:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.5.1.tgz#e340fc56ce74290fe2b2394d1ce88c4353ac6dfa"
-
 invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
@@ -6830,10 +6833,6 @@ lodash._reinterpolate@~3.0.0:
 lodash.clonedeep@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
-
-lodash.debounce@^4.0.8:
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
 
 lodash.defaultsdeep@^4.6.0:
   version "4.6.0"
@@ -10755,14 +10754,6 @@ vue-loader@^15.2.4, vue-loader@^15.7.0:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
-
-vue-resize-directive@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/vue-resize-directive/-/vue-resize-directive-1.2.0.tgz#4214ca8a80a425529b036ea868cad54a38f613e4"
-  dependencies:
-    css-element-queries "^1.0.2"
-    intersection-observer "^0.5.0"
-    lodash.debounce "^4.0.8"
 
 vue-router@^3.0.2:
   version "3.0.7"

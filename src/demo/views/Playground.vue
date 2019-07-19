@@ -5,6 +5,7 @@
 <script>
 import { DbData, DbDashboard } from 'dashblocks';
 import { demodashboard } from '@/demo/mixins/demodashboard';
+import energydata from '@/demo/data/energy.json';
 
 export default {
   name: 'Playground',
@@ -27,7 +28,7 @@ export default {
           {
             id: 'w1',
             type: 'DbDygraphsBar',
-            cspan: 8,
+            cspan: 16,
             height: 250,
             properties: {
               options: {
@@ -40,10 +41,10 @@ export default {
             }
           },
           {
-            id: 'w1',
-            type: 'None',
-            cspan: 8,
-            height: 250
+            id: 'w2',
+            type: 'DbSankey',
+            cspan: 16,
+            height: 800
           }
         ]
       },
@@ -68,6 +69,7 @@ export default {
       this.dbdata.setWData('w1', {
         data: dthData
       });
+      /*
       let dataOneSeries = {
         labels: ['January', 'February', 'March', 'April'],
         datasets: [
@@ -90,17 +92,9 @@ export default {
           }
         ]
       };
+      */
       this.dbdata.setWData('w2', {
-        data: JSON.parse(JSON.stringify(dataOneSeries))
-      });
-      this.dbdata.setWData('w3', {
-        data: JSON.parse(JSON.stringify(dataOneSeries))
-      });
-      this.dbdata.setWData('w4', {
-        data: JSON.parse(JSON.stringify(dataOneSeries))
-      });
-      this.dbdata.setWData('w5', {
-        data: JSON.parse(JSON.stringify(dataTwoSeries))
+        data: energydata
       });
     }
   }

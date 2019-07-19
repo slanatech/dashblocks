@@ -1,22 +1,20 @@
 /* DbSankey: Sankey visualization based on https://observablehq.com/@jarrettmeyer/sankey-with-animated-gradients
 https://observablehq.com/@d3/sankey-diagram */
 <template>
-  <div ref="container" class="db-sankey"></div>
+  <div ref="container" class="db-d3-sankey"></div>
 </template>
 <script>
-//import * as d3 from 'd3';
-//import sankey from 'd3-sankey';
-import log from '../log';
+import * as d3 from 'd3';
+import * as sankey from 'd3-sankey';
+import DOMuid from './domuid.js';
+import log from '../log.js';
 
 export default {
   name: 'DbSankey',
   props: {
-    // TODO _updated, data
-    wdata: {},
-    wspec: {},
-    dark: {
-      type: Boolean,
-      default: false
+    data: {
+      links: [],
+      nodes: []
     },
     colorScheme: {
       type: String,
@@ -27,7 +25,8 @@ export default {
     return {
       graph: null,
       svg: null,
-      g: null
+      g: null,
+      idcntr: 0
     };
   },
   mounted() {
@@ -39,13 +38,8 @@ export default {
     window.removeEventListener('resize', this.handleResize);
   },
   watch: {
-    wdata: function() {
-      // TODO ???
+    data: function() {
       // Rendering is triggered when data changed
-      // To force re-render if only options changed, call $refs.child.render
-      this.render();
-    },
-    dark: function() {
       this.$nextTick(() => {
         this.render();
       });
@@ -57,7 +51,9 @@ export default {
         this.sizeSvg();
       });
     },
+
     // Resize svg efficiently, without re-render, based on current BBox
+    // ???
     sizeSvg() {
       if (this.svg && this.g) {
         const box = this.g.node().getBBox();
@@ -79,7 +75,7 @@ export default {
 
     render() {
       log.info('Rendering d3 Sankey ...');
-      /*
+
       // Clear whole content of container
       this.svg = null;
       this.g = null;
@@ -87,7 +83,7 @@ export default {
         this.$refs.container.removeChild(this.$refs.container.lastChild);
       }
 
-      let data = this.wdata.data;
+      let data = this.data;
 
       let arrow = '\u2192';
       let duration = 250;
@@ -95,7 +91,7 @@ export default {
       let nodeWidth = 20;
       let margin = 10;
       let height = 600;
-      let width = 975;
+      let width = 1400;
       let size = [width - 2 * margin, height - 2 * margin];
 
       let color = value => {
@@ -104,7 +100,7 @@ export default {
 
       let format = value => {
         let f = d3.format(',.0f');
-        return f(value) + ' TWh';
+        return f(value);
       };
 
       let layout = sankey
@@ -112,38 +108,26 @@ export default {
         .size(size)
         .nodePadding(nodePadding)
         .nodeWidth(nodeWidth);
-      */
 
-      /*
-      graph = {
-        const graph = layout(energy);
+      let graph = layout(data);
+      graph.nodes.forEach(node => {
+        node.color = color(node.index / graph.nodes.length);
+      });
 
-        graph.nodes.forEach((node) => {
-          node.color = color(node.index / graph.nodes.length);
-        });
-
-        graph.links.forEach((link) => {
-          link.gradient = DOM.uid("gradient");
-          link.path = DOM.uid("path");
-        });
-
-        return graph;
-      }
-      */
-
-      //const svg = d3.select(DOM.svg(width, height));
+      graph.links.forEach(link => {
+        link.gradient = DOMuid('gradient');
+        link.path = DOMuid('path');
+      });
 
       // TODO this - enable
-      //const svg = d3.select(this.DOMsvg(width, width));
-      /* TODO ???
+      const svg = d3
+        .select(this.DOMsvg(width, height))
         .style('width', '100%')
         .style('height', '100%')
-        .style('padding', '10px')
+        .style('margin-bottom', '20px') // ???
         .style('font', '10px Roboto')
         .style('box-sizing', 'border-box');
-      */
 
-      /*
       const defs = svg.append('defs');
 
       // Add definitions for all of the linear gradients.
@@ -266,14 +250,18 @@ export default {
       }
 
       nodes.on('mouseover', branchAnimate).on('mouseout', branchClear);
-      */
+
       // TODO Add svg to dom
+      this.$refs.container.appendChild(svg.node());
+      this.svg = svg;
+      this.g = view;
+      this.sizeSvg();
     }
   }
 };
 </script>
 <style>
-.db-sankey {
+.db-d3-sankey {
   width: 100%;
   height: 100%;
   display: block;

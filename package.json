@@ -1,6 +1,6 @@
 {
   "name": "dashblocks",
-  "version": "0.5.12",
+  "version": "0.5.20",
   "private": false,
   "repository": {
     "type": "git",
@@ -72,6 +72,7 @@
     "chart.js": "^2.8.0",
     "chartjs-plugin-labels": "^1.1.0",
     "d3": "^5.9.2",
+    "d3-sankey": "^0.12.1",
     "datalib": "^1.9.2",
     "deepmerge": "^3.2.0",
     "dygraphs": "^2.1.0",
