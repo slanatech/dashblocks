@@ -1,4 +1,5 @@
 import DbHorizonSamples from '../../src/demo/views/samples/DbHorizonSamples';
+import DbDygraphsBarSamples from '../../src/demo/views/samples/DbDygraphsBarSamples';
 import SampleDashboard from '../../src/demo/views/SampleDashboard';
 
 export default ({
@@ -8,5 +9,6 @@ export default ({
   siteData // site metadata
 }) => {
   Vue.component('DbHorizonSamples', DbHorizonSamples);
+  Vue.component('DbDygraphsBarSamples', DbDygraphsBarSamples);
   Vue.component('SampleDashboard', SampleDashboard);
 };

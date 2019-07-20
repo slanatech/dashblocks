@@ -3,6 +3,7 @@
 </template>
 <script>
 import * as d3 from 'd3';
+import { dbStdProps } from '../../mixins/dbstdprops';
 import log from '../log';
 /**
  * D3 Horizon Chart.
@@ -21,11 +22,8 @@ import log from '../log';
  */
 export default {
   name: 'DbHorizon',
+  mixins: [dbStdProps],
   props: {
-    _updated: {
-      type: Number,
-      default: 0
-    },
     /**
      * Chart Data
      */
@@ -46,15 +44,6 @@ export default {
     colorSteps: {
       type: Number,
       default: 7
-    },
-    /**
-     * Enable dark mode
-     *
-     * `true,false`
-     */
-    dark: {
-      type: Boolean,
-      default: false
     },
     /**
      * Color scheme

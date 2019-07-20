@@ -10,32 +10,38 @@
   </db-dygraphs>
 </template>
 <script>
-//import merge from "deepmerge";
+import { dbStdProps } from '../../mixins/dbstdprops';
 //import DygraphInteraction from 'dygraphs';
-//import DbDygraphs from './DbDygraphs';
 //import log from '../log';
-
+/**
+ * Dygraphs Bar Chart.
+ * http://dygraphs.com/
+ *
+ * Dygraphs accepts data in the following format:
+ *
+ *```json
+ * [
+ *   [date:new Date(),1,1,1],
+ *   [date:new Date(),1,2,2],
+ *   [date:new Date(),1,3,3]
+ * ]
+ *```
+ *
+ * @example ../../demo/views/samples/DbDygraphsBarSamples.vue
+ */
 export default {
   name: 'DbDygraphsBar',
   components: {
-    //DbDygraphs
     DbDygraphs: () => import('./DbDygraphs')
   },
+  mixins: [dbStdProps],
   props: {
-    _updated: {
-      type: Number,
-      default: 0
-    },
     data: {
       type: Array,
       default: () => []
     },
     options: {
       type: Object
-    },
-    dark: {
-      type: Boolean,
-      default: false
     }
   },
   data() {

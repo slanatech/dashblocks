@@ -10,9 +10,7 @@ DbSankey component
 
 |Name           |Type     |Required|Default |Description
 |:--------------|:--------|:-------|:-------|:----------
-|**wdata**||false||
-|**wspec**||false||
-|**dark**|boolean|false|false|
+|**data**||false||
 |**colorScheme**|string|false|'interpolateRainbow'|
 
 ### Examples

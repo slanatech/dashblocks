@@ -127,6 +127,10 @@ export default {
             {
               title: 'DBHorizon',
               href: '/dbhorizonsamples'
+            },
+            {
+              title: 'DBDygraphsBar',
+              href: '/dbdygraphsbarsamples'
             }
           ]
         }

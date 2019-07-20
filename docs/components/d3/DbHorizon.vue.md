@@ -20,11 +20,11 @@ DbHorizon accepts data in the following format:
 
 |Name           |Type     |Required|Default |Description
 |:--------------|:--------|:-------|:-------|:----------
-|**_updated**|number|false|0|
+|**_updated**|number|false|0|Change to trigger data update.<br/>Set this to current timestamp to inform component that data has been updated.<br/>Helpful in situations when, for example, only values in array are changed.<br/>See [https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats](https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats)
+|**dark**|boolean|false|false|Enable dark mode<br/><br/>`true,false`
 |**data**|array|false|() => []|Chart Data
 |**seriesHeight**|number|false|23|Height of each series in pixels.
 |**colorSteps**|number|false|7|Number of overlapping color steps, in range 1-9
-|**dark**|boolean|false|false|Enable dark mode<br/><br/>`true,false`
 |**scheme**|string|false|'schemePuBuGn'|Color scheme<br/>Use one of Discrete Diverging color schemes from d3-scale-chromatic:<br/><br/>`schemeBrBG,schemePRGn, ...`<br/><br/>See [https://github.com/d3/d3-scale-chromatic](https://github.com/d3/d3-scale-chromatic)
 
 ### Examples
