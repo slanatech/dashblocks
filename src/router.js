@@ -10,6 +10,7 @@ import DashblocksShowcase from './demo/views/DashblocksShowcase';
 import SampleDashboard from './demo/views/SampleDashboard';
 import DbHorizonSamples from './demo/views/samples/DbHorizonSamples';
 import DbDygraphsBarSamples from './demo/views/samples/DbDygraphsBarSamples';
+import DashRidgeline from './demo/views/DashRidgeline.vue';
 import Playground from './demo/views/Playground';
 
 Vue.use(Router);
@@ -74,6 +75,11 @@ export default new Router({
       path: '/dbdygraphsbarsamples',
       name: 'DbDygraphsBar Samples',
       component: DbDygraphsBarSamples
+    },
+    {
+      path: '/dashridgeline',
+      name: 'Ridgeline',
+      component: DashRidgeline
     },
     {
       path: '/playground',

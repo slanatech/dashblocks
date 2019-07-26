@@ -1,7 +1,6 @@
 <template>
   <div :class="getDbClass()">
-    <component v-bind:is="layoutComponent" :dbspec="dbspec" :dbdata="dbdata" :dark="dark" v-on:db-event="handleDbEvent">
-    </component>
+    <component v-bind:is="layoutComponent" :dbspec="dbspec" :dbdata="dbdata" :dark="dark" v-on:db-event="handleDbEvent"> </component>
   </div>
 </template>
 

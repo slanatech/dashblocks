@@ -48,13 +48,7 @@
           </v-list-tile>
         </v-list>
         <v-list dense>
-          <v-list-group
-            v-for="item in items2"
-            :key="item.title"
-            v-model="item.active"
-            :prepend-icon="item.icon"
-            no-action
-          >
+          <v-list-group v-for="item in items2" :key="item.title" v-model="item.active" :prepend-icon="item.icon" no-action>
             <template v-slot:activator>
               <v-list-tile>
                 <v-list-tile-content>
@@ -177,6 +171,13 @@ export default {
           title: 'Dashboard Six',
           subtitle: '',
           href: '/dashsix'
+        },
+        {
+          icon: 'insert_chart',
+          iconClass: 'teal lighten-2 white--text',
+          title: 'Ridgeline',
+          subtitle: '',
+          href: '/dashridgeline'
         },
         {
           icon: 'insert_chart',

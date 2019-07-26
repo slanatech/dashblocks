@@ -56,12 +56,7 @@ export default {
         datasets: [
           {
             label: 'Data One',
-            data: [
-              { x: 10, y: 20, r: 10 },
-              { x: 20, y: 20, r: 20 },
-              { x: 30, y: 30, r: 30 },
-              { x: 100, y: 200, r: 100 }
-            ]
+            data: [{ x: 10, y: 20, r: 10 }, { x: 20, y: 20, r: 20 }, { x: 30, y: 30, r: 30 }, { x: 100, y: 200, r: 100 }]
           },
           {
             label: 'Data Two',

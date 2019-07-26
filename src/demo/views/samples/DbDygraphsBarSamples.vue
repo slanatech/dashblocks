@@ -12,12 +12,7 @@
     <br />
     <div>
       <div>Dark mode. TODO Font color in DbDygraphs</div>
-      <db-dygraphs-bar
-        :data="chartData.dthData2"
-        :dark="true"
-        class="db-dygraphs-sample"
-        style="background-color: #0f2027; color: white;"
-      ></db-dygraphs-bar>
+      <db-dygraphs-bar :data="chartData.dthData2" :dark="true" class="db-dygraphs-sample" style="background-color: #0f2027; color: white;"></db-dygraphs-bar>
     </div>
   </div>
 </template>

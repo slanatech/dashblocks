@@ -42,7 +42,7 @@ export default {
           },
           {
             id: 'w2',
-            type: 'DbSankey',
+            type: 'DbRidgeline',
             cspan: 16,
             height: 800
           }

@@ -328,15 +328,9 @@ export function generateChart(chartId, chartType) {
             var custom = (arc && arc.custom) || {};
             var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
             var arcOpts = chart.options.elements.arc;
-            var fill = custom.backgroundColor
-              ? custom.backgroundColor
-              : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-            var stroke = custom.borderColor
-              ? custom.borderColor
-              : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-            var bw = custom.borderWidth
-              ? custom.borderWidth
-              : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+            var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+            var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+            var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
             return {
               // And finally :
               text: ds.data[i] + ' ' + label,

@@ -1,5 +1,4 @@
-/* DbSankey: Sankey visualization based on https://observablehq.com/@jarrettmeyer/sankey-with-animated-gradients
-https://observablehq.com/@d3/sankey-diagram */
+/* DbSankey: Sankey visualization based on https://observablehq.com/@jarrettmeyer/sankey-with-animated-gradients https://observablehq.com/@d3/sankey-diagram */
 <template>
   <div ref="container" class="db-d3-sankey"></div>
 </template>
@@ -135,7 +134,11 @@ export default {
         .selectAll('linearGradient')
         .data(graph.links)
         .join('linearGradient')
-        .attr('id', d => d.gradient.id);
+        .attr('id', d => d.gradient.id)
+        // Important
+        // see https://stackoverflow.com/questions/21638169/svg-line-with-gradient-stroke-wont-display-straight
+        .attr('gradientUnits', 'userSpaceOnUse');
+
       gradients
         .append('stop')
         .attr('offset', 0.0)

@@ -2,6 +2,7 @@
 import DbHorizon from './d3/DbHorizon';
 import DbSunburst from './d3/DbSunburst';
 import DbSankey from './d3/DbSankey';
+import DbRidgeline from './d3/DbRidgeline';
 import {
   DbChartjsBar,
   DbChartjsHorizontalBar,
@@ -29,6 +30,7 @@ export default {
   DbHorizon,
   DbSunburst,
   DbSankey,
+  DbRidgeline,
   DbChartjsBar,
   DbChartjsHorizontalBar,
   DbChartjsDoughnut,
