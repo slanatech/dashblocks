@@ -53,10 +53,11 @@
   ],
   "main": "dist/dashblocks.common.js",
   "dependencies": {
-    "plotly.js-dist": "^1.47.3",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
-    "vuex": "^3.1.0"
+    "vuex": "^3.1.0",
+    "plotly.js-dist": "^1.47.3",
+    "dygraphs": "^2.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.6.0",
@@ -75,7 +76,6 @@
     "d3-sankey": "^0.12.1",
     "datalib": "^1.9.2",
     "deepmerge": "^3.2.0",
-    "dygraphs": "^2.1.0",
     "easy-pie-chart": "^2.1.7",
     "lint-staged": "^7.3.0",
     "loglevel": "^1.6.1",

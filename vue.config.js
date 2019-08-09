@@ -5,12 +5,17 @@ const webpack = require('webpack');
 // We will not include plotly.js-dist into lib bundle, to keep lib size reasonable.
 // plotly.js-dist is ~6M
 // App that uses dashblocks should have plotly.js-dist in it's dependencies
+// Also not including dygraphs as it must be loaded on demand
 // TODO Enable for Demo app build
 function getProdExternals() {
   return {
     'plotly.js-dist': {
       commonjs: 'plotly.js-dist',
       commonjs2: 'plotly.js-dist'
+    },
+    dygraphs: {
+      commonjs: 'dygraphs',
+      commonjs2: 'dygraphs'
     }
   };
 }
