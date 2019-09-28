@@ -3,7 +3,7 @@
 </template>
 <script>
 import * as d3 from 'd3';
-import { dbStdProps } from '../../mixins/dbstdprops';
+import { dbStdProps } from '../mixins/dbstdprops';
 import log from '../log';
 /**
  * D3 Ridgeline Chart.

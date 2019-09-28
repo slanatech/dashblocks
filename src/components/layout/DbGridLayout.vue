@@ -5,7 +5,7 @@
       v-bind:key="widget.id"
       :layoutClass="getWidgetClass(widget)"
       :wspec="widget"
-      :wdata="getWidgetData(widget)"
+      :wdata="dbdata[widget.id]"
       :style="widget.style"
       :dark="dark"
       @db-event="handleDbEvent"

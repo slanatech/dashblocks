@@ -2,7 +2,7 @@
   <db-dygraphs ref="dygraph" :_updated="_updated" :data="data" :options="graphOptions" :dark="dark" @db-event="handleDbEvent"> </db-dygraphs>
 </template>
 <script>
-import { dbStdProps } from '../../mixins/dbstdprops';
+import { dbStdProps } from '../mixins/dbstdprops';
 //import DygraphInteraction from 'dygraphs';
 //import log from '../log';
 /**

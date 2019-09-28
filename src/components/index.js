@@ -2,6 +2,7 @@ import DbData from './dbdata';
 import DbColors from './dbcolors';
 import DbUtils from './dbutils';
 import DbDashboard from './dashboard/DbDashboard';
+import { dbStdProps } from './mixins/dbstdprops';
 //import DbDygraphsBar from './dygraphs/DbDygraphsBar';
 import '../assets/scss/dashblocks.scss';
 
@@ -20,7 +21,7 @@ const DashBlocks = {
   }
 };
 
-export { DbData, DbColors, DbUtils, DbDashboard, DashBlocks };
+export { DbData, DbColors, DbUtils, DbDashboard, DashBlocks, dbStdProps };
 
 //export default DashBlocks;
 
