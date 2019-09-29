@@ -21,11 +21,12 @@ class DbData {
 
   // TODO Set / Update
   setWData(key, data) {
-    if (!(key in data)) {
-      Vue.set(this, key, data);
+    if (!(key in this)) {
+      Vue.set(this, key, { data: data });
       Vue.set(this[key], '_updated', Date.now());
     } else {
-      Vue.set(this, key, data);
+      //Vue.set(this, key, data);
+      this[key].data = data;
       this[key]['_updated'] = Date.now();
     }
     this['_updated'] = Date.now();
