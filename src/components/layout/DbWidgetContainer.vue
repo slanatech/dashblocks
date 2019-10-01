@@ -68,6 +68,7 @@ export default {
     getWidgetProperties: function() {
       let props = Object.assign({}, pathOr({}, ['properties'], this.wspec), this.wdata);
       return props; //pathOr({}, ['properties'], this.wspec);
+      //return {_updated:this.wdata._updated};
     },
     getItemStyle: function() {
       // display:flex + width:100% below - Important ! Firefox resizing

@@ -108,10 +108,19 @@ export default {
           // Update first half of the values in the first chart
           for (let i = 0; i < 50; i++) {
             comp.dbdata['w1'].data[i][1] = Math.random();
-            comp.dbdata['w3'].data[i] = Math.random();
+            //comp.dbdata['w3'].data[i] = Math.random();
           }
           comp.dbdata.touch('w1');
-          comp.dbdata.touch('w3');
+          //comp.dbdata.touch('w3');
+
+          let newData3 = [];
+          for (let i = 0; i < 100; i++) {
+            newData3.push(Math.random());
+          }
+
+          comp.dbdata.setWData('w3', {
+            data: newData3
+          });
 
           // Add new value to second chart
           let x = new Date(sTS + cntr * 3600 * 1000);
