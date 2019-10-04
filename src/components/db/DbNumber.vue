@@ -2,25 +2,30 @@
 <template>
   <div class="dbc-number">
     <div class="dbc-n-hdr">
-      <span class="text-md">{{ title }}</span> <span class="db-badge db-float-right">{{ badge }}</span>
+      <span class="text-md">{{ title }}</span>
     </div>
     <div class="dbc-n-content">
       <div v-if="hasTrend" class="dbc-n-layer">
+        <!--
         <db-trend-line
           :_updated="_updated"
           :data="trend"
           :gradient="trendGradient"
           :strokeWidth="4"
-          style="height: 80%; width: 80%;position: absolute;top:20%; right: 0%;"
+          style="height: 100%; width: 100%; position: absolute;top:30%; right: -10%;"
         ></db-trend-line>
+        -->
       </div>
       <div v-if="hasIcon" class="dbc-n-layer">
         <div class="db-v-center"><i :class="iconClass"></i></div>
       </div>
-      <div class="dbc-n-layer" style="text-align: right;">
-        <div class="db-v-center">
-          <div class="dbc-n-value">{{ value }}</div>
-          <div class="text-sm text-faded">200 OK Requests per Second: {{ hasTrend }}</div>
+      <div class="dbc-n-layer" style="margin-top: 5px;">
+        <div>
+          <div class="dbc-n-value">{{ formattedValue }}</div>
+          <div class="text-sm text-faded">{{ subtitle }}</div>
+          <div>
+            <db-trend-line :_updated="_updated" :data="trend" :gradient="trendGradient" :strokeWidth="6" :height="50"></db-trend-line>
+          </div>
         </div>
       </div>
     </div>
@@ -56,6 +61,7 @@ export default {
       default: ''
     },
     title: String,
+    subtitle: String,
     badge: {
       type: String,
       default: ''
@@ -89,6 +95,9 @@ export default {
     },
     iconClass() {
       return this.icon + ' dbc-number-icon ' + this.getRangeClass();
+    },
+    formattedValue() {
+      return this.value.toFixed(2);
     }
   },
   methods: {
