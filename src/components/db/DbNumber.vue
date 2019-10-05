@@ -1,30 +1,25 @@
 /* DashBlocks: Number widget */
 <template>
   <div class="dbc-number">
-    <div class="dbc-n-hdr">
-      <span class="text-md">{{ title }}</span>
-    </div>
     <div class="dbc-n-content">
-      <div v-if="hasTrend" class="dbc-n-layer">
-        <!--
-        <db-trend-line
-          :_updated="_updated"
-          :data="trend"
-          :gradient="trendGradient"
-          :strokeWidth="4"
-          style="height: 100%; width: 100%; position: absolute;top:30%; right: -10%;"
-        ></db-trend-line>
-        -->
+      <div v-if="hasIcon" class="dbc-n-layer" style="text-align: right;">
+        <div class=""><i :class="iconClass"></i></div>
       </div>
-      <div v-if="hasIcon" class="dbc-n-layer">
-        <div class="db-v-center"><i :class="iconClass"></i></div>
+      <div v-if="hasPct" class="dbc-n-layer" style="text-align: right;">
+        <div style="float: right;">
+          <db-easy-pie :_updated="_updated" :value="percentValue" :lineWidth="8" :size="86" fontSize="14px"></db-easy-pie>
+        </div>
       </div>
-      <div class="dbc-n-layer" style="margin-top: 5px;">
+      <div class="dbc-n-main">
+        <div class="dbc-n-hdr">
+          <span class="text-md">{{ title }}</span>
+        </div>
         <div>
           <div class="dbc-n-value">{{ formattedValue }}</div>
           <div class="text-sm text-faded">{{ subtitle }}</div>
           <div>
-            <db-trend-line :_updated="_updated" :data="trend" :gradient="trendGradient" :strokeWidth="6" :height="50"></db-trend-line>
+            <!--<db-trend-line :_updated="_updated" :data="trend" :gradient="trendGradient" :strokeWidth="4" :height="50"></db-trend-line>-->
+            <db-sparkline :_updated="_updated" :data="trend"></db-sparkline>
           </div>
         </div>
       </div>
@@ -34,10 +29,15 @@
 
 <script>
 import DbTrendLine from './DbTrendLine';
+import DbSparkline from './DbSparkline';
+import DbEasyPie from './DbEasyPie';
+import { sprintf } from 'sprintf-js';
 export default {
   name: 'DbNumber',
   components: {
-    DbTrendLine
+    DbTrendLine,
+    DbSparkline,
+    DbEasyPie
   },
   props: {
     _updated: {
@@ -45,6 +45,14 @@ export default {
       default: 0
     },
     value: {
+      type: Number,
+      default: 0
+    },
+    format: {
+      type: String,
+      default: '%d'
+    },
+    total: {
       type: Number,
       default: 0
     },
@@ -91,26 +99,37 @@ export default {
       return this.ranges && Array.isArray(this.ranges) && this.ranges.length == 2;
     },
     hasIcon() {
+      // TODO if we have trend, and don't have explicit icon, show trend up / down
       return this.icon !== '';
+    },
+    hasPct() {
+      return this.total > 0;
     },
     iconClass() {
       return this.icon + ' dbc-number-icon ' + this.getRangeClass();
     },
     formattedValue() {
-      return this.value.toFixed(2);
+      return sprintf(this.format, this.value);
+    },
+    percentValue() {
+      if (this.total > 0) {
+        return this.value / this.total;
+      } else {
+        return 0;
+      }
     }
   },
   methods: {
     getRangeClass() {
       if (!this.hasRanges) {
-        return 'bg-neutral';
+        return 'text-neutral';
       }
       if (this.value <= this.ranges[0]) {
-        return 'bg-success';
+        return 'text-success';
       } else if (this.value <= this.ranges[1]) {
-        return 'bg-warning';
+        return 'text-warning';
       } else {
-        return 'bg-alarm';
+        return 'text-alarm';
       }
     }
   }
@@ -135,6 +154,12 @@ export default {
     height: 100%;
   }
 
+  .dbc-n-main {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
   .dbc-n-value {
     font-size: 210%;
   }
@@ -144,11 +169,11 @@ export default {
   }
 
   .dbc-number-icon {
-    font-size: 210%;
+    font-size: 250%;
     padding: 6px;
     border-radius: 4px;
     color: white;
-    opacity: 0.6;
+    opacity: 0.4;
   }
 }
 </style>

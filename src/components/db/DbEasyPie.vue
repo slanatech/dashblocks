@@ -2,12 +2,13 @@
 <template>
   <div class="dbc-easy-pie" ref="chart" :data-percent="percent">
     <div class="inner-text" :style="{ fontSize: fontSize, lineHeight: pieSize + 'px' }">
-      <slot> {{ percent }} % </slot>
+      <slot> {{ percent }}% </slot>
     </div>
   </div>
 </template>
 <script>
 import EasyPieChart from 'easy-pie-chart';
+import { dbStdProps } from '../mixins/dbstdprops';
 export default {
   name: 'DbEasyPie',
   data() {
@@ -16,14 +17,12 @@ export default {
       pieSize: 150
     };
   },
+  mixins: [dbStdProps],
   props: {
-    /*
-    wspec: {
-      type: Object,
-      default: () => this.defaultOptions
+    value: {
+      type: Number,
+      default: 0
     },
-    */
-    wdata: Object,
     barColor: {
       type: String,
       default: '#ef1e25'
@@ -47,7 +46,7 @@ export default {
   },
   computed: {
     percent() {
-      return this.wdata.value;
+      return this.value.toFixed(2);
     }
   },
   watch: {
@@ -65,7 +64,9 @@ export default {
   },
   mounted() {
     window.addEventListener('resize', this.handleResize);
-    this.render();
+    this.$nextTick(() => {
+      this.render();
+    });
   },
   beforeDestroy: function() {
     window.removeEventListener('resize', this.handleResize);
@@ -134,6 +135,8 @@ export default {
 .dbc-easy-pie {
   position: relative;
   text-align: center;
+  width: 100%;
+  height: 100%;
 }
 .dbc-easy-pie .inner-text {
   position: absolute;

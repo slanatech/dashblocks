@@ -18,6 +18,7 @@ import DbNumber from './db/DbNumber';
 import DbEasyPie from './db/DbEasyPie';
 import DbTrendLine from './db/DbTrendLine';
 import DbTrendBar from './db/DbTrendBar';
+import DbSparkline from './db/DbSparkline';
 /* TODO Revisit Plotly
 import DbPlotly from './plotly/DbPlotly';
 import DbPlotlyLine from './plotly/DbPlotlyLine';
@@ -46,6 +47,7 @@ export default {
   DbEasyPie,
   DbTrendLine,
   DbTrendBar,
+  DbSparkline,
   /*
   DbPlotly,
   DbPlotlyLine,

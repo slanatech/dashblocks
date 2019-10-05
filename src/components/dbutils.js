@@ -31,6 +31,23 @@ class DbUtils {
     }
   }
 
+  // Set path in object base, if not exist. names: ['prop1','prop2',...]
+  pathSet(base, names) {
+    for (let i = 0; i < names.length; i++) {
+      base = base[names[i]] = base[names[i]] || {};
+    }
+    return base;
+  }
+
+  // Checks path in object base, if not exist. names: ['prop1','prop2',...]
+  pathOr(def, names, base) {
+    for (let i = 0; i < names.length; i++) {
+      if (!base[names[i]]) return def;
+      base = base[names[i]];
+    }
+    return base;
+  }
+
   // DATE-TIME UTILS /////////////////////////////// //
 
   // Get from, to and duration in milliseconds based from and to string values
