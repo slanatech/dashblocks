@@ -1,5 +1,5 @@
 <template>
-  <div class="db-grid-layout">
+  <div :class="getClass()">
     <db-widget-container
       v-for="widget in dbspec.widgets"
       v-bind:key="widget.id"
@@ -41,6 +41,10 @@ export default {
     */
   },
   methods: {
+    getClass: function() {
+      let layoutSize = pathOr(16, ['layout', 'size'], this.dbspec);
+      return layoutSize === 16 ? 'db-grid-layout' : 'db-grid-layout-12';
+    },
     getWidgetClass: function(widget) {
       // TODO - wspan ?
       let wClass = '';

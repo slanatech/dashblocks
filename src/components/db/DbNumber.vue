@@ -2,6 +2,9 @@
 <template>
   <div class="dbc-number">
     <div class="dbc-n-content">
+      <div v-if="hasTrend" class="dbc-n-layer">
+        <db-sparkline :_updated="_updated" :data="trend" :height="60" style="position:absolute;bottom:0;width:100%;"></db-sparkline>
+      </div>
       <div v-if="hasIcon" class="dbc-n-layer" style="text-align: right;">
         <div class=""><i :class="iconClass"></i></div>
       </div>
@@ -19,8 +22,8 @@
           <div class="text-sm text-faded">{{ subtitle }}</div>
           <div>
             <!--<db-trend-line :_updated="_updated" :data="trend" :gradient="trendGradient" :strokeWidth="4" :height="50"></db-trend-line>-->
-            <db-sparkline :_updated="_updated" :data="trend"></db-sparkline>
           </div>
+          <div class="text-xxs text-faded dbc-n-footer">{{ footer }}</div>
         </div>
       </div>
     </div>
@@ -56,6 +59,7 @@ export default {
       type: Number,
       default: 0
     },
+    // TODO TrendMax
     trend: {
       type: Array,
       default: () => []
@@ -70,6 +74,15 @@ export default {
     },
     title: String,
     subtitle: String,
+    qualifier: {
+      type: String,
+      default: ''
+    },
+    footer: {
+      type: String,
+      default: ''
+    },
+    // TODO ???
     badge: {
       type: String,
       default: ''
@@ -109,11 +122,11 @@ export default {
       return this.icon + ' dbc-number-icon ' + this.getRangeClass();
     },
     formattedValue() {
-      return sprintf(this.format, this.value);
+      return sprintf(this.format, this.value, this.qualifier);
     },
     percentValue() {
       if (this.total > 0) {
-        return this.value / this.total;
+        return (this.value / this.total) * 100;
       } else {
         return 0;
       }
@@ -162,6 +175,9 @@ export default {
 
   .dbc-n-value {
     font-size: 210%;
+  }
+  .dbc-n-footer {
+    height: 18px;
   }
 
   .dbc-n-subtitle {
