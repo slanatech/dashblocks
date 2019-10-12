@@ -3,7 +3,7 @@
   <div class="dbc-number">
     <div class="dbc-n-content">
       <div v-if="hasTrend" class="dbc-n-layer">
-        <db-sparkline :_updated="_updated" :data="trend" :height="60" style="position:absolute;bottom:0;width:100%;"></db-sparkline>
+        <db-sparkline :_updated="_updated" :data="trend" :max="trendMax" :height="60" style="position:absolute;bottom:0;width:100%;"></db-sparkline>
       </div>
       <div v-if="hasIcon" class="dbc-n-layer" style="text-align: right;">
         <div class=""><i :class="iconClass"></i></div>
@@ -59,10 +59,13 @@ export default {
       type: Number,
       default: 0
     },
-    // TODO TrendMax
     trend: {
       type: Array,
       default: () => []
+    },
+    trendMax: {
+      type: Number,
+      default: null
     },
     ranges: {
       type: Array,

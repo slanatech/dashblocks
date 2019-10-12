@@ -24,6 +24,10 @@ export default {
       type: Number,
       default: 60
     },
+    max: {
+      type: Number,
+      default: null
+    },
     data: {
       type: Array,
       default: () => []
@@ -73,13 +77,15 @@ export default {
         .domain([0, this.data.length - 1])
         .range([0, canvas.width]);
 
+      // TODO Support negative y
       let yMin = d3.min(this.data);
-      let yMax = d3.max(this.data);
+      let yMax = this.max || d3.max(this.data);
       if (yMax === 0 && yMin === 0) {
-        // correct if we have all 0s, so nothing is drawn
+        // adjust if we have all 0s, so nothing is drawn
         yMax = 1;
         yMin = 0;
       } else if (yMin > 0) {
+        // adjust to make sure we're based off 0 y
         yMin = 0;
       }
       let ly = d3
@@ -94,16 +100,16 @@ export default {
       let line = d3
         .line()
         .x(d => lx(d.x))
-        .y(d => ly(d.y));
-      //.curve(d3.curveCardinal);
+        .y(d => ly(d.y))
+        .curve(d3.curveCardinal);
       line.context(ctx);
 
       let area = d3
         .area()
         .x(d => lx(d.x))
         .y1(d => ly(d.y))
-        .y0(canvas.height);
-      //.curve(d3.curveCardinal);
+        .y0(canvas.height)
+        .curve(d3.curveCardinal);
       area.context(ctx);
 
       ctx.beginPath();
