@@ -10,7 +10,7 @@
       </div>
       <div v-if="hasPct" class="dbc-n-layer" style="text-align: right;">
         <div style="float: right;">
-          <db-easy-pie :_updated="_updated" :value="percentValue" :lineWidth="8" :size="86" fontSize="14px"></db-easy-pie>
+          <db-easy-pie :_updated="_updated" :value="percentValue" :percentRanges="percentRanges" :lineWidth="8" :size="86" fontSize="14px"></db-easy-pie>
         </div>
       </div>
       <div class="dbc-n-main">
@@ -68,6 +68,10 @@ export default {
       default: null
     },
     ranges: {
+      type: Array,
+      default: () => []
+    },
+    percentRanges: {
       type: Array,
       default: () => []
     },
@@ -188,8 +192,8 @@ export default {
   }
 
   .dbc-number-icon {
-    font-size: 250%;
-    padding: 6px;
+    font-size: 180%;
+    padding: 2px;
     border-radius: 4px;
     color: white;
     opacity: 0.4;

@@ -42,11 +42,18 @@ export default {
     size: { type: Number, default: 0 },
     rotate: { type: Number, default: 0 },
     duration: { type: Number, default: 1000 },
-    animated: { type: Boolean, default: true }
+    animated: { type: Boolean, default: true },
+    percentRanges: {
+      type: Array,
+      default: () => []
+    }
   },
   computed: {
     percent() {
       return this.value.toFixed(2);
+    },
+    hasRanges() {
+      return Array.isArray(this.percentRanges) && this.percentRanges.length > 0;
     }
   },
   watch: {
@@ -93,6 +100,16 @@ export default {
         this.render();
       });
     },
+    getBarColor(percent) {
+      if (!this.hasRanges) {
+        return this.barColor;
+      }
+      for (let range of this.percentRanges) {
+        if (range.value > percent) {
+          return range.color;
+        }
+      }
+    },
     render() {
       if (!this.$refs.chart) {
         return;
@@ -103,7 +120,7 @@ export default {
         this.$refs.chart.removeChild(this.$refs.chart.lastChild);
       }
       this.pieChart = new EasyPieChart(this.$refs.chart, {
-        barColor: this.barColor,
+        barColor: this.getBarColor,
         trackColor: this.trackColor,
         scaleColor: this.scaleColor,
         scaleLength: this.scaleLength,
