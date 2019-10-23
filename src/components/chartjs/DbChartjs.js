@@ -128,7 +128,8 @@ export function generateChart(chartId, chartType) {
       // Make a full copy of data:
       // Chartjs augments datasets with _meta data, which may lead to watch loop
       // as well as, updating properties passed to component is not a good idea
-      this.chartData = JSON.parse(JSON.stringify(this.data));
+      // heck if this.data is even defined
+      this.chartData = JSON.parse(JSON.stringify(this.data || {}));
       this.preProcess(true);
       this.renderChart(this.chartData, this.chartOptions);
     },
@@ -183,6 +184,7 @@ export function generateChart(chartId, chartType) {
 
         for (let idx = 0; idx < this.data.datasets.length; idx++) {
           let ds = this.data.datasets[idx];
+          // TODO Fix Note: if data was not initialized properly, datasets could be undefined
           if (idx < this.chartData.datasets.length) {
             // Preserve _meta which is generated and maintained by chartjs
             /// Merge in new data / props passed via data prop
