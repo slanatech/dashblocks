@@ -10,7 +10,15 @@
       </div>
       <div v-if="hasPct" class="dbc-n-layer" style="text-align: right;">
         <div style="float: right;">
-          <db-easy-pie :_updated="_updated" :value="percentValue" :percentRanges="percentRanges" :lineWidth="8" :size="86" fontSize="14px"></db-easy-pie>
+          <db-easy-pie
+            :_updated="_updated"
+            :value="percentValue"
+            :percentRanges="percentRanges"
+            :lineWidth="8"
+            :size="86"
+            :dark="dark"
+            fontSize="14px"
+          ></db-easy-pie>
         </div>
       </div>
       <div class="dbc-n-main">
@@ -34,6 +42,7 @@
 import DbTrendLine from './DbTrendLine';
 import DbSparkline from './DbSparkline';
 import DbEasyPie from './DbEasyPie';
+import { dbStdProps } from '../mixins/dbstdprops';
 import { sprintf } from 'sprintf-js';
 export default {
   name: 'DbNumber',
@@ -42,11 +51,8 @@ export default {
     DbSparkline,
     DbEasyPie
   },
+  mixins: [dbStdProps],
   props: {
-    _updated: {
-      type: Number,
-      default: 0
-    },
     value: {
       type: Number,
       default: 0
@@ -103,11 +109,8 @@ export default {
   },
   /*
   watch: {
-    wdata: {
-      handler(newVal, oldVal) {
-        console.log(`wdata prop changed ${JSON.stringify(oldVal)} -> ${JSON.stringify(newVal)}`);
-      },
-      deep: true
+    dark: function() {
+      this.scheduleUpdate(true);
     }
   },
   */

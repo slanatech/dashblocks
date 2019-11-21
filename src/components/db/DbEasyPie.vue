@@ -33,7 +33,7 @@ export default {
     },
     trackColor: {
       type: String,
-      default: '#f2f2f2'
+      default: null
     },
     scaleColor: { type: String, default: '#dfe0e0' },
     scaleLength: { type: Number, default: 5 },
@@ -54,6 +54,12 @@ export default {
     },
     hasRanges() {
       return Array.isArray(this.percentRanges) && this.percentRanges.length > 0;
+    },
+    epTrackColor() {
+      if (this.trackColor) {
+        return this.trackColor;
+      }
+      return this.dark ? '#37474f' : '#f2f2f2';
     }
   },
   watch: {
@@ -67,6 +73,11 @@ export default {
     animated(val) {
       this.pieChart.options.animate.enabled = val;
       this.update(this.percent);
+    },
+    dark() {
+      this.$nextTick(() => {
+        this.render();
+      });
     }
   },
   mounted() {
@@ -121,7 +132,7 @@ export default {
       }
       this.pieChart = new EasyPieChart(this.$refs.chart, {
         barColor: this.getBarColor,
-        trackColor: this.trackColor,
+        trackColor: this.epTrackColor,
         scaleColor: this.scaleColor,
         scaleLength: this.scaleLength,
         lineCap: this.lineCap,

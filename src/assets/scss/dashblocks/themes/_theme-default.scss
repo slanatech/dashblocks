@@ -10,7 +10,7 @@
 .db-dashboard.db-theme-default.db-dark {
   color: $light;
   & .db-widget-container {
-    border: 1px solid material-color('grey', '800');
+    border: 1px solid material-color('blue-grey', '900');
   }
 
   & .dygraph-axis-label {
