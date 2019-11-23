@@ -3,6 +3,7 @@
 </template>
 <script>
 import { dbStdProps } from '../mixins/dbstdprops';
+import dbColors from '../dbcolors';
 //import DygraphInteraction from 'dygraphs';
 //import log from '../log';
 /**
@@ -71,7 +72,9 @@ export default {
       var points = e.points;
       var y_bottom = e.dygraph.toDomYCoord(0);
 
-      ctx.fillStyle = e.color;
+      let opColor = dbColors.hex2RGBA(e.color, 1);
+      ctx.fillStyle = opColor; //e.color;
+      ctx.strokeStyle = opColor; //e.color;
 
       // Find the minimum separation between x-values.
       // This determines the bar width.

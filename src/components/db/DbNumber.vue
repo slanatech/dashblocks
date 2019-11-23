@@ -23,15 +23,15 @@
       </div>
       <div class="dbc-n-main">
         <div class="dbc-n-hdr">
-          <span class="text-md">{{ title }}</span>
+          <span class="text-md db-txt-faded">{{ title }}</span>
         </div>
         <div>
-          <div class="dbc-n-value">{{ formattedValue }}</div>
-          <div class="text-sm text-faded">{{ subtitle }}</div>
+          <div class="dbc-n-value db-txt-highlight">{{ formattedValue }}</div>
+          <div class="text-sm db-txt-faded">{{ subtitle }}</div>
           <div>
             <!--<db-trend-line :_updated="_updated" :data="trend" :gradient="trendGradient" :strokeWidth="4" :height="50"></db-trend-line>-->
           </div>
-          <div class="text-xxs text-faded dbc-n-footer">{{ footer }}</div>
+          <div class="text-xxs db-txt-faded dbc-n-footer">{{ footer }}</div>
         </div>
       </div>
     </div>
@@ -145,7 +145,7 @@ export default {
   methods: {
     getRangeClass() {
       if (!this.hasRanges) {
-        return 'text-neutral';
+        return 'db-txt-faded';
       }
       if (this.value <= this.ranges[0]) {
         return 'text-success';

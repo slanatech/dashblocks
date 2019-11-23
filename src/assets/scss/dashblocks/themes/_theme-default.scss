@@ -5,12 +5,31 @@
 
 .db-dashboard.db-theme-default {
   @include db-dashboard;
+
+  & .db-txt-faded {
+    color: material-color('grey', '700');
+  }
+
+  & .db-txt-highlight {
+    color: material-color('grey', '800');
+  }
+
 }
 
 .db-dashboard.db-theme-default.db-dark {
-  color: $light;
+  color: $faded;
+
+  & .db-txt-faded {
+    color: material-color('grey', '700');
+  }
+
+  & .db-txt-highlight {
+    color: material-color('grey', '500');
+  }
+
   & .db-widget-container {
-    border: 1px solid material-color('blue-grey', '900');
+    border: 0px;
+    background: material-color('grey', '900');
   }
 
   & .dygraph-axis-label {

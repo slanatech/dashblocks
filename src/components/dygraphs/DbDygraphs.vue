@@ -3,26 +3,20 @@
 </template>
 <script>
 import dbColors from '../dbcolors';
+import { dbStdProps } from '../mixins/dbstdprops';
 import 'dygraphs/dist/dygraph.css';
 import log from '../log';
 let Dygraphs = null;
 export default {
   name: 'DbDygraphs',
+  mixins: [dbStdProps],
   props: {
-    _updated: {
-      type: Number,
-      default: 0
-    },
     data: {
       type: Array,
       default: () => []
     },
     options: {
       type: Object
-    },
-    dark: {
-      type: Boolean,
-      default: false
     }
   },
   data() {
