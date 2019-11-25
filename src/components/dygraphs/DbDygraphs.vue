@@ -30,6 +30,7 @@ export default {
     // Augment passed options with defaults for Dygraphs
     graphOptions: {
       get() {
+        // filter out proprietary options
         return Object.assign({}, this.defaultOptions, this.options);
       },
       set() {
@@ -156,7 +157,7 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="scss">
 .db-dygraphs {
   width: 100%;
   height: 100%;
@@ -173,14 +174,27 @@ export default {
   text-align: left;
 }
 .dygraph-legend {
-  background-color: rgba(255, 255, 255, 0.85) !important;
+  background-color: rgba(255, 255, 255, 0.85);
   padding: 4px;
   border: 1px solid #e0e0e0;
   border-radius: 2px;
-  box-shadow: 2px 2px 2px #888;
   pointer-events: none;
   width: 190px;
   font-size: 12px;
   position: relative;
+}
+
+.db-dark {
+  & .dygraph-legend {
+    color: #e0e0e0;
+    background-color: rgba(69, 90, 100, 0.5);
+    padding: 4px;
+    border: 1px solid #263238;
+    border-radius: 2px;
+    pointer-events: none;
+    width: 190px;
+    font-size: 12px;
+    position: relative;
+  }
 }
 </style>

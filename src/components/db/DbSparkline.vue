@@ -6,6 +6,7 @@
 </template>
 <script>
 import * as d3 from 'd3';
+import dbColors from '../dbcolors';
 export default {
   name: 'DbSparkline',
   components: {},
@@ -115,7 +116,9 @@ export default {
       ctx.beginPath();
       //line(pointsData);
       area(pointsData);
-      ctx.fillStyle = 'rgba(0, 255, 0, 0.2)';
+      //ctx.fillStyle = 'rgba(0, 255, 0, 0.2)';
+      //ctx.fillStyle = dbColors.hex2RGBA('#607d8b',0.3); // Dark
+      ctx.fillStyle = dbColors.hex2RGBA('#78909c', 0.2); // Light
       ctx.fill();
       //ctx.stroke();
     }
