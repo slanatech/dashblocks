@@ -12,11 +12,13 @@ function getProdExternals() {
     'plotly.js-dist': {
       commonjs: 'plotly.js-dist',
       commonjs2: 'plotly.js-dist'
-    },
+    }
+    /*
     dygraphs: {
       commonjs: 'dygraphs',
       commonjs2: 'dygraphs'
     }
+    */
   };
 }
 
