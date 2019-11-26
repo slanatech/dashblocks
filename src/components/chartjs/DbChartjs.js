@@ -89,7 +89,12 @@ export function generateChart(chartId, chartType) {
           },
           legend: {
             labels: {
-              fontColor: this.dark ? '#FFF' : '#000' // TODO Get from dbcolors
+              fontColor: this.dark ? '#AAA' : '#666' // TODO Get from dbcolors
+            }
+          },
+          plugins: {
+            labels: {
+              fontColor: this.dark ? '#AAA' : '#666' // TODO Get from dbcolors
             }
           }
         };
@@ -281,35 +286,8 @@ export function generateChart(chartId, chartType) {
         );
       },
 
-      /*
-      scalesSSS: {
-        // TODO Only set up for specific chart types !
-        xAxes: [
-          {
-            gridLines: {
-              color: 'rgba(255, 255, 255, 0.1)',
-              zeroLineColor: '#EEE'
-            },
-            ticks: {
-              fontColor: this.getAxesColor()
-            }
-          }
-        ],
-        yAxes: [
-          {
-            gridLines: {
-              color: 'rgba(255, 255, 255, 0.2)'
-            },
-            ticks: {
-              fontColor: this.getAxesColor()
-            }
-          }
-        ]
-      }
-       */
-
       getAxesColor() {
-        return this.dark ? '#FFF' : '#666';
+        return this.dark ? '#BBB' : '#666'; // TODO Get from dbcolors
       },
       addPlugin(plugin) {
         this.$data._plugins.push(plugin);

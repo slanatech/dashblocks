@@ -35,6 +35,10 @@ export default {
     },
     options: {
       type: Object
+    },
+    opacity: {
+      type: Number,
+      default: 0.6
     }
   },
   data() {
@@ -58,9 +62,7 @@ export default {
     // Augment passed options with defaults for this chart type
     graphOptions: {
       get() {
-        // eslint-disable-next-line
-        const { dbOpacity, ...dygraphsOptions } = this.options;
-        return Object.assign({}, this.defaultOptions, dygraphsOptions);
+        return Object.assign({}, this.defaultOptions, this.options);
       },
       set() {
         /*noop*/
@@ -74,8 +76,7 @@ export default {
       var points = e.points;
       var y_bottom = e.dygraph.toDomYCoord(0);
 
-      let opacity = this.options.dbOpacity || 0.6;
-      let opColor = dbColors.hex2RGBA(e.color, opacity);
+      let opColor = dbColors.hex2RGBA(e.color, this.opacity);
       ctx.fillStyle = opColor; //e.color;
       ctx.strokeStyle = opColor; //e.color;
 
