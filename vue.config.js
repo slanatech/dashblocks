@@ -24,9 +24,11 @@ function getProdExternals() {
 
 module.exports = {
   publicPath: '/demo/',
+
   devServer: {
     proxy: 'http://localhost:3400'
   },
+
   configureWebpack: {
     externals: process.env.NODE_ENV === 'production' ? getProdExternals() : {},
     plugins: [
@@ -38,5 +40,14 @@ module.exports = {
         dashblocks: path.resolve(__dirname, 'src/components/')
       }
     }
-  }
+  },
+
+  pluginOptions: {
+    quasar: {
+      importStrategy: 'kebab',
+      rtlSupport: false
+    }
+  },
+
+  transpileDependencies: ['quasar']
 };
