@@ -1,14 +1,12 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header class="text-grey-4 sws-toolbar-bg" height-hint="98">
+    <q-header class="text-grey-4 db-toolbar" height-hint="98">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="leftShown = !leftShown" />
 
         <q-toolbar-title>
-          swagger-stats
+          dashblocks
         </q-toolbar-title>
-
-        <q-btn dense flat round icon="menu" @click="rightShown = !rightShown" />
 
         <q-toggle v-model="dark" icon="brightness_medium">
           <q-tooltip anchor="bottom right" self="center middle">Dark Mode</q-tooltip>
@@ -18,9 +16,11 @@
           <q-tooltip anchor="bottom right" self="center middle">Slide show</q-tooltip>
         </q-toggle>
 
+        <!--
         <q-btn dense flat size="md" round icon="refresh" @click="performRefresh" />
-
         <q-btn-toggle v-model="refreshTimeout" text-color="blue-grey-8" toggle-text-color="grey-4" size="md" dense flat :options="refreshOptions" />
+        -->
+        <q-btn dense flat round icon="menu" @click="rightShown = !rightShown" />
       </q-toolbar>
     </q-header>
 
@@ -38,9 +38,34 @@
             <q-item-label>{{ item.title }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator></q-separator>
-        <q-btn :ripple="false" class="full-width" flat :icon="miniState ? 'chevron_right' : 'chevron_left'" size="md" @click="toggleMiniState" />
       </q-list>
+      <q-expansion-item
+        :content-inset-level="0.3"
+        v-for="menuSection in menuSections"
+        v-bind:key="menuSection.title"
+        :icon="menuSection.icon"
+        :label="menuSection.title"
+        :class="`ei-${menuSection.title}`"
+        expand-separator
+      >
+        <q-tooltip anchor="top right" self="center middle" :target="`.ei-${menuSection.title} i`">{{ menuSection.title }}</q-tooltip>
+        <q-list>
+          <q-item clickable v-ripple v-for="item in menuSection.items" v-bind:key="item.link" :to="item.link" exact>
+            <q-item-section avatar>
+              <q-icon :name="item.icon" size="xs">
+                <q-tooltip anchor="top right" self="center middle">
+                  {{ item.title }}
+                </q-tooltip>
+              </q-icon>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{ item.title }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-expansion-item>
+      <q-separator></q-separator>
+      <q-btn :ripple="false" class="full-width" flat :icon="miniState ? 'chevron_right' : 'chevron_left'" size="md" @click="toggleMiniState" />
     </q-drawer>
 
     <q-drawer v-model="rightShown" side="right" bordered>
@@ -49,7 +74,16 @@
 
     <q-page-container>
       <transition :name="transitionName">
-        <router-view />
+        <q-page class="db-page">
+          <q-toolbar style="margin: 4px 4px 4px 0px;">
+            <q-icon class="text-primary" name="trending_up" size="md" />
+            <!--<q-avatar :icon="icon" color="primary" text-color="white" size="md"/>-->
+            <q-toolbar-title> {{ currentRouteName }} </q-toolbar-title>
+            <q-space></q-space>
+            <div class="text-caption">by <a href="https://dashblocks.io" target="blank">dashblocks</a></div>
+          </q-toolbar>
+          <router-view />
+        </q-page>
       </transition>
     </q-page-container>
   </q-layout>
@@ -70,17 +104,34 @@ export default {
       transitionName: '',
       testColors: null,
       menuItems: [
-        { title: 'Summary', link: '/', icon: 'trending_up' },
-        { title: 'Requests', link: '/requests', icon: 'sync_alt' },
-        { title: 'Errors', link: '/errors', icon: 'error' },
-        { title: 'API', link: '/api', icon: 'code' },
-        { title: 'API Operation', link: '/apiop', icon: 'settings_ethernet' },
-        { title: 'API Responses', link: '/apiresponses', icon: 'pie_chart' },
-        { title: 'Rates & Durations', link: '/rates', icon: 'schedule' },
-        { title: 'Payload', link: '/payload', icon: 'swap_vert' },
-        { title: 'Last Errors', link: '/lasterrors', icon: 'error_outline' },
-        { title: 'Longest Requests', link: '/longestrequests', icon: 'hourglass_empty' }
+        { title: 'Dashboard Showcase', link: '/', icon: 'trending_up' },
+        { title: 'Chart.JS Showcase', link: '/chartjs', icon: 'pie_chart' },
+        { title: 'Dashboard Three', link: '/dashthree', icon: 'pie_chart' },
+        { title: 'Dashboard Four', link: '/dashfour', icon: 'pie_chart' },
+        { title: 'Dashboard Five', link: '/dashfive', icon: 'pie_chart' },
+        { title: 'Dashboard Six', link: '/dashsix', icon: 'pie_chart' },
+        { title: 'Dygraphs Dynamic', link: '/dygraphsdynamic', icon: 'schedule' }
       ],
+      menuSections: [
+        {
+          title: 'Experimental',
+          icon: 'thumbs_up_down',
+          items: [
+            { title: 'Playground', link: '/playground', icon: 'waves' },
+            { title: 'Ridgeline', link: '/dashridgeline', icon: 'waves' }
+          ]
+        },
+        {
+          title: 'Samples',
+          icon: 'toc',
+          items: [
+            { title: 'First Dashboard', link: '/sampledashboard', icon: 'code' },
+            { title: 'DbHorizon', link: '/dbhorizonsamples', icon: 'code' },
+            { title: 'DbDygraphsBar', link: '/dbdygraphsbarsamples', icon: 'code' }
+          ]
+        }
+      ],
+      /*
       refreshOptions: [
         { icon: 'pause', value: 0 },
         { label: '1s', value: 1000 },
@@ -89,15 +140,19 @@ export default {
         { label: '30s', value: 30000 },
         { label: '1m', value: 60000 }
       ],
+      */
       rotateEnabled: false,
       rotateCurrent: -1,
-      rotateOptions: ['/', '/requests', '/errors', '/api', '/apiresponses', '/rates', '/payload']
+      rotateOptions: ['/', '/chartjs', '/dashthree', '/dashfour', '/dashsix', '/dygraphsdynamic']
     };
   },
   computed: {
     ...mapState({
       rotateTrigger: state => state.rotateTrigger
     }),
+    currentRouteName() {
+      return this.$route.name;
+    },
     refreshTimeout: {
       get() {
         return this.$store.state.refreshTimeout;
