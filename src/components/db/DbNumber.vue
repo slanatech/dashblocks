@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import DbTrendLine from './DbTrendLine';
 import DbSparkline from './DbSparkline';
 import DbEasyPie from './DbEasyPie';
 import { dbStdProps } from '../mixins/dbstdprops';
@@ -47,7 +46,6 @@ import { sprintf } from 'sprintf-js';
 export default {
   name: 'DbNumber',
   components: {
-    DbTrendLine,
     DbSparkline,
     DbEasyPie
   },

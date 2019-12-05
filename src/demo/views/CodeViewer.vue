@@ -11,9 +11,7 @@ export default {
   name: 'CodeViewer',
   props: {
     lang: String,
-    theme: String,
-    height: true,
-    width: true
+    theme: String
   },
   data: function() {
     return {

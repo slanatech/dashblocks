@@ -42,7 +42,13 @@ export default {
         data: [0, 0, 0, 100, 80, 3, 4, 3, 2, 10]
       });
       this.dbdata.setWData('w2', {
-        data: [{ value: 0, title: '' }, { value: 1, title: 'test1' }, { value: 5, title: 'test5' }, { value: 2, title: 'test2' }, { value: 1, title: 'test1' }]
+        data: [
+          { value: 0, title: '' },
+          { value: 1, title: 'test1' },
+          { value: 5, title: 'test5' },
+          { value: 2, title: 'test2' },
+          { value: 1, title: 'test1' }
+        ]
       });
       this.dbdata.setWData('w4', {
         value: 56500,
