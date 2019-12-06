@@ -47,6 +47,8 @@
         :label="menuSection.title"
         :class="`ei-${menuSection.title}`"
         expand-separator
+        v-model="menuSection.expanded"
+        v-on:click="setMiniState(false)"
       >
         <q-tooltip anchor="top right" self="center middle" :target="`.ei-${menuSection.title} i`">{{ menuSection.title }}</q-tooltip>
         <q-list>
@@ -68,8 +70,8 @@
       <q-btn :ripple="false" class="full-width" flat :icon="miniState ? 'chevron_right' : 'chevron_left'" size="md" @click="toggleMiniState" />
     </q-drawer>
 
-    <q-drawer v-model="rightShown" side="right" bordered>
-      OPA
+    <q-drawer v-model="rightShown" side="right" bordered overlay :width="600">
+      <code-viewer></code-viewer>
     </q-drawer>
 
     <q-page-container>
@@ -92,10 +94,11 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import DbColors from '../../components/dbcolors';
+import CodeViewer from '../views/CodeViewer.vue';
 
 export default {
-  name: 'SwsUxLayout',
-
+  name: 'DbUxLayout',
+  components: { CodeViewer },
   data() {
     return {
       miniState: true,
@@ -116,6 +119,7 @@ export default {
         {
           title: 'Experimental',
           icon: 'thumbs_up_down',
+          expanded: false,
           items: [
             { title: 'Playground', link: '/playground', icon: 'waves' },
             { title: 'Ridgeline', link: '/dashridgeline', icon: 'waves' }
@@ -124,6 +128,7 @@ export default {
         {
           title: 'Samples',
           icon: 'toc',
+          expanded: false,
           items: [
             { title: 'First Dashboard', link: '/sampledashboard', icon: 'code' },
             { title: 'DbHorizon', link: '/dbhorizonsamples', icon: 'code' },
@@ -217,12 +222,24 @@ export default {
     }),
     toggleMiniState() {
       this.miniState = !this.miniState;
+      if (this.miniState) {
+        // collapse all sections, when switching to mini
+        for (let section of this.menuSections) {
+          section.expanded = false;
+        }
+      }
       // need to wait a bit till it fully expands/collapses
       this.$nextTick(() => {
         setTimeout(() => {
           window.dispatchEvent(new Event('resize'));
         }, 200);
       });
+    },
+    setMiniState(newState) {
+      if (this.miniState === newState) {
+        return;
+      }
+      this.toggleMiniState();
     },
     handleLeftLayout(state) {
       console.log(`Left Layout ! ${state}`);

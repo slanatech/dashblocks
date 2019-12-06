@@ -1,7 +1,17 @@
 <template>
-  <div :style="{ position: 'absolute', height: '100%', width: '100%' }">
-    <v-btn fixed dark fab top right color="pink" @click="handleUpdateSpec"> <v-icon>refresh</v-icon> </v-btn>
-    <div ref="editor" :style="{ position: 'absolute', height: '100%', width: '100%' }"></div>
+  <div class="fit column">
+    <!--<v-btn fixed dark fab top right color="pink" @click="handleUpdateSpec"> <v-icon>refresh</v-icon> </v-btn>-->
+    <div class="col-auto">
+      <q-toolbar style="margin: 4px 4px 4px 0px;">
+        <q-icon class="text-primary" name="code" size="md" />
+        <q-toolbar-title>Dashboard Definition</q-toolbar-title>
+        <q-space />
+        <q-btn round color="accent" size="sm" icon="save" @click="handleUpdateSpec" />
+      </q-toolbar>
+    </div>
+    <div class="col-grow" style="background-color: antiquewhite;">
+      <div ref="editor" :style="{ height: '100%', width: '100%' }"></div>
+    </div>
   </div>
 </template>
 <script>
