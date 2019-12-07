@@ -37,7 +37,7 @@ module.exports = {
     ],
     resolve: {
       alias: {
-        dashblocks: path.resolve(__dirname, 'src/components/')
+        dashblocks: path.resolve(__dirname, 'src/index.esm.js')
       }
     }
   },

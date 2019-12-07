@@ -4,6 +4,8 @@ import DbUtils from './dbutils';
 import DbDashboard from './dashboard/DbDashboard';
 import { dbStdProps } from './mixins/dbstdprops';
 //import DbDygraphsBar from './dygraphs/DbDygraphsBar';
+// ???
+import DbWidgets from '../dbwidgets';
 import '../assets/scss/dashblocks.scss';
 
 const DashBlocks = {

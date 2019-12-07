@@ -1,26 +1,18 @@
 <template>
   <div :class="getClass()" :style="getWidgetStyle()">
-    <component
-      v-bind:is="wspec.type"
-      :wspec="wspec"
-      :wdata="wdata"
-      v-bind="getWidgetProperties()"
-      :style="getItemStyle()"
-      :dark="dark"
-      v-on:db-event="handleDbEvent"
-    >
-    </component>
+    <component v-bind:is="wspec.type" :wspec="wspec" :wdata="wdata" v-bind="getWidgetProperties()" :style="getItemStyle()" :dark="dark" v-on:db-event="handleDbEvent"> </component>
   </div>
 </template>
 
 <script>
 import pathOr from 'ramda/es/pathOr';
+// [sv2] TODO remove
 // Imports all item components, then whatever is specified in dashboard will be used dynamically
-import DbWidgets from '../dbwidgets';
+// import DbWidgets from '../dbwidgets';
 import log from '../log';
 export default {
   name: 'DbWidgetContainer',
-  components: DbWidgets,
+  // components: DbWidgets,
   props: {
     layoutClass: String,
     wspec: Object,

@@ -25,7 +25,7 @@
 
 ##  Pages  
 
-- [ ] github pages with doc - vuepress
+- [x] github pages with doc - vuepress
 - [x] [Demo project](https://slanatech.github.io/dashblocks) 
 
 
@@ -61,11 +61,11 @@
        
 
 ### Dygraphs
-- [ ] Showcase dashboard
+- [x] Showcase dashboard
 
 ### Dashblocks
-- [ ] Number 
-- [ ] Percent
+- [x] Number 
+- [x] Percent
 - [ ] Multiple values - rows with sparklines
 - [ ] Showcase dashboard
 

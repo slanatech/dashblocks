@@ -23,11 +23,17 @@
     "test": "yarn run test:unit"
   },
   "main": "dist/dashblocks.common.js",
+  "module": "src/index.esm.js",
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
   "files": [
     "dist/*",
     "src/assets/*",
     "src/components/*",
-    "public/*",
+    "components.js",
+    "index.esm.js",
     "package.json",
     "README.md",
     "CONTRIBUTING.md",

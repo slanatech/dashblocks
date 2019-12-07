@@ -1,4 +1,3 @@
-/* DbEasyPie: Easy-Pie-Chart based on https://github.com/rendro/easy-pie-chart */
 <template>
   <div class="dbc-easy-pie" ref="chart" :data-percent="percent">
     <div class="inner-text" :style="{ fontSize: fontSize, lineHeight: pieSize + 'px' }">
@@ -7,6 +6,7 @@
   </div>
 </template>
 <script>
+/* DbEasyPie: Easy-Pie-Chart based on https://github.com/rendro/easy-pie-chart */
 import EasyPieChart from 'easy-pie-chart';
 import { dbStdProps } from '../mixins/dbstdprops';
 export default {

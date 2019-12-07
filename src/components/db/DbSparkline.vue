@@ -1,10 +1,12 @@
-/* DbTrendLine: Trend Line using https://github.com/QingWei-Li/vue-trend * TODO Height / Width as props */
 <template>
   <div ref="chart" style="height:60px;">
     <canvas ref="canvas" style="position: absolute;"> </canvas>
   </div>
 </template>
 <script>
+/* DbTrendLine: Trend Line using https://github.com/QingWei-Li/vue-trend
+ * TODO Height / Width as props
+ */
 import * as d3 from 'd3';
 import dbColors from '../dbcolors';
 export default {
