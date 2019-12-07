@@ -3,17 +3,7 @@ import DbHorizon from './d3/DbHorizon';
 import DbSunburst from './d3/DbSunburst';
 import DbSankey from './d3/DbSankey';
 import DbRidgeline from './d3/DbRidgeline';
-import {
-  DbChartjsBar,
-  DbChartjsHorizontalBar,
-  DbChartjsDoughnut,
-  DbChartjsLine,
-  DbChartjsPie,
-  DbChartjsPolarArea,
-  DbChartjsRadar,
-  DbChartjsBubble,
-  DbChartjsScatter
-} from './chartjs/DbChartjs';
+import { DbChartjsBar, DbChartjsHorizontalBar, DbChartjsDoughnut, DbChartjsLine, DbChartjsPie, DbChartjsPolarArea, DbChartjsRadar, DbChartjsBubble, DbChartjsScatter } from './chartjs/DbChartjs';
 import DbNumber from './db/DbNumber';
 import DbEasyPie from './db/DbEasyPie';
 import DbTrendLine from './db/DbTrendLine';
@@ -29,7 +19,7 @@ import DbDygraphsLine from './dygraphs/DbDygraphsLine';
 import DbDygraphsSparkLine from './dygraphs/DbDygraphsSparkLine';
 import DbDygraphsDateTimeHistogram from './dygraphs/DbDygraphsDateTimeHistogram';
 
-export default {
+export {
   DbHorizon,
   DbSunburst,
   DbSankey,

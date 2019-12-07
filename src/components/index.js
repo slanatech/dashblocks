@@ -5,12 +5,18 @@ import DbDashboard from './dashboard/DbDashboard';
 import { dbStdProps } from './mixins/dbstdprops';
 //import DbDygraphsBar from './dygraphs/DbDygraphsBar';
 // ???
-import DbWidgets from '../dbwidgets';
+import * as dbComponents from './dbwidgets';
 import '../assets/scss/dashblocks.scss';
 
 const DashBlocks = {
   install(Vue) {
     Vue.component('DbDashboard', DbDashboard);
+
+    Object.keys(dbComponents).forEach(key => {
+      const c = dbComponents[key];
+      Vue.component(key, c);
+    });
+
     //Vue.component('DbDygraphsBar', DbDygraphsBar);
     /*
     Vue.component('db-dygraphs-bundle', function(resolve) {
