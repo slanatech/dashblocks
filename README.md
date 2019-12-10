@@ -1,6 +1,8 @@
-# dashblocks | [DOCS](https://slanatech.github.io/dashblocks) | [DEMO](https://slanatech.github.io/dashblocks/demo)
+# dashblocks 
 
-#### Enable Analytics in your Apps 
+####  [https://dashblocks.io](dashblocks.io) | [DOCS](https://slanatech.github.io/dashblocks) | [DEMO](https://slanatech.github.io/dashblocks/demo)
+
+### Enable Analytics in your Apps 
 
 ![](https://img.shields.io/badge/vue-2.x-brightgreen.svg)
 [![npm version](https://badge.fury.io/js/dashblocks.svg)](https://badge.fury.io/js/dashblocks)

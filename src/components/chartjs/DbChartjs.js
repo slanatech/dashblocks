@@ -1,12 +1,10 @@
-import Chart from 'chart.js';
-// eslint-disable-next-line
-import ChartjsPluginLabels from 'chartjs-plugin-labels';
 import dbColors from '../dbcolors';
 import dbUtils from '../dbutils';
 import log from '../log';
 import merge from 'deepmerge';
 
-// TODO Issue - does not resize properly in Firefox
+// Chart.js to be imported asynchronously
+let Chart = null;
 
 export function generateChart(chartId, chartType) {
   return {
@@ -136,7 +134,17 @@ export function generateChart(chartId, chartType) {
       // heck if this.data is even defined
       this.chartData = JSON.parse(JSON.stringify(this.data || {}));
       this.preProcess(true);
-      this.renderChart(this.chartData, this.chartOptions);
+      import('chart.js').then(module => {
+        log.info('chart.js: imported');
+        Chart = module.default;
+        import('chartjs-plugin-labels').then(mp => {
+          this.$nextTick(() => {
+            this.renderChart(this.chartData, this.chartOptions);
+          });
+        });
+      });
+
+      //this.renderChart(this.chartData, this.chartOptions);
     },
 
     methods: {
