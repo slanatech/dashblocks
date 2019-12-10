@@ -24,7 +24,10 @@
   },
   "main": "dist/dashblocks.common.js",
   "module": "src/index.esm.js",
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
   "files": [
     "dist/*",
     "src/assets/*",

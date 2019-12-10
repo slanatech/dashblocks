@@ -1,5 +1,5 @@
 <template>
-  <div class="dbc-easy-pie" ref="chart" :data-percent="percent">
+  <div class="db-easy-pie" ref="chart" :data-percent="percent">
     <div class="inner-text" :style="{ fontSize: fontSize, lineHeight: pieSize + 'px' }">
       <slot> {{ percent }}% </slot>
     </div>
@@ -159,20 +159,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-.dbc-easy-pie {
-  position: relative;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-}
-.dbc-easy-pie .inner-text {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  text-align: center;
-  display: block;
-}
-</style>
