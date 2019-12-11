@@ -2,6 +2,7 @@ import dbColors from '../dbcolors';
 import dbUtils from '../dbutils';
 import log from '../log';
 import merge from 'deepmerge';
+import { dbStdProps } from '../mixins/dbstdprops';
 
 // Chart.js to be imported asynchronously
 let Chart = null;
@@ -28,11 +29,9 @@ export function generateChart(chartId, chartType) {
       );
     },
 
+    mixins: [dbStdProps],
+
     props: {
-      _updated: {
-        type: Number,
-        default: 0
-      },
       chartId: {
         default: chartId,
         type: String
@@ -57,10 +56,6 @@ export function generateChart(chartId, chartType) {
         default() {
           return [];
         }
-      },
-      dark: {
-        default: false,
-        type: Boolean
       },
       data: Object,
       options: {
