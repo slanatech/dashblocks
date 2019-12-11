@@ -39,7 +39,7 @@ export default {
     },
     defaultOptions: function() {
       return {
-        colors: dbColors.getColors(this.dark),
+        colors: dbColors.getColors(this.dark, this.colorScheme),
         animatedZooms: true,
         labelsDiv: this.$refs.dbdylabels,
         legend: 'follow',

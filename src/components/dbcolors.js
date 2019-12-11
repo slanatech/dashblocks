@@ -103,45 +103,13 @@ let g2 = [
 ];
 
 // eslint-disable-next-line
-let g3 = [
-  '#3F6833',
-  '#967302',
-  '#2F575E',
-  '#99440A',
-  '#58140C',
-  '#052B51',
-  '#511749',
-  '#3F2B5B',
-  '#E0F9D7',
-  '#FCEACA',
-  '#CFFAFF',
-  '#F9E2D2',
-  '#FCE2DE',
-  '#BADFF4',
-  '#F9D9F9',
-  '#DEDAF7'
-];
+let g3 = ['#3F6833', '#967302', '#2F575E', '#99440A', '#58140C', '#052B51', '#511749', '#3F2B5B', '#E0F9D7', '#FCEACA', '#CFFAFF', '#F9E2D2', '#FCE2DE', '#BADFF4', '#F9D9F9', '#DEDAF7'];
 
 // rgb(126, 178, 109)
 // #7EB26D
 
 // eslint-disable-next-line
-const carbonDarkR = [
-  '#007d79',
-  '#ff7eb6',
-  '#fa4d56',
-  '#fff1f1',
-  '#6fdc8c',
-  '#4589ff',
-  '#d12771',
-  '#d2a106',
-  '#08bdba',
-  '#bae6ff',
-  '#ba4e00',
-  '#d4bbff',
-  '#8a3ffc',
-  '#33b1ff'
-];
+const carbonDarkR = ['#007d79', '#ff7eb6', '#fa4d56', '#fff1f1', '#6fdc8c', '#4589ff', '#d12771', '#d2a106', '#08bdba', '#bae6ff', '#ba4e00', '#d4bbff', '#8a3ffc', '#33b1ff'];
 
 // eslint-disable-next-line
 const diverging1 = ['#a50026', '#d73027', '#f46d43', '#fdae61', '#fee090', '#ffffbf', '#e0f3f8', '#abd9e9', '#74add1', '#4575b4', '#313695'];
@@ -150,23 +118,38 @@ const diverging2 = ['#8e0152', '#c51b7d', '#de77ae', '#f1b6da', '#fde0ef', '#f7f
 // eslint-disable-next-line
 const diverging3 = ['#a50026', '#d73027', '#f46d43', '#fdae61', '#fee08b', '#ffffbf', '#d9ef8b', '#a6d96a', '#66bd63', '#1a9850', '#006837'];
 
-/* DashBlocks Colors */
+/* Default Dashblocks Color Scheme
+ */
+const defaultColorScheme = {
+  light: d3ScaleChromatic.schemeTableau10,
+  dark: grafanaColors
+};
+
+/* DashBlocks Colors
+ *  App may define multiple color schemes.
+ *  "default" is always defined, and used if no colorScheme prop  is passed to the component
+ *  colorScheme: <name> is standard prop for components
+ *  palette defines both light and dark sets
+ * */
 class DbColors {
   constructor() {
-    // TODO //
+    // Expose d3ScaleChromatic so color sets for schemes can be generated
+    this.d3ScaleChromatic = d3ScaleChromatic;
+    this.d3Color = d3Color;
+    // Expose Const set of colors
+    this.grafanaColors = grafanaColors;
+    // Color Schemes. Default Color scheme is always available, and used by default by all components.
+    this.colorSchemes = {
+      default: defaultColorScheme
+    };
+    // TODO remove
     this.spectralDiverging = d3ScaleChromatic.schemeSpectral[4];
     this.a = d3ScaleChromatic.schemeRdYlBu[6];
     this.b = this.a.reverse();
   }
 
-  // TODO getColors by "palette"
-  // App may define multiple palettes.
-  // "default" is always defined, and used if no palette name is passed to the chart
-  // colorPalette: <name> is standard prop for chart components
-  // palette defines both light and dark sets
-  // plus more, like alarm / normal / warning colors
-
-  getColors(dark) {
+  /* TODO Deprecated, remove
+  getColorsOld(dark) {
     //return dark ? d3ScaleChromatic.schemePastel1 : d3ScaleChromatic.schemeSet1;
     //return dark ? grafanaColors : d3ScaleChromatic.schemeCategory10;
     //return dark ? d3ScaleChromatic.schemeTableau10 : d3ScaleChromatic.schemeCategory10;
@@ -181,6 +164,23 @@ class DbColors {
 
     return dark ? grafanaColors : d3ScaleChromatic.schemeTableau10;
   }
+  */
+
+  setColorScheme(name, colorScheme) {
+    this.colorSchemes[name] = colorScheme;
+  }
+
+  getColorScheme(name) {
+    let schemeName = name || 'default';
+    return schemeName in this.colorSchemes ? this.colorSchemes[schemeName] : this.colorSchemes['default'];
+  }
+
+  getColors(dark, name) {
+    dark = dark || false;
+    name = name || 'default';
+    let colorScheme = this.getColorScheme(name) || defaultColorScheme;
+    return dark ? colorScheme['dark'] : colorScheme['light'];
+  }
 
   hex2RGBA(hex, opacity) {
     let c = d3Color.color(hex);
@@ -191,20 +191,3 @@ class DbColors {
 
 let dbColors = new DbColors();
 export default dbColors;
-
-//const defaultColors = d3ScaleChromatic.schemeDark2;
-// D3 - https://github.com/d3/d3-scale-chromatic/blob/master/src/categorical/category10.js
-/*
-const defaultColorsA = [
-  '#1f77b4', // muted blue
-  '#ff7f0e', // safety orange
-  '#2ca02c', // cooked asparagus green
-  '#d62728', // brick red
-  '#9467bd', // muted purple
-  '#8c564b', // chestnut brown
-  '#e377c2', // raspberry yogurt pink
-  '#7f7f7f', // middle gray
-  '#bcbd22', // curry yellow-green
-  '#17becf' // blue-teal
-];
-*/

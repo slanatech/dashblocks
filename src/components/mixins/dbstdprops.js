@@ -19,6 +19,16 @@ export const dbStdProps = {
     dark: {
       type: Boolean,
       default: false
+    },
+    /**
+     * Color Scheme Name
+     * App may define multiple color schemes for different charts
+     * and use this prop to specify which colorScheme to use
+     * default: "default" - refers to default dashblocks colorScheme which is always defined
+     */
+    colorScheme: {
+      type: String,
+      default: 'default'
     }
   }
 };

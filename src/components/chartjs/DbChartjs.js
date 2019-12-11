@@ -123,7 +123,7 @@ export function generateChart(chartId, chartType) {
       },
       dark: function() {
         log.debug('DbChartjs: dark prop changed');
-        this.scheduleUpdate(false, true);
+        this.scheduleUpdate(true, true);
       }
     },
 
@@ -131,7 +131,7 @@ export function generateChart(chartId, chartType) {
       // Make a full copy of data:
       // Chartjs augments datasets with _meta data, which may lead to watch loop
       // as well as, updating properties passed to component is not a good idea
-      // heck if this.data is even defined
+      // check if this.data is even defined
       this.chartData = JSON.parse(JSON.stringify(this.data || {}));
       this.preProcess(true);
       import('chart.js').then(module => {

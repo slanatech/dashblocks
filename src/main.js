@@ -4,7 +4,7 @@ import router from './router';
 import store from './store';
 
 // Import all
-import { DashBlocks } from 'dashblocks';
+import { DashBlocks, dbColors } from 'dashblocks';
 import * as dashblocksComponents from 'dashblocks';
 
 Vue.use(DashBlocks, {
@@ -16,6 +16,16 @@ import './css.js';
 import './quasar';
 
 Vue.config.productionTip = false;
+
+// Set up Color Schemes for Dashblocks
+function setupColorSchemes() {
+  dbColors.setColorScheme('barChartDiverging', {
+    light: dbColors.d3ScaleChromatic.schemeSpectral[4],
+    dark: dbColors.d3ScaleChromatic.schemeRdYlBu[6]
+  });
+}
+
+setupColorSchemes();
 
 new Vue({
   router,

@@ -28,6 +28,7 @@ export default {
             cspan: 16,
             height: 220,
             properties: {
+              colorScheme: 'barChartDiverging',
               options: {
                 stackedGraph: true,
                 title: 'Traffic over time',
