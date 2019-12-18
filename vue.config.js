@@ -30,7 +30,7 @@ module.exports = {
   },
 
   configureWebpack: {
-    externals: process.env.NODE_ENV === 'production' ? getProdExternals() : {},
+    //externals: process.env.NODE_ENV === 'production' ? getProdExternals() : {},
     plugins: [
       // Ignore all locale files of moment.js
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
@@ -44,10 +44,9 @@ module.exports = {
 
   pluginOptions: {
     quasar: {
-      importStrategy: 'kebab',
-      rtlSupport: false
+      importStrategy: 'manual',
+      treeShake: false
     }
   },
-
   transpileDependencies: ['quasar']
 };
