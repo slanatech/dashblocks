@@ -22,8 +22,22 @@ features:
 footer: MIT Licensed | Copyright © 2019 slana.tech
 pageClass: dashblocks-landing
 ---
+
+<br/>
+<div style="text-align: center;width: 100%;">
+  <a class="github-button" href="https://github.com/slanatech" data-size="large" aria-label="Follow @slanatech on GitHub">Follow</a>
+  <a class="github-button" href="https://github.com/slanatech/dashblocks" data-icon="octicon-star" data-size="large" aria-label="Star slanatech/dashblocks on GitHub">Star</a>
+  <a class="github-button" href="https://github.com/slanatech/dashblocks/fork" data-icon="octicon-repo-forked" data-size="large" aria-label="Fork slanatech/dashblocks on GitHub">Fork</a>
+</div>
+<br/>
+
 <div class="hero">
 <p class="action"><a href="/demo/" target="_blank" class="nav-link action-button">See the Demo →</a></p>
-</div
+</div>
 
 ![sample](dashboard_dark.png)
+
+
+<ClientOnly>
+  <githubbuttons/>
+</ClientOnly>
