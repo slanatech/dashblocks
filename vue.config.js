@@ -39,14 +39,22 @@ module.exports = {
       alias: {
         dashblocks: path.resolve(__dirname, 'src/index.esm.js')
       }
+    },
+    module: {
+      rules: [
+        {
+          sideEffects: true
+        }
+      ]
     }
   },
 
   pluginOptions: {
     quasar: {
       importStrategy: 'manual',
-      treeShake: false
+      treeShake: true
     }
-  },
-  transpileDependencies: ['quasar']
+  }
+
+  //transpileDependencies: ['quasar']
 };

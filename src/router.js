@@ -17,7 +17,7 @@ import Playground from './demo/views/Playground';
 Vue.use(Router);
 
 export default new Router({
-  base: '/',
+  //base: '/',
   //mode: 'history',
   routes: [
     {
