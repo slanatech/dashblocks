@@ -23,7 +23,8 @@ export default {
     return {
       graph: null,
       needUpdate: false,
-      needOptionsUpdate: false
+      needOptionsUpdate: false,
+      optionsChanged: false
     };
   },
   computed: {
@@ -61,17 +62,25 @@ export default {
   watch: {
     _updated: function() {
       log.info('_updated prop changed');
-      this.scheduleUpdate(false);
+      this.scheduleUpdate();
     },
     data: {
       handler() {
         log.info('data prop changed');
-        this.scheduleUpdate(false);
+        this.scheduleUpdate();
+      },
+      deep: true
+    },
+    options: {
+      handler() {
+        this.optionsChanged = true;
+        this.scheduleUpdate();
       },
       deep: true
     },
     dark: function() {
-      this.scheduleUpdate(true);
+      this.optionsChanged = true;
+      this.scheduleUpdate();
     }
   },
   methods: {
@@ -93,9 +102,8 @@ export default {
       let idx = 0;
       return this.data.map(x => [idx++, x]);
     },
-    scheduleUpdate(optionsUpdate) {
+    scheduleUpdate() {
       this.needUpdate = true;
-      this.needOptionsUpdate = optionsUpdate;
       this.$nextTick(() => {
         this.update();
       });
@@ -106,10 +114,10 @@ export default {
         return;
       }
       this.needUpdate = false;
-      if (this.needOptionsUpdate) {
+      if (this.optionsChanged) {
+        this.optionsChanged = false;
         log.info('DbDygraphs: updating options ...');
         this.graph.updateOptions(this.graphOptions);
-        this.needOptionsUpdate = false;
       }
       log.info('DbDygraphs: updating data ...');
       this.graph.updateOptions({ file: this.getData() });
