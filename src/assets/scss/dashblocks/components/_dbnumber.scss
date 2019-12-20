@@ -1,0 +1,43 @@
+.db-number {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+
+  .db-n-content {
+    width: 100%;
+    flex: 2;
+    position: relative;
+  }
+
+  .db-n-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .db-n-main {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .db-n-value {
+    font-size: 210%;
+  }
+  .db-n-footer {
+    height: 18px;
+  }
+
+  .db-n-subtitle {
+    font-size: 100%;
+  }
+
+  .db-n-icon {
+    font-size: 180%;
+    padding: 2px;
+    border-radius: 4px;
+    color: white;
+    opacity: 0.4;
+  }
+}

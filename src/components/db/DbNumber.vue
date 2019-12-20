@@ -1,37 +1,29 @@
 /* DashBlocks: Number widget */
 <template>
-  <div class="dbc-number">
-    <div class="dbc-n-content">
-      <div v-if="hasTrend" class="dbc-n-layer">
+  <div class="db-number">
+    <div class="db-n-content">
+      <div v-if="hasTrend" class="db-n-layer">
         <db-sparkline :_updated="_updated" :data="trend" :max="trendMax" :height="60" style="position:absolute;bottom:0;width:100%;"></db-sparkline>
       </div>
-      <div v-if="hasIcon" class="dbc-n-layer" style="text-align: right;">
+      <div v-if="hasIcon" class="db-n-layer" style="text-align: right;">
         <div class=""><i :class="iconClass"></i></div>
       </div>
-      <div v-if="hasPct" class="dbc-n-layer" style="text-align: right;">
+      <div v-if="hasPct" class="db-n-layer" style="text-align: right;">
         <div style="float: right;">
-          <db-easy-pie
-            :_updated="_updated"
-            :value="percentValue"
-            :percentRanges="percentRanges"
-            :lineWidth="8"
-            :size="86"
-            :dark="dark"
-            fontSize="14px"
-          ></db-easy-pie>
+          <db-easy-pie :_updated="_updated" :value="percentValue" :percentRanges="percentRanges" :lineWidth="8" :size="86" :dark="dark" fontSize="14px"></db-easy-pie>
         </div>
       </div>
-      <div class="dbc-n-main">
-        <div class="dbc-n-hdr">
+      <div class="db-n-main">
+        <div class="db-n-hdr">
           <span class="text-md db-txt-faded">{{ title }}</span>
         </div>
         <div>
-          <div class="dbc-n-value db-txt-highlight">{{ formattedValue }}</div>
+          <div class="db-n-value db-txt-highlight">{{ formattedValue }}</div>
           <div class="text-sm db-txt-faded">{{ subtitle }}</div>
           <div>
             <!--<db-trend-line :_updated="_updated" :data="trend" :gradient="trendGradient" :strokeWidth="4" :height="50"></db-trend-line>-->
           </div>
-          <div class="text-xxs db-txt-faded dbc-n-footer">{{ footer }}</div>
+          <div class="text-xxs db-txt-faded db-n-footer">{{ footer }}</div>
         </div>
       </div>
     </div>
@@ -127,7 +119,7 @@ export default {
       return this.total > 0;
     },
     iconClass() {
-      return this.icon + ' dbc-number-icon ' + this.getRangeClass();
+      return this.icon + ' db-n-icon ' + this.getRangeClass();
     },
     formattedValue() {
       return sprintf(this.format, this.value, this.qualifier);
@@ -156,48 +148,3 @@ export default {
   }
 };
 </script>
-<style lang="scss">
-.dbc-number {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-flow: column;
-
-  .dbc-n-content {
-    width: 100%;
-    flex: 2;
-    position: relative;
-  }
-
-  .dbc-n-layer {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }
-
-  .dbc-n-main {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-
-  .dbc-n-value {
-    font-size: 210%;
-  }
-  .dbc-n-footer {
-    height: 18px;
-  }
-
-  .dbc-n-subtitle {
-    font-size: 100%;
-  }
-
-  .dbc-number-icon {
-    font-size: 180%;
-    padding: 2px;
-    border-radius: 4px;
-    color: white;
-    opacity: 0.4;
-  }
-}
-</style>
