@@ -114,13 +114,13 @@ export default {
         return;
       }
       this.needUpdate = false;
+      log.info('DbDygraphs: updating ...');
       if (this.optionsChanged) {
         this.optionsChanged = false;
-        log.info('DbDygraphs: updating options ...');
-        this.graph.updateOptions(this.graphOptions);
+        this.graph.updateOptions(Object.assign({}, this.graphOptions, { file: this.getData() }));
+      } else {
+        this.graph.updateOptions({ file: this.getData() });
       }
-      log.info('DbDygraphs: updating data ...');
-      this.graph.updateOptions({ file: this.getData() });
     },
     legendFormatter: function(data) {
       if (data.x == null) {
