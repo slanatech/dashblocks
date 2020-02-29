@@ -88,6 +88,9 @@ export default {
       //console.log("Rendering Dygraph ...");
       this.graph = new Dygraphs(this.$refs.container, this.getData(), this.graphOptions);
     },
+    getDygraphs() {
+      return this.graph;
+    },
     getData() {
       // pre-process data if needed
       if (!Array.isArray(this.data)) {

@@ -70,6 +70,9 @@ export default {
     }
   },
   methods: {
+    getDygraphs() {
+      return this.$refs.dygraph.getDygraphs();
+    },
     // This function draws bars for a single series
     barChartPlotter: function(e) {
       var ctx = e.drawingContext;
