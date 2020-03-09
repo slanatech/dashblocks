@@ -64,6 +64,9 @@ export default {
     }
   },
   methods: {
+    getDygraphs() {
+      return this.$refs.dygraph.getDygraphs();
+    },
     handleDbEvent(payload) {
       this.$emit('db-event', payload);
     }
