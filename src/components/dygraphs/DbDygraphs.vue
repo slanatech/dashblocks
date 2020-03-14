@@ -46,7 +46,9 @@ export default {
         legend: 'follow',
         legendFormatter: this.legendFormatter,
         zoomCallback: this.handleZoom,
-        clickCallback: this.handleClick
+        clickCallback: this.handleClick,
+        highlightCallback: this.handleHighlight,
+        unhighlightCallback: this.handleUnHighlight
       };
     }
   },
@@ -163,6 +165,22 @@ export default {
         minDate: Math.floor(minDate),
         maxDate: Math.floor(maxDate),
         yRanges: yRanges
+      });
+    },
+    handleHighlight: function(event, x, points, row, seriesName) {
+      log.debug('handleHighlight: x:' + x + ', points:' + points + ', row:' + row + ', seriesName: ' + seriesName);
+      this.$emit('db-event', {
+        type: 'highlight',
+        x: x,
+        points: points,
+        row: row,
+        seriesName: seriesName
+      });
+    },
+    handleUnHighlight: function(event) {
+      log.debug('handleUnHighlight');
+      this.$emit('db-event', {
+        type: 'unhighlight'
       });
     }
   }
