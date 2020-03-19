@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     getDygraphs() {
-      return this.$refs.dygraph.getDygraphs();
+      return this.$refs.dygraph ? this.$refs.dygraph.getDygraphs() : null;
     },
     // This function draws bars for a single series
     barChartPlotter: function(e) {
