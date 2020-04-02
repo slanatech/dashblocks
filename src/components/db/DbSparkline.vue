@@ -1,5 +1,5 @@
 <template>
-  <div ref="chart" style="height:60px;">
+  <div ref="chart" :style="`height:${height}px;`">
     <canvas ref="canvas" style="position: absolute;"> </canvas>
   </div>
 </template>
@@ -42,12 +42,16 @@ export default {
         this.render();
       });
     }
+    // TODO watch data for updates
   },
   mounted() {
     window.addEventListener('resize', this.handleResize);
     this.$nextTick(() => {
       this.render();
     });
+  },
+  beforeDestroy: function() {
+    window.removeEventListener('resize', this.handleResize);
   },
   methods: {
     initSize() {

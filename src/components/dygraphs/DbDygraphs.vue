@@ -1,5 +1,5 @@
 <template>
-  <div ref="container" class="db-dygraphs" />
+  <div ref="container" :class="elementClass" />
 </template>
 <script>
 import dbColors from '../dbcolors';
@@ -48,8 +48,14 @@ export default {
         zoomCallback: this.handleZoom,
         clickCallback: this.handleClick,
         highlightCallback: this.handleHighlight,
-        unhighlightCallback: this.handleUnHighlight
+        unhighlightCallback: this.handleUnHighlight,
+        highlightSeriesBackgroundAlpha: this.dark ? 0.4 : 0.5,
+        highlightSeriesBackgroundColor: this.dark ? 'rgb(0, 0, 0)' : 'rgb(255, 255, 255)',
+        axisLineColor: this.dark ? 'rgba(255, 255, 255, 0.3)' : 'rgb(0, 0, 0, 0.3)'
       };
+    },
+    elementClass: function() {
+      return this.dark ? 'db-dygraphs db-dark' : 'db-dygraphs';
     }
   },
   mounted() {
