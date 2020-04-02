@@ -6,6 +6,7 @@
 import { DbData, DbDashboard } from 'dashblocks';
 import { demodashboard } from '@/demo/mixins/demodashboard';
 import energydata from '@/demo/data/energy.json';
+import ridgemapdata from '@/demo/data/ridgemapdata.json';
 
 export default {
   name: 'Playground',
@@ -42,9 +43,9 @@ export default {
           },
           {
             id: 'w2',
-            type: 'DbRidgeline',
-            cspan: 16,
-            height: 800
+            type: 'DbSparkRidgeline',
+            cspan: 6,
+            height: 400
           }
         ]
       },
@@ -93,8 +94,17 @@ export default {
         ]
       };
       */
+      let sparkRidgeLineData = [];
+      for (let a = 0; a < 1; a++) {
+        let s = [];
+        let adj = a;
+        for (let b = 0; b < 160; b++) {
+          s.push(Math.sin(b + adj));
+        }
+        sparkRidgeLineData.push(s);
+      }
       this.dbdata.setWData('w2', {
-        data: energydata
+        data: ridgemapdata //sparkRidgeLineData
       });
     }
   }
