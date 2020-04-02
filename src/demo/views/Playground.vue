@@ -44,7 +44,7 @@ export default {
           {
             id: 'w2',
             type: 'DbSparkRidgeline',
-            cspan: 6,
+            cspan: 12,
             height: 400
           }
         ]
