@@ -129,12 +129,12 @@ export default {
       const curve = d3.curveNatural;
       const xLimit = width * 0.5;
       const pad = 1;
-      const heightAmplifier = 250; // This should be dynamic based on data
+      const heightAmplifier = 50; // This should be dynamic based on data
 
       const xDelta = 20;
 
-      const numseries = 20;
-      const yDelta = Math.floor(height / (numseries + 4));
+      const numseries = 2;
+      const yDelta = Math.floor(height / (numseries + 2));
       console.log(`yDelta=${yDelta}`);
 
       const line = d3
@@ -146,7 +146,10 @@ export default {
       const zone = d3
         .area()
         .context(ctx)
-        .y1(d => d[1] - pad)
+        .y1(d => {
+          console.log(`Zone - y1`);
+          return d[1] - pad;
+        })
         .y0(height)
         .curve(curve);
 
@@ -155,12 +158,30 @@ export default {
         .context(ctx)
         .curve(curve);
 
-      const color = d3.scaleSequential(d3.interpolateBlues).domain([0, numseries]);
+      const color = d3.scaleSequential(d3.interpolateBlues).domain([0, numseries + 10]);
+
+      const testData = [
+        [0, 0, 1, 1, 2, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0],
+        [0, 0, 0, 0, 1, 1, 2, 3, 8, 4, 4, 3, 2, 1, 1, 0],
+        [0, 3, 4, 5, 1, 1, 2, 2, 2, 6, 6, 5, 4, 2, 2, 2],
+        [0, 3, 4, 5, 1, 1, 2, 2, 2, 6, 6, 5, 4, 2, 2, 2],
+        [0, 3, 4, 5, 1, 1, 2, 2, 2, 6, 6, 5, 4, 2, 2, 2],
+        [0, 3, 4, 5, 1, 1, 2, 2, 2, 6, 6, 5, 4, 2, 2, 2]
+      ];
 
       ctx.save();
-      let cidx = 0;
+      let cidx = 4;
+      let yidx = 0;
       for (let y = numseries * yDelta; y > 0; y -= yDelta) {
-        const points = d3.range(0, width, xDelta).map(x => [x, y + this.heightAt(x, y) * heightAmplifier]);
+        //const points = d3.range(0, width, xDelta).map(x => [x, y + this.heightAt(x, y) * heightAmplifier]);
+        const points = d3.range(0, width, Math.floor(width / 15)).map((x, i) => {
+          console.log(`Getting ${yidx}:${i}`);
+          // 6: max
+          // max: height = 100
+          let currY = y + (100 - (testData[yidx][i] / 8) * 100); // * heightAmplifier;
+          return [x, currY];
+        });
+        yidx++;
         console.log(`Drawing points: y=${y} => [${points[0]},${points[1]},${points[2]} ...]`);
 
         ctx.beginPath();
