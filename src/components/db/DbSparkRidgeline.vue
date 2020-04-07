@@ -1,6 +1,6 @@
 <template>
   <div ref="chart" :style="`height:${height}px;`">
-    <canvas ref="canvas" style="position: absolute;"> </canvas>
+    <canvas ref="canvas" style="position: absolute;"></canvas>
   </div>
 </template>
 <script>
@@ -68,6 +68,17 @@ export default {
       });
     },
 
+    DOMcontext2d(width, height, dpi) {
+      if (dpi == null) dpi = devicePixelRatio;
+      let canvas = document.createElement('canvas');
+      canvas.width = width * dpi;
+      canvas.height = height * dpi;
+      canvas.style.width = width + 'px';
+      let context = canvas.getContext('2d');
+      context.scale(dpi, dpi);
+      return context;
+    },
+
     heightAt(x, y) {
       // courtesy of https://cmaher.github.io/posts/working-with-simplex-noise/
       let maxAmp = 0;
@@ -88,7 +99,6 @@ export default {
 
     render2() {
       this.initSize();
-
       let canvas = this.$refs.canvas;
       let width = this.canvasWidth;
       let height = this.canvasHeight;
@@ -115,18 +125,39 @@ export default {
       //return ctx.canvas;
     },
 
+    // TODO Consider re-creating canvas and context
+    // TODO -> Utils
+    initContext(width, height) {
+      let canvas = this.$refs.canvas;
+      let dpi = devicePixelRatio;
+      canvas.width = width * dpi;
+      canvas.height = height * dpi;
+      canvas.style.width = width + 'px';
+      let context = canvas.getContext('2d');
+      context.scale(dpi, dpi);
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.setLineDash([]);
+      context.strokeStyle = 'rgba(0, 0, 0, 1)';
+      return context;
+    },
+
     render() {
       console.log(`Entering render !`);
       this.initSize();
-      let canvas = this.$refs.canvas;
       let width = this.canvasWidth;
       let height = this.canvasHeight;
+      /*
+      let canvas = this.$refs.canvas;
       canvas.width = this.canvasWidth;
       canvas.height = this.canvasHeight;
+      canvas.style.width = this.canvasWidth + 'px';
       let ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      //let dpi = 0.5;//window.devicePixelRatio;
+      //ctx.scale(dpi, dpi); // ????
+      */
+      let ctx = this.initContext(this.canvasWidth, this.canvasHeight);
 
-      const curve = d3.curveNatural;
+      const curve = d3.curveNatural; //d3.curveLinear
       const xLimit = width * 0.5;
       const pad = 1;
       const heightAmplifier = 50; // This should be dynamic based on data
@@ -143,16 +174,18 @@ export default {
         //.defined(d => d[0] > xLimit)
         .curve(curve);
 
+      // Zone fills outside of path
       const zone = d3
         .area()
         .context(ctx)
         .y1(d => {
           console.log(`Zone - y1`);
-          return d[1] - pad;
+          return d[1] - 1;
         })
         .y0(height)
         .curve(curve);
 
+      // Area fills inside of path
       const area = d3
         .area()
         .context(ctx)
@@ -164,6 +197,10 @@ export default {
         [0, 0, 1, 1, 2, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0],
         [0, 0, 0, 0, 1, 1, 2, 3, 8, 4, 4, 3, 2, 1, 1, 0],
         [0, 3, 4, 5, 1, 1, 2, 2, 2, 6, 6, 5, 4, 2, 2, 2],
+        [0, 3, 4, 5, 1, 1, 2, 2, 2, 6, 6, 5, 4, 2, 2, 2],
+        [0, 3, 4, 5, 1, 1, 2, 2, 2, 6, 6, 5, 4, 2, 2, 2],
+        [0, 3, 4, 5, 1, 1, 2, 2, 2, 6, 6, 5, 4, 2, 2, 2],
+        [0, 3, 4, 5, 8, 1, 2, 2, 2, 6, 6, 5, 4, 2, 2, 2],
         [0, 3, 4, 5, 1, 1, 2, 2, 2, 6, 6, 5, 4, 2, 2, 2],
         [0, 3, 4, 5, 1, 1, 2, 2, 2, 6, 6, 5, 4, 2, 2, 2],
         [0, 3, 4, 5, 1, 1, 2, 2, 2, 6, 6, 5, 4, 2, 2, 2]
@@ -179,26 +216,34 @@ export default {
           // 6: max
           // max: height = 100
           let currY = y + (100 - (testData[yidx][i] / 8) * 100); // * heightAmplifier;
+          //let currY = y + (testData[yidx][i] / 8) * 100; // * heightAmplifier;
           return [x, currY];
         });
         yidx++;
         console.log(`Drawing points: y=${y} => [${points[0]},${points[1]},${points[2]} ...]`);
 
+        let currentColor = color(cidx++);
+        // Zone fills area _outside_ of path and up to the bottom - i.e. to the max Y ( y=0: top, y=max: bottom )
         ctx.beginPath();
-        ctx.fillStyle = color(cidx++); //color(y);
+        ctx.fillStyle = currentColor;
+        //area(points);
         zone(points);
         ctx.fill();
 
-        //ctx.beginPath();
-        //line(points);
-        //ctx.stroke();
+        /*
+        ctx.beginPath();
+        line(points);
+        ctx.stroke();
+        */
 
+        // This sets clip to _inside_ region of path (current series)
+        // _inside_ is not where we filled with color, but from path's Y up to top of the canvas (up to y=0)
+        // Because of clip, all the subsequent series will be drawn only partially in this clipped area -
+        // i.e. only what's visible on top of previously drawn series
         ctx.beginPath();
         area(points);
         ctx.clip();
-        //yield ctx.canvas;
       }
-      //ctx.restore();
     },
 
     renderSVG() {
