@@ -62,6 +62,7 @@ export default {
     import('dygraphs').then(module => {
       log.info('dygraphs: imported');
       Dygraphs = module.default;
+      //  note: can use Dygraphs.defaultInteractionModel
       this.$nextTick(() => {
         this.render();
       });
