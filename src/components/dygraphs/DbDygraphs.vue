@@ -93,7 +93,6 @@ export default {
   },
   methods: {
     render() {
-      //console.log("Rendering Dygraph ...");
       this.graph = new Dygraphs(this.$refs.container, this.getData(), this.graphOptions);
     },
     getDygraphs() {
@@ -121,7 +120,7 @@ export default {
     },
     update() {
       // Prevent multiple re-draws per single data update ( because there are redundant watches )
-      if (!this.needUpdate) {
+      if (!this.graph || !this.needUpdate) {
         return;
       }
       this.needUpdate = false;

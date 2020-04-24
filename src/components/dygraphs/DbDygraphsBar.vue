@@ -6,6 +6,9 @@ import { dbStdProps } from '../mixins/dbstdprops';
 import dbColors from '../dbcolors';
 //import DygraphInteraction from 'dygraphs';
 //import log from '../log';
+
+// TODO Support special plotter to draw equalizer-like Bars ( horizontal lines with color indicating value )
+
 /**
  * Dygraphs Bar Chart.
  * http://dygraphs.com/
