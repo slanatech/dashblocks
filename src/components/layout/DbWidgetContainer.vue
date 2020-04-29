@@ -1,6 +1,6 @@
 <template>
   <div :class="getClass()" :style="getWidgetStyle()">
-    <component v-bind:is="wspec.type" :wspec="wspec" :wdata="wdata" v-bind="getWidgetProperties()" :style="getItemStyle()" :dark="dark" v-on:db-event="handleDbEvent"> </component>
+    <component v-bind:is="wspec.type" :wspec="wspec" :wdata="wdata" v-bind="getWidgetProperties()" :style="getItemStyle()" :dark="dark" :colorScheme="colorScheme" v-on:db-event="handleDbEvent"> </component>
   </div>
 </template>
 
@@ -20,6 +20,10 @@ export default {
     dark: {
       type: Boolean,
       default: false
+    },
+    colorScheme: {
+      type: String,
+      default: 'default'
     }
   },
   data() {

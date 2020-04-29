@@ -1,7 +1,8 @@
 <template>
-  <db-dygraphs ref="dygraph" :_updated="_updated" :data="data" :options="graphOptions" :dark="dark" @db-event="handleDbEvent"> </db-dygraphs>
+  <db-dygraphs ref="dygraph" :_updated="_updated" :data="data" :options="graphOptions" :dark="dark" :colorScheme="colorScheme" @db-event="handleDbEvent"> </db-dygraphs>
 </template>
 <script>
+import { dbStdProps } from '../mixins/dbstdprops';
 //import DygraphInteraction from 'dygraphs';
 import DbDygraphs from './DbDygraphs';
 //import log from '../log';
@@ -10,21 +11,14 @@ export default {
   components: {
     DbDygraphs
   },
+  mixins: [dbStdProps],
   props: {
-    _updated: {
-      type: Number,
-      default: 0
-    },
     data: {
       type: Array,
       default: () => []
     },
     options: {
       type: Object
-    },
-    dark: {
-      type: Boolean,
-      default: false
     }
   },
   data() {

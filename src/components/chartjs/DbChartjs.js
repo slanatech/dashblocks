@@ -93,7 +93,7 @@ export function generateChart(chartId, chartType) {
         };
       },
       defaultColors: function() {
-        return dbColors.getColors(this.dark);
+        return dbColors.getColors(this.dark, this.colorScheme);
       }
     },
 
@@ -118,6 +118,10 @@ export function generateChart(chartId, chartType) {
       },
       dark: function() {
         log.debug('DbChartjs: dark prop changed');
+        this.scheduleUpdate(true, true);
+      },
+      colorScheme: function() {
+        this.optionsChanged = true;
         this.scheduleUpdate(true, true);
       }
     },

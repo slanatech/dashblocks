@@ -8,6 +8,7 @@
       :wdata="dbdata[widget.id]"
       :style="widget.style"
       :dark="dark"
+      :colorScheme="dbspec.colorScheme || 'default'"
       @db-event="handleDbEvent"
     >
     </db-widget-container>

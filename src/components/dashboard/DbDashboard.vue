@@ -36,11 +36,21 @@ export default {
     // TBD
   },
   watch: {
+    /*
     dbspec: function() {
-      log.info('Dashboard specification updated');
       this.$nextTick(() => {
         window.dispatchEvent(new Event('resize'));
       });
+    }*/
+    dbspec: {
+      handler() {
+        log.info('Dashboard specification updated');
+        // ???
+        this.$nextTick(() => {
+          window.dispatchEvent(new Event('resize'));
+        });
+      },
+      deep: true
     }
   },
   created() {

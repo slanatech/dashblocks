@@ -90,6 +90,10 @@ export default {
     dark: function() {
       this.optionsChanged = true;
       this.scheduleUpdate();
+    },
+    colorScheme: function() {
+      this.optionsChanged = true;
+      this.scheduleUpdate();
     }
   },
   methods: {
