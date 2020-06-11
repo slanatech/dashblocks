@@ -4,13 +4,15 @@
   </div>
 </template>
 <script>
-/* DbSparkRidgeLine. "Sparklines" for multiple time series, using ridgeline plot
- *  Based on https://observablehq.com/@fil/atmospheric-perspective?collection=@fil/3d
+/* DbSparkRidgeLine. "Sparklines" for multiple time series, using ridgeline plot / heightmap
+ *  Based on https://observablehq.com/@zechasault/images-drawn-with-ridgeline-plot
  * TODO Height / Width as props
  */
 import * as d3 from 'd3';
 //import dbColors from '../dbcolors';
 //import { makeNoise2D } from 'open-simplex-noise';
+import ridgedata from '../data/ridgedata.json';
+import apilatencydata from '../data/series_api_latency.json';
 import jvmdata from '../data/series_test_jvm_memory_used_bytes.json';
 
 export default {
@@ -20,8 +22,7 @@ export default {
     return {
       canvasWidth: 100,
       canvasHeight: 100,
-      noise2D: null, //makeNoise2D(0),
-      ctxInit: false
+      noise2D: null //makeNoise2D(0)
     };
   },
   props: {
@@ -76,63 +77,6 @@ export default {
       });
     },
 
-    DOMcontext2d(width, height, dpi) {
-      if (dpi == null) dpi = devicePixelRatio;
-      let canvas = document.createElement('canvas');
-      canvas.width = width * dpi;
-      canvas.height = height * dpi;
-      canvas.style.width = width + 'px';
-      let context = canvas.getContext('2d');
-      context.scale(dpi, dpi);
-      return context;
-    },
-
-    heightAt(x, y) {
-      // courtesy of https://cmaher.github.io/posts/working-with-simplex-noise/
-      let maxAmp = 0;
-      let amp = 1;
-      let altitude = 0.06;
-      let octaves = 3;
-      let noise = 0;
-
-      for (let i = 0; i < octaves; ++i) {
-        noise += this.noise2D(x * altitude, y * altitude) * amp;
-        maxAmp += amp;
-        amp *= 0.5;
-        altitude *= 2;
-      }
-      noise /= maxAmp;
-      return noise * 0.5 + 0.5;
-    },
-
-    render2() {
-      this.initSize();
-      let canvas = this.$refs.canvas;
-      let width = this.canvasWidth;
-      let height = this.canvasHeight;
-      canvas.width = this.canvasWidth;
-      canvas.height = this.canvasHeight;
-      let ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      //let ctx = DOM.context2d(width, height);
-      /*
-              y
-            x 0 1 2 3 4 5 …
-              1
-              2
-              3
-      */
-      for (let x = 0; x < width; x += 3) {
-        for (let y = 0; y < height; y += 3) {
-          ctx.fillRect(x, y, 3, 3);
-          ctx.fillStyle = `rgba(0, 0, 0, ${this.heightAt(x, y)}`;
-          ctx.save();
-        }
-      }
-      //return ctx.canvas;
-    },
-
     // TODO Consider re-creating canvas and context
     // TODO -> Utils
     initContext(width, height) {
@@ -149,12 +93,11 @@ export default {
       return context;
     },
 
-    render() {
-      //if (!this.data) {
-      //  return;
-      //}
-      let startTs = Date.now();
-      console.log(`Entering render: ${startTs}`);
+    renderC() {
+      if (!this.data) {
+        return;
+      }
+      console.log(`Entering render !`);
       this.initSize();
       let width = this.canvasWidth;
       let height = this.canvasHeight;
@@ -167,13 +110,7 @@ export default {
       //let dpi = 0.5;//window.devicePixelRatio;
       //ctx.scale(dpi, dpi); // ????
       */
-      let ctx = null;
-      if (!this.ctxInit) {
-        ctx = this.initContext(this.canvasWidth, this.canvasHeight);
-        this.ctxInit = true;
-      } else {
-        ctx = this.$refs.canvas.getContext('2d');
-      }
+      let ctx = this.initContext(this.canvasWidth, this.canvasHeight);
 
       const curve = d3.curveNatural; //d3.curveLinear
       const xLimit = width * 0.5;
@@ -182,16 +119,11 @@ export default {
 
       const xDelta = 20;
 
-      let data = this.data; //; jvmdata
+      const numseries = this.data.length;
+      const serieslength = this.data[0].length;
 
-      const numseries = data.length;
-      const serieslength = data[0].length;
-
-      const yDelta = Math.floor(height / (numseries + 4));
+      const yDelta = Math.floor(height / (numseries + 8));
       console.log(`yDelta=${yDelta}`);
-
-      const dataMax = d3.max(data, d => d3.max(d, i => i));
-      console.log(`dataMax=${dataMax}`);
 
       const line = d3
         .line()
@@ -204,7 +136,7 @@ export default {
         .area()
         .context(ctx)
         .y1(d => {
-          //console.log(`Zone - y1`);
+          console.log(`Zone - y1`);
           return d[1] - 1;
         })
         .y0(height)
@@ -217,8 +149,6 @@ export default {
         .curve(curve);
 
       let color = d3.scaleSequential(d3.interpolateBlues).domain([0, numseries + 20]);
-      // This one better for dark mode
-      //let color = d3.scaleSequential(d3.interpolateGreys).domain([0,numseries + 20]);
 
       const testData = [
         [0, 0, 1, 1, 2, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0],
@@ -237,39 +167,28 @@ export default {
       let cidx = 10;
       let yidx = 0;
 
-      /*
-      for(let aaa=0; aaa<10; aaa++ ){
+      for (let aaa = 0; aaa < 10; aaa++) {
         let d = this.data[aaa][0];
         console.log(`aaa: ${aaa}: ${d}`);
       }
 
       for (let y = numseries * yDelta; y > 0; y -= yDelta) {
         console.log(`y: ${y}`);
-        let xstep = Math.floor(width / serieslength)+1;
-        const pp = d3.range(0, width, xstep).map((x, i) => {return [x,i]});
+        let xstep = Math.floor(width / serieslength) + 1;
+        const pp = d3.range(0, width, xstep).map((x, i) => {
+          return [x, i];
+        });
         console.log('points:' + pp);
       }
-      */
-
-      //ctx.strokeStyle = 'rgba(0, 0, 153, 0.4)';
-      ctx.strokeStyle = 'rgba(0, 0, 0, 0.15)';
 
       for (let y = numseries * yDelta; y > 0; y -= yDelta) {
-        // [sv2] Presumably, ctx.save() resets previously set .clip() (???).
-        // With this, render is much faster in Chrome: ~80 ms vs ~700 ms on large data set
-        // Note we don't do .restore() at the end of cycle. If ctx.restore() is done, rendering is slow again.
-        ctx.save();
-
         let xstep = Math.floor(width / serieslength) + 1;
         const points = d3.range(0, width, xstep).map((x, i) => {
           // 6: max
           // max: height = 100
-          let vv = data[yidx][i] || 0;
-          if (isNaN(vv)) {
-            vv = 0;
-          }
+          let vv = this.data[yidx][i];
           // 1.5 - max ?
-          let vvv = 100 - (vv / dataMax) * 100;
+          let vvv = 100 - (vv / 1.5) * 100;
 
           let currY = y + vvv; // * heightAmplifier;
           //let currY = y + (testData[yidx][i] / 8) * 100; // * heightAmplifier;
@@ -277,7 +196,7 @@ export default {
         });
 
         yidx++;
-        //console.log(`Drawing points: y=${y} => [${points[0]},${points[1]},${points[2]} ...]`);
+        console.log(`Drawing points: y=${y} => [${points[0]},${points[1]},${points[2]} ...]`);
 
         let currentColor = color(cidx++);
         // Zone fills area _outside_ of path and up to the bottom - i.e. to the max Y ( y=0: top, y=max: bottom )
@@ -287,49 +206,52 @@ export default {
         zone(points);
         ctx.fill();
 
+        /*
         ctx.beginPath();
         line(points);
         ctx.stroke();
+        */
 
         // This sets clip to _inside_ region of path (current series)
         // _inside_ is not where we filled with color, but from path's Y up to top of the canvas (up to y=0)
         // Because of clip, all the subsequent series will be drawn only partially in this clipped area -
         // i.e. only what's visible on top of previously drawn series
-
-        // ctx.restore();
-
         ctx.beginPath();
         area(points);
         ctx.clip();
       }
-
-      let endTs = Date.now();
-      console.log(`Finished render: ${endTs} - ${endTs - startTs} msec`);
     },
 
-    renderSVG() {
-      this.initSize();
+    render() {
+      let startTs = Date.now();
+      console.log(`Entering SVG render: ${startTs}`);
 
-      //let canvas = this.$refs.canvas;
+      //if (!this.data) {
+      //  return;
+      //}
+
+      this.initSize();
       let width = this.canvasWidth;
       let height = this.canvasHeight;
-      let w = 600;
+      let w = width; // ??
 
       // Clear whole content of container
       while (this.$refs.chart.lastChild) {
         this.$refs.chart.removeChild(this.$refs.chart.lastChild);
       }
 
-      //  TODO
+      let data = this.data; // jvmdata;
 
-      let data = this.data;
+      //  TODO top margin should take into account number of series & height
+      let margin = { top: 50, right: 10, bottom: 10, left: 10 };
 
-      let margin = { top: 10, right: 10, bottom: 10, left: 10 };
       let overlap = 10;
-      let lineColor = '#ffffff';
-      let areaColor = '#000000';
-      let opacity = 0.6;
+      let lineColor = 'rgba(100,100,100,0.1)'; // '#ffffff'; //
+      let areaColor = 'gray';
+      let opacity = 0.4;
       let showline = true;
+      let seabed = 0;
+      let transitionDuration = 0;
 
       let x = d3
         .scaleLinear()
@@ -351,37 +273,73 @@ export default {
         .area()
         .curve(d3.curveBasis)
         .x((d, i) => x(i))
-        .y0(0)
+        .y0(-seabed)
         .y1(d => z(d));
 
       let line = area.lineY1();
 
+      /*
       const svg = d3
         .select(this.$refs.chart.appendChild(DOMsvg(width, height)))
         .style('position', 'relative')
         .style('font', '10px sans-serif');
+      */
 
-      const serie = svg
-        .append('g')
+      let g = d3
+        .select(this.$refs.chart.appendChild(DOMsvg(width, height)))
         .selectAll('g')
-        .data(data)
+        .data([{}]);
+
+      g = g
         .enter()
         .append('g')
+        .merge(g);
+
+      const serie = g.selectAll('g').data(data, (d, i) => i);
+
+      const serieE = serie.enter().append('g');
+
+      serie.exit().remove();
+
+      serie
+        .merge(serieE)
+        .transition()
+        .duration(0)
         .attr('transform', (d, i) => {
-          return `translate(0,${y(i) + 1})`;
+          return `translate(0,${y(i)})`;
         });
 
-      serie
+      let p = serieE
         .append('path')
-        .attr('fill', areaColor)
+        .attr('class', 'p1')
         .attr('opacity', opacity)
-        .attr('d', (d, i) => area(d));
+        .attr('fill', areaColor);
 
       serie
+        .merge(serieE)
+        .select('.p1')
+        .transition()
+        .duration(data[0].length * transitionDuration)
+        .delay((d, i) => i * transitionDuration)
+        .attr('opacity', opacity)
+        .attr('fill', areaColor)
+        .attr('d', (d, i) => area(d));
+
+      let p2 = serieE
         .append('path')
+        .attr('class', 'p2')
         .attr('fill', 'none')
-        .attr('stroke', lineColor)
         .attr('opacity', showline ? 1 : 0)
+        .attr('stroke', lineColor);
+
+      serie
+        .merge(serieE)
+        .select('.p2')
+        .transition()
+        .duration(data[0].length * transitionDuration)
+        .delay((d, i) => i * transitionDuration)
+        .attr('opacity', showline ? 1 : 0)
+        .attr('stroke', lineColor)
         .attr('d', d => line(d));
 
       function DOMsvg(width, height) {
@@ -391,6 +349,9 @@ export default {
         svg.setAttribute('height', height);
         return svg;
       }
+
+      let endTs = Date.now();
+      console.log(`Finished SVG render: ${endTs} - ${endTs - startTs} msec`);
     },
 
     // TODO Switch to canvas
