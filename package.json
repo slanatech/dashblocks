@@ -1,6 +1,6 @@
 {
   "name": "dashblocks",
-  "version": "0.5.32",
+  "version": "0.5.35",
   "private": false,
   "description": "Enable Analytics in your Apps: Declarative Interactive Dashboards",
   "author": "https://github.com/sv2",
@@ -172,10 +172,6 @@
       "release": true
     },
     "hooks": {
-      "before:init": [
-        "yarn run build",
-        "yarn test"
-      ],
       "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
     }
   },
