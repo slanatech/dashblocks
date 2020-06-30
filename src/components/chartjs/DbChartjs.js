@@ -77,11 +77,12 @@ export function generateChart(chartId, chartType) {
         return {
           responsive: true,
           maintainAspectRatio: false,
-          onClick: (evt, item) => {
-            if ('_comp' in this) {
-              this._comp.handleClick(evt, item);
-            }
+          /*
+          onClick: function (evt, item) {
+            console.log(this['_component']);
+            this['_component'].handleClick(evt, item);
           },
+          */
           legend: {
             labels: {
               fontColor: this.dark ? '#AAA' : '#666' // TODO Get from dbcolors
@@ -340,29 +341,50 @@ export function generateChart(chartId, chartType) {
       },
       renderChart(data, options) {
         this.$nextTick(() => {
-          if (this.$data._chart) this.$data._chart.destroy();
-          this.$data._chart = new Chart(this.$refs.canvas.getContext('2d'), {
+          if (this.$data._chart) {
+            this.$data._chart.destroy();
+            this.$data._chart = null;
+          }
+
+          let _component = this;
+          let opts = Object.assign(
+            {
+              onClick: function(evt, item) {
+                console.log(_component);
+                _component.handleClick(evt, item);
+              }
+            },
+            options
+          );
+
+          let chart = new Chart(this.$refs.canvas.getContext('2d'), {
             type: chartType,
             data: data,
-            options: options,
+            options: opts,
             plugins: this.$data._plugins
           });
-          this.$data._chart._comp = this;
+          //chart._component = this;
+          this.$data._chart = chart;
         });
+      },
+      handleClick(event, item) {
+        log.debug('handleClick');
+        if (Array.isArray(item) && item.length === 1) {
+          this.$emit('db-event', {
+            type: 'item-click',
+            index: item[0]._index,
+            datasetIndex: item[0]._datasetIndex,
+            data: item[0]._chart.data
+          });
+        }
       }
     },
     beforeDestroy() {
       if (this.$data._chart) {
+        this.$data._chart._component = null;
         this.$data._chart.destroy();
+        this.$data._chart = null;
       }
-    },
-    handleClick(event, item) {
-      log.debug('handleClick');
-      this.$emit('db-event', {
-        type: 'click',
-        event: event,
-        item: item
-      });
     }
   };
 }
