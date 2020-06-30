@@ -56,6 +56,10 @@ export default {
     scheme: {
       type: String,
       default: 'schemePuBuGn'
+    },
+    curve: {
+      type: String,
+      default: 'curveBasis'
     }
   },
   data() {
@@ -133,6 +137,12 @@ export default {
         .domain([data[0].values[0].date, data[0].values[data[0].values.length - 1].date])
         .range([0, width]);
 
+      // TODO Reverce mapping: x => value index, so we can get data value by x when mousing over
+      let rx = d3
+        .scaleLinear()
+        .domain([0, width])
+        .range([0, data[0].values.length]);
+
       let y = d3
         .scaleLinear()
         .domain([0, d3.max(data, d => d3.max(d.values, d => d.value))])
@@ -155,10 +165,10 @@ export default {
           )
           .call(g => g.select('.domain').remove());
 
-      // ???
+      let areaCurve = d3[this.curve] || d3.curveBasis;
       let area = d3
         .area()
-        .curve(d3.curveBasis)
+        .curve(areaCurve)
         .defined(d => !isNaN(d.value))
         .x(d => x(d.date))
         .y0(0)
@@ -206,9 +216,10 @@ export default {
         const mx = d3.mouse(svg.node())[0] + 0.5;
         rule.attr('x1', mx).attr('x2', mx);
         // this gets value from X in data - original timestamp ?
-        //let scalex = x.invert(mx);
+        let scalex = x.invert(mx);
+        let vidx = rx(mx);
         // TODO get Y using X
-        //console.log(`Mouse move: mx=${mx}, x=${scalex}`);
+        console.log(`Mouse move: mx=${mx}, vidx=${vidx}, x=${scalex.toUTCString()}`);
       });
 
       function horizon(d) {

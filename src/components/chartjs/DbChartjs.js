@@ -78,7 +78,9 @@ export function generateChart(chartId, chartType) {
           responsive: true,
           maintainAspectRatio: false,
           onClick: (evt, item) => {
-            this.onClick(evt, item);
+            if ('_comp' in this) {
+              this._comp.handleClick(evt, item);
+            }
           },
           legend: {
             labels: {
@@ -192,6 +194,11 @@ export function generateChart(chartId, chartType) {
         if (!('datasets' in this.data) || !Array.isArray(this.data.datasets)) {
           this.chartData.datasets = [];
           return;
+        }
+
+        // If dataset was removed or added, need to re-initialize all datasets
+        if (this.data.datasets.length !== this.chartData.datasets.length) {
+          this.chartData.datasets = [];
         }
 
         for (let idx = 0; idx < this.data.datasets.length; idx++) {
@@ -340,6 +347,7 @@ export function generateChart(chartId, chartType) {
             options: options,
             plugins: this.$data._plugins
           });
+          this.$data._chart._comp = this;
         });
       }
     },
@@ -347,6 +355,14 @@ export function generateChart(chartId, chartType) {
       if (this.$data._chart) {
         this.$data._chart.destroy();
       }
+    },
+    handleClick(event, item) {
+      log.debug('handleClick');
+      this.$emit('db-event', {
+        type: 'click',
+        event: event,
+        item: item
+      });
     }
   };
 }
