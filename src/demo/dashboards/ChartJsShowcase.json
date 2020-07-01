@@ -80,6 +80,12 @@
           }
         }
       }
+    },
+    {
+      "id": "w11",
+      "type": "DbChartjsFunnel",
+      "cspan": 8,
+      "height": 300
     }
   ]
 }

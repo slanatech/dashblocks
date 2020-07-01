@@ -42,6 +42,7 @@
   "dependencies": {
     "chart.js": "^2.9.3",
     "chartjs-plugin-labels": "^1.1.0",
+    "chartjs-plugin-funnel": "^1.1.5",
     "core-js": "^3.4.7",
     "d3": "^5.14.2",
     "d3-sankey": "^0.12.3",

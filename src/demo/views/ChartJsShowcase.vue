@@ -37,6 +37,16 @@ export default {
         ]
       };
 
+      let dataFunnel = {
+        labels: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'], //, 'P7', 'P8','P9', 'P10', 'P11', 'P12','P13', 'P14', 'P15', 'P16'],
+        datasets: [
+          {
+            label: 'Data One',
+            data: [20, 80, 70, 50, 40, 30]
+          }
+        ]
+      };
+
       let dataTwoSeries = {
         labels: ['January', 'February', 'March', 'April'],
         datasets: [
@@ -120,6 +130,7 @@ export default {
       this.dbdata.setWData('w8', { data: d8 });
       this.dbdata.setWData('w9', { data: d9 });
       this.dbdata.setWData('w10', { data: d10 });
+      this.dbdata.setWData('w11', { data: dataFunnel });
 
       //let bw = 1;
       // Dynamic updates

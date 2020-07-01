@@ -3530,7 +3530,7 @@ chardet@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
 
-chart.js@^2.9.3:
+chart.js@>2.7.0, chart.js@^2.9.3:
   version "2.9.3"
   resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-2.9.3.tgz#ae3884114dafd381bc600f5b35a189138aac1ef7"
   dependencies:
@@ -3549,6 +3549,13 @@ chartjs-color@^2.1.0:
   dependencies:
     chartjs-color-string "^0.6.0"
     color-convert "^1.9.3"
+
+chartjs-plugin-funnel@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/chartjs-plugin-funnel/-/chartjs-plugin-funnel-1.1.5.tgz#45f262d5a1f322be326692fdde2a730a43fc21d2"
+  integrity sha512-iblHmQ+8ApfVLaWPVRM7+4GAzCIGyKh540rhEpUcjtmDgKdKkHQ9KNqm3QEEpHAWlb4RUWWIdI1dCDRHXxiLSw==
+  dependencies:
+    chart.js ">2.7.0"
 
 chartjs-plugin-labels@^1.1.0:
   version "1.1.0"

@@ -139,8 +139,10 @@ export function generateChart(chartId, chartType) {
         log.info('chart.js: imported');
         Chart = module.default;
         import('chartjs-plugin-labels').then(mp => {
-          this.$nextTick(() => {
-            this.renderChart(this.chartData, this.chartOptions);
+          import('chartjs-plugin-funnel').then(mp => {
+            this.$nextTick(() => {
+              this.renderChart(this.chartData, this.chartOptions);
+            });
           });
         });
       });
@@ -219,6 +221,10 @@ export function generateChart(chartId, chartType) {
         }
       },
 
+      getColor(i) {
+        return this.defaultColors[i % this.defaultColors.length];
+      },
+
       // Set params and colors for dataset, if not explicitly specified
       setupDataset(ds, idx) {
         if ('borderColor' in ds || 'backgroundColor' in ds) {
@@ -234,6 +240,11 @@ export function generateChart(chartId, chartType) {
           //ds.segmentStrokeWidth = 20;
           //ds.segmentStrokeColor = "rgba(255, 255, 255, 0)";
           ds.backgroundColor = this.defaultColors.map(x => dbColors.hex2RGBA(x, 0.5));
+        } else if (['funnel-chart'].includes(this.chartId)) {
+          ds.borderWidth = ds.borderWidth || 1;
+          ds.borderColor = this.defaultColors[idx];
+          ds.backgroundColor = ds.data.map((x, i) => dbColors.hex2RGBA(this.getColor(i), 0.5));
+          //ds.backgroundColor.push(this.defaultColors[0]);
         } else {
           ds.borderWidth = ds.borderWidth || 1;
           ds.borderColor = this.defaultColors[idx];
@@ -397,6 +408,7 @@ export const DbChartjsPolarArea = generateChart('polar-chart', 'polarArea');
 export const DbChartjsRadar = generateChart('radar-chart', 'radar');
 export const DbChartjsBubble = generateChart('bubble-chart', 'bubble');
 export const DbChartjsScatter = generateChart('scatter-chart', 'scatter');
+export const DbChartjsFunnel = generateChart('funnel-chart', 'funnel');
 
 export default {
   DbChartjsBar,
@@ -407,7 +419,8 @@ export default {
   DbChartjsPolarArea,
   DbChartjsRadar,
   DbChartjsBubble,
-  DbChartjsScatter
+  DbChartjsScatter,
+  DbChartjsFunnel
 };
 
 // Process Axes
