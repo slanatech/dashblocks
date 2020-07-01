@@ -79,9 +79,9 @@ export default {
       return iStyle;
     },
     handleDbEvent(payload) {
-      log.debug(`DbWidgetContainer:db-event: ${JSON.stringify(payload)}`);
+      log.debug(`DbWidgetContainer: db-event:${payload.type || 'NO-TYPE'}`);
       // Augment event with widget id
-      this.$emit('db-event', Object.assign({}, { id: this.wspec.name }, payload));
+      this.$emit('db-event', Object.assign({}, { id: this.wspec.id }, payload));
     }
   }
 };

@@ -68,7 +68,7 @@ export default {
       return dbClass;
     },
     handleDbEvent(payload) {
-      log.debug(`DbDashboard:db-event: ${JSON.stringify(payload)}`);
+      log.debug(`DbDashboard: db-event:${payload.type || 'NO-TYPE'}`);
       this.$emit('db-event', payload);
     }
   }

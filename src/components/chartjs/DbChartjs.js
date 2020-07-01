@@ -3,6 +3,7 @@ import dbUtils from '../dbutils';
 import log from '../log';
 import merge from 'deepmerge';
 import { dbStdProps } from '../mixins/dbstdprops';
+import pathOr from 'ramda/es/pathOr';
 
 // Chart.js to be imported asynchronously
 let Chart = null;
@@ -74,15 +75,13 @@ export function generateChart(chartId, chartType) {
 
     computed: {
       defaultOptions: function() {
+        let _component = this;
         return {
           responsive: true,
           maintainAspectRatio: false,
-          /*
-          onClick: function (evt, item) {
-            console.log(this['_component']);
-            this['_component'].handleClick(evt, item);
+          onClick: function(evt, item) {
+            _component.handleClick(evt, item);
           },
-          */
           legend: {
             labels: {
               fontColor: this.dark ? '#AAA' : '#666' // TODO Get from dbcolors
@@ -345,36 +344,36 @@ export function generateChart(chartId, chartType) {
             this.$data._chart.destroy();
             this.$data._chart = null;
           }
-
-          let _component = this;
-          let opts = Object.assign(
-            {
-              onClick: function(evt, item) {
-                console.log(_component);
-                _component.handleClick(evt, item);
-              }
-            },
-            options
-          );
-
           let chart = new Chart(this.$refs.canvas.getContext('2d'), {
             type: chartType,
             data: data,
-            options: opts,
+            options: options,
             plugins: this.$data._plugins
           });
-          //chart._component = this;
           this.$data._chart = chart;
         });
       },
       handleClick(event, item) {
         log.debug('handleClick');
-        if (Array.isArray(item) && item.length === 1) {
+        let charElement = this.$data._chart.getElementAtEvent(event);
+        if (Array.isArray(charElement) && charElement.length === 1) {
+          let chartEl = charElement[0];
+          let index = chartEl._index;
+          let datasetIndex = chartEl._datasetIndex;
+
+          let label = pathOr('', ['_chart', 'data', 'labels', index], chartEl);
+          let value = pathOr(0, ['_chart', 'data', 'datasets', datasetIndex, 'data', index], chartEl);
+          let datasetLabel = pathOr(0, ['_chart', 'data', 'datasets', datasetIndex, 'label'], chartEl);
+
           this.$emit('db-event', {
             type: 'item-click',
-            index: item[0]._index,
-            datasetIndex: item[0]._datasetIndex,
-            data: item[0]._chart.data
+            label: label,
+            value: value,
+            index: index,
+            datasetLabel: datasetLabel,
+            datasetIndex: datasetIndex,
+            element: chartEl,
+            item: item
           });
         }
       }
