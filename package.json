@@ -165,6 +165,10 @@
     "*.vue": [
       "vue-cli-service lint",
       "git add"
+    ],
+    "*.js": [
+      "vue-cli-service lint",
+      "git add"
     ]
   },
   "release-it": {
