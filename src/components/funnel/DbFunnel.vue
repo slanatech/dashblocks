@@ -1,4 +1,4 @@
-/* Based on https://github.com/greghub/vue-funnel-graph-js */
+/* * Based on https://github.com/greghub/vue-funnel-graph-js */
 <template>
   <div ref="chart" class="funnel svg-funnel-js" :class="{ 'svg-funnel-js--vertical': direction === 'vertical' }">
     <div class="svg-funnel-js__container">
