@@ -85,7 +85,16 @@
       "id": "w11",
       "type": "DbChartjsFunnel",
       "cspan": 8,
-      "height": 300
+      "height": 300,
+      "properties": {
+        "options": {
+          "sort": "desc",
+          "keep": "auto",
+          "legend": {
+            "display": true
+          }
+        }
+      }
     }
   ]
 }

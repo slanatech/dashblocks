@@ -59,7 +59,10 @@
     "vue-router": "^3.1.3",
     "vuebars": "^0.1.5",
     "vuetrend": "^0.3.4",
-    "vuex": "^3.1.2"
+    "vuex": "^3.1.2",
+    "@tweenjs/tween.js": "^18.6.0",
+    "funnel-graph-js": "^1.4.2",
+    "polymorph-js": "^1.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.1",
@@ -160,10 +163,6 @@
   "license": "MIT",
   "lint-staged": {
     "*.js": [
-      "vue-cli-service lint",
-      "git add"
-    ],
-    "*.vue": [
       "vue-cli-service lint",
       "git add"
     ]

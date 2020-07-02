@@ -27,25 +27,10 @@ export default {
         },
         widgets: [
           {
-            id: 'w1',
-            type: 'DbDygraphsBar',
+            id: 'wF',
+            type: 'DbFunnel',
             cspan: 16,
-            height: 250,
-            properties: {
-              options: {
-                stackedGraph: true,
-                title: 'Traffic over time',
-                ylabel: 'Requests, Mil.',
-                labels: ['Date', 'Success', 'Error'],
-                legend: 'always'
-              }
-            }
-          },
-          {
-            id: 'w2',
-            type: 'DbSparkRidgeline',
-            cspan: 12,
-            height: 400
+            height: 600
           }
         ]
       },
@@ -59,52 +44,29 @@ export default {
   },
   methods: {
     initialize: function() {
-      // Initialize dashboard data - set data for each dashboard widget
-      // This is obviously a sample that generates random data
-      // In real dashboards you would get data from database, backend APIs, vuex, etc
-      let dthData = [];
-      let sTS = Date.now() - 100 * 3600 * 1000;
-      for (let i = 0; i < 100; i++) {
-        dthData.push([new Date(sTS + i * 3600 * 1000), Math.random(), Math.random()]);
-      }
-      this.dbdata.setWData('w1', {
-        data: dthData
-      });
-      /*
-      let dataOneSeries = {
-        labels: ['January', 'February', 'March', 'April'],
-        datasets: [
-          {
-            label: 'Data One',
-            data: [10, 20, 30, 100]
-          }
-        ]
-      };
-      let dataTwoSeries = {
-        labels: ['January', 'February', 'March', 'April'],
-        datasets: [
-          {
-            label: 'Data One',
-            data: [10, 20, 30, 100]
-          },
-          {
-            label: 'Data Two',
-            data: [50, 10, 70, 11]
-          }
-        ]
-      };
-      */
-      let sparkRidgeLineData = [];
-      for (let a = 0; a < 1; a++) {
-        let s = [];
-        let adj = a;
-        for (let b = 0; b < 160; b++) {
-          s.push(Math.sin(b + adj));
-        }
-        sparkRidgeLineData.push(s);
-      }
-      this.dbdata.setWData('w2', {
-        data: ridgemapdata //sparkRidgeLineData
+      this.dbdata.setWData('wF', {
+        labels: ['Impressions', 'Add To Cart', 'Buy'],
+        subLabels: ['Direct', 'Social Media', 'Ads'],
+        values: [
+          // with the given Labels and SubLabels here's what the values represent:
+          //
+          // Direct, Social, Ads
+          //    |      |     |
+          //    v      v     v
+          [3000, 2500, 6500], // Segments of "Impressions" from top to bottom
+          [3000, 1700, 1000], // Segments of "Add To Cart"
+          [600, 200, 130] // Segments of "Buy"
+        ],
+        colors: [
+          ['#FFB178', '#FF3C8E'], // color set for "Impressions" segment
+          ['#A0BBFF', '#EC77FF'], // color set for "Add To Cart" segment
+          ['#A0F9FF', '#7795FF'] // color set for "Buy" segment
+        ],
+        direction: 'vertical',
+        gradientDirection: 'vertical',
+        height: 500,
+        width: 1500,
+        animated: true
       });
     }
   }

@@ -167,12 +167,7 @@ export default {
         p1 = p1 && this.isOK(p1.canvasy) ? p1 : null;
         p2 = p2 && this.isOK(p2.canvasy) ? p2 : null;
         if (p0 && p1) {
-          var controls = this.getControlPoints(
-            { x: p0.canvasx, y: p0.canvasy },
-            { x: p1.canvasx, y: p1.canvasy },
-            p2 && { x: p2.canvasx, y: p2.canvasy },
-            this.smoothing
-          );
+          var controls = this.getControlPoints({ x: p0.canvasx, y: p0.canvasy }, { x: p1.canvasx, y: p1.canvasy }, p2 && { x: p2.canvasx, y: p2.canvasy }, this.smoothing);
           // Uncomment to show the control points:
           // ctx.lineTo(lastRightX, lastRightY);
           // ctx.lineTo(controls[0], controls[1]);
