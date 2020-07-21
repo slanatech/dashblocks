@@ -1,6 +1,6 @@
 /* DbPerspective * Perspective viewer: https://perspective.finos.org/ */
 <template>
-  <perspective-viewer ref="pv" class="perspective-viewer-vaporwave" :columns="['Sales', 'Profit']" />
+  <perspective-viewer ref="pv" class="perspective-viewer-material-dark" :columns="['Sales', 'Profit']" />
 </template>
 <script>
 import '@finos/perspective-viewer';
@@ -27,35 +27,8 @@ export default {
       default: 0
     },
     data: {
-      type: Array,
-      default: () => []
-    },
-    autoDraw: Boolean,
-    barWidth: {
-      type: Number,
-      default: 8
-    },
-    growDuration: {
-      type: Number,
-      default: 0.5
-    },
-    gradient: {
-      type: Array,
-      default: () => ['#6fa8dc', '#42b983']
-    },
-    max: {
-      type: Number,
-      default: -Infinity
-    },
-    min: {
-      type: Number,
-      default: Infinity
-    },
-    height: Number,
-    width: Number,
-    padding: {
-      type: Number,
-      default: 8
+      type: Object,
+      default: null
     }
   },
   watch: {
@@ -69,20 +42,12 @@ export default {
     }
   },
   mounted() {
-    window.addEventListener('resize', this.handleResize);
-    this.initSize();
     // TEMP
     let p = this.$refs.pv;
-    p.load(this.testData);
+    p.load(this.data);
     let a = 1;
   },
   methods: {
-    initSize() {
-      this.$nextTick(() => {
-        this.lineHeight = this.height ? this.height : this.$refs.chart.clientHeight;
-        this.lineWidth = this.width ? this.width : this.$refs.chart.clientWidth - 10;
-      });
-    },
     handleResize(/*event*/) {
       this.$nextTick(() => {
         // TODO Something wrong with this -10 ... Reconsider

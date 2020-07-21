@@ -16,7 +16,6 @@ export default {
   mixins: [demodashboard],
   data() {
     return {
-      isDark: false,
       dbdata: new DbData(),
       // Declare Dashboard Layout. Add widgets to your dashboard, specifying how many columns and rows
       // each widget takes. Dashblocks provides 16-columns CSS Grid layout.
@@ -37,14 +36,19 @@ export default {
       ready: false
     };
   },
-  mounted() {
-    this.$store.dispatch('setDashboardSpec', { spec: JSON.stringify(this.dbspec, null, '\t') });
-    this.initialize();
+  async mounted() {
+    await this.$store.dispatch('setDashboardSpec', { spec: JSON.stringify(this.dbspec, null, '\t') });
+    await this.initialize();
     this.ready = true;
   },
   methods: {
-    initialize: function() {
-      // TODO
+    initialize: async function() {
+      // Fetch data from Arrow file
+      const data = await fetch('data/superstore.arrow');
+      const dataBuffer = await data.arrayBuffer();
+      this.dbdata.setWData('wP', {
+        data: Object.freeze(dataBuffer)
+      });
     }
   }
 };

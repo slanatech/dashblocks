@@ -37,7 +37,7 @@ export default {
       ready: false
     };
   },
-  mounted() {
+  async mounted() {
     this.$store.dispatch('setDashboardSpec', { spec: JSON.stringify(this.dbspec, null, '\t') });
     this.initialize();
     this.ready = true;
