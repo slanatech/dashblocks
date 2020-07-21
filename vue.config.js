@@ -1,6 +1,7 @@
 // vue.config.js
 const path = require('path');
 const webpack = require('webpack');
+const PerspectivePlugin = require('@finos/perspective-webpack-plugin');
 
 // We will not include plotly.js-dist into lib bundle, to keep lib size reasonable.
 // plotly.js-dist is ~6M
@@ -33,7 +34,8 @@ module.exports = {
     //externals: process.env.NODE_ENV === 'production' ? getProdExternals() : {},
     plugins: [
       // Ignore all locale files of moment.js
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new PerspectivePlugin()
     ],
     resolve: {
       alias: {

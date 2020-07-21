@@ -122,7 +122,8 @@ export default {
           expanded: false,
           items: [
             { title: 'Playground', link: '/playground', icon: 'waves' },
-            { title: 'Ridgeline', link: '/dashridgeline', icon: 'waves' }
+            { title: 'Ridgeline', link: '/dashridgeline', icon: 'waves' },
+            { title: 'Perspective', link: '/perspective', icon: 'waves' }
           ]
         },
         {
