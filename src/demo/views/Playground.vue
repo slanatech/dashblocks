@@ -16,7 +16,6 @@ export default {
   mixins: [demodashboard],
   data() {
     return {
-      isDark: false,
       dbdata: new DbData(),
       // Declare Dashboard Layout. Add widgets to your dashboard, specifying how many columns and rows
       // each widget takes. Dashblocks provides 16-columns CSS Grid layout.
@@ -64,8 +63,6 @@ export default {
         ],
         direction: 'vertical',
         gradientDirection: 'vertical',
-        height: 500,
-        width: 1500,
         animated: true
       });
     }

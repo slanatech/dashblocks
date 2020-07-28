@@ -1,50 +1,52 @@
 /* * Based on https://github.com/greghub/vue-funnel-graph-js */
 <template>
-  <div ref="chart" class="funnel svg-funnel-js" :class="{ 'svg-funnel-js--vertical': direction === 'vertical' }">
-    <div class="svg-funnel-js__container">
-      <svg :width="width" :height="height">
-        <defs>
-          <linearGradient :id="`funnelGradient-${index + 1}`" v-for="(colors, index) in gradientSet" :key="index" :gradientTransform="gradientAngle">
-            <stop :stop-color="color" :offset="offsetColor(index, colors.values.length)" v-for="(color, index) in colors.values" :key="index"></stop>
-          </linearGradient>
-        </defs>
-        <path :fill="colorSet[index].fill" :stroke="colorSet[index].fill" :d="path" v-for="(path, index) in paths" :key="index"></path>
-      </svg>
+  <div ref="container">
+    <div v-if="ready" class="funnel svg-funnel-js" :class="{ 'svg-funnel-js--vertical': direction === 'vertical' }">
+      <div class="svg-funnel-js__container">
+        <svg :width="width" :height="height">
+          <defs>
+            <linearGradient :id="`funnelGradient-${index + 1}`" v-for="(colors, index) in gradientSet" :key="index" :gradientTransform="gradientAngle">
+              <stop :stop-color="color" :offset="offsetColor(index, colors.values.length)" v-for="(color, index) in colors.values" :key="index"></stop>
+            </linearGradient>
+          </defs>
+          <path :fill="colorSet[index].fill" :stroke="colorSet[index].fill" :d="path" v-for="(path, index) in paths" :key="index"></path>
+        </svg>
+      </div>
+      <transition-group class="svg-funnel-js__labels" name="appear" tag="div" v-on:enter="enterTransition" v-on:leave="leaveTransition">
+        <div
+          class="svg-funnel-js__label"
+          :class="`label-${index + 1}`"
+          v-for="(value, index) in valuesFormatted"
+          :key="
+            labels[index]
+              .toLowerCase()
+              .split(' ')
+              .join('-')
+          "
+        >
+          <div class="label__value">{{ value }}</div>
+          <div class="label__title" v-if="labels">{{ labels[index] }}</div>
+          <div class="label__percentage" v-if="displayPercentage && percentages()[index] !== 100">{{ percentages()[index] }}%</div>
+          <div class="label__segment-percentages" v-if="is2d()">
+            <ul class="segment-percentage__list">
+              <li v-for="(subLabel, j) in subLabels" :key="j">
+                {{ subLabel }}:
+                <span class="percentage__list-label" v-if="subLabelValue === 'percent'">{{ twoDimPercentages()[index][j] }}%</span>
+                <span class="percentage__list-label" v-else>{{ values[index][j] | format }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </transition-group>
+      <transition name="fade" v-on:enter="enterTransition" v-on:leave="leaveTransition">
+        <div class="svg-funnel-js__subLabels" v-if="is2d()">
+          <div :class="`svg-funnel-js__subLabel svg-funnel-js__subLabel-${index + 1}`" v-for="(subLabel, index) in subLabels" :key="index">
+            <div class="svg-funnel-js__subLabel--color" :style="subLabelBackgrounds(index)"></div>
+            <div class="svg-funnel-js__subLabel--title">{{ subLabel }}</div>
+          </div>
+        </div>
+      </transition>
     </div>
-    <transition-group class="svg-funnel-js__labels" name="appear" tag="div" v-on:enter="enterTransition" v-on:leave="leaveTransition">
-      <div
-        class="svg-funnel-js__label"
-        :class="`label-${index + 1}`"
-        v-for="(value, index) in valuesFormatted"
-        :key="
-          labels[index]
-            .toLowerCase()
-            .split(' ')
-            .join('-')
-        "
-      >
-        <div class="label__value">{{ value }}</div>
-        <div class="label__title" v-if="labels">{{ labels[index] }}</div>
-        <div class="label__percentage" v-if="displayPercentage && percentages()[index] !== 100">{{ percentages()[index] }}%</div>
-        <div class="label__segment-percentages" v-if="is2d()">
-          <ul class="segment-percentage__list">
-            <li v-for="(subLabel, j) in subLabels" :key="j">
-              {{ subLabel }}:
-              <span class="percentage__list-label" v-if="subLabelValue === 'percent'">{{ twoDimPercentages()[index][j] }}%</span>
-              <span class="percentage__list-label" v-else>{{ values[index][j] | format }}</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </transition-group>
-    <transition name="fade" v-on:enter="enterTransition" v-on:leave="leaveTransition">
-      <div class="svg-funnel-js__subLabels" v-if="is2d()">
-        <div :class="`svg-funnel-js__subLabel svg-funnel-js__subLabel-${index + 1}`" v-for="(subLabel, index) in subLabels" :key="index">
-          <div class="svg-funnel-js__subLabel--color" :style="subLabelBackgrounds(index)"></div>
-          <div class="svg-funnel-js__subLabel--title">{{ subLabel }}</div>
-        </div>
-      </div>
-    </transition>
   </div>
 </template>
 <script>
@@ -68,7 +70,8 @@ export default {
       prevPaths: [], // paths before update, used for animations
       graph: null,
       tween: null,
-      defaultColors: getDefaultColors(10)
+      defaultColors: getDefaultColors(10),
+      ready: false
     };
   },
   mixins: [dbStdProps],
@@ -107,7 +110,7 @@ export default {
   },
   computed: {
     valuesFormatted() {
-      if (this.graph.is2d()) {
+      if (this.graph && this.graph.is2d()) {
         return this.graph.getValues2d().map(value => formatNumber(value));
       }
       return this.values.map(value => formatNumber(value));
@@ -190,13 +193,15 @@ export default {
       return;
     },
     initSize() {
-      //let cH = this.$refs.chart.clientHeight;
-      //let cW = this.$refs.chart.clientWidth;
-      this.chartWidth = 1500; //cW;
-      this.chartHeight = 500; //cH;
+      let cH = this.$refs.container.clientHeight;
+      let cW = this.$refs.container.clientWidth;
+      log.info(`DbFunnel: width=${cW}, height=${cH}`);
+      this.chartWidth = cW;
+      this.chartHeight = cH;
       log.info(`DbFunnel: set width=${this.chartWidth}, height=${this.chartHeight}`);
     },
     handleResize(/*event*/) {
+      this.ready = false;
       this.$nextTick(() => {
         this.render();
       });
@@ -212,6 +217,7 @@ export default {
           values: this.values
         }
       });
+      this.ready = true;
       this.drawPaths();
       if (this.animated) this.makeAnimations();
     },
