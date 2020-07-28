@@ -3,7 +3,7 @@
   <div ref="container">
     <div v-if="ready" class="funnel svg-funnel-js" :class="{ 'svg-funnel-js--vertical': direction === 'vertical' }">
       <div class="svg-funnel-js__container">
-        <svg :width="width" :height="height">
+        <svg :width="chartWidth - 130" :height="chartHeight - 40">
           <defs>
             <linearGradient :id="`funnelGradient-${index + 1}`" v-for="(colors, index) in gradientSet" :key="index" :gradientTransform="gradientAngle">
               <stop :stop-color="color" :offset="offsetColor(index, colors.values.length)" v-for="(color, index) in colors.values" :key="index"></stop>
@@ -71,7 +71,9 @@ export default {
       graph: null,
       tween: null,
       defaultColors: getDefaultColors(10),
-      ready: false
+      ready: false,
+      chartWidth: 0,
+      chartHeight: 0
     };
   },
   mixins: [dbStdProps],
@@ -209,8 +211,8 @@ export default {
     render() {
       this.initSize();
       this.graph = new FunnelGraph({
-        height: this.chartHeight,
-        width: this.chartWidth,
+        height: this.chartHeight - 40,
+        width: this.chartWidth - 130,
         direction: this.direction,
         data: {
           labels: this.labels,

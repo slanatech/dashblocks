@@ -29,7 +29,7 @@ export default {
             id: 'wF',
             type: 'DbFunnel',
             cspan: 16,
-            height: 600
+            height: 500
           }
         ]
       },
