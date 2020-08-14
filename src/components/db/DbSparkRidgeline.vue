@@ -14,7 +14,7 @@ import * as d3 from 'd3';
 import jvmdata from '../data/series_test_jvm_memory_used_bytes.json';
 
 export default {
-  name: 'DbSparkRidgeline',
+  name: 'DbSparkLineMap',
   components: {},
   data() {
     return {

@@ -14,6 +14,7 @@ import DbDygraphsBarSamples from './demo/views/samples/DbDygraphsBarSamples';
 import DashRidgeline from './demo/views/DashRidgeline.vue';
 import Playground from './demo/views/Playground';
 import Perspective from './demo/views/Perspective';
+import SparkLineMap from './demo/views/SparkLineMap';
 
 Vue.use(Router);
 
@@ -98,6 +99,11 @@ export default new Router({
           path: '/perspective',
           name: 'Perspective',
           component: Perspective
+        },
+        {
+          path: '/sparklinemap',
+          name: 'Sparklinemap',
+          component: SparkLineMap
         }
       ]
     }
