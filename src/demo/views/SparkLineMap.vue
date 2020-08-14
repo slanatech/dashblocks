@@ -1,11 +1,11 @@
 <template>
   <div>
     <q-toolbar>
-      <q-btn-toggle v-model="dataSet" toggle-color="primary" :options="dataOptions" />
-      <q-toggle v-model="lineEnabled" label="Enable Outline">
+      <q-select dense outlined v-model="dataSet" :options="dataOptions" label="Data" emit-value map-options/>
+      <q-select dense outlined v-model="colorInterpolator" toggle-color="primary" label="Colors" :options="colorOptions" emit-value map-options/>
+      <q-toggle v-model="lineEnabled" icon="waves">
         <q-tooltip anchor="bottom right" self="center middle">Enable Outline</q-tooltip>
       </q-toggle>
-      <q-btn-toggle class="q-ma-md" v-model="colorInterpolator" toggle-color="primary" :options="colorOptions" />
     </q-toolbar>
     <db-dashboard v-if="ready" :dbspec="dbspec" :dbdata="dbdata" :dark="isDark"> </db-dashboard>
   </div>
@@ -98,6 +98,8 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch('setDashboardSpec', { spec: JSON.stringify(this.dbspec, null, '\t') });
+    this.dataSet = this.$route.query.ds || 't2';
+    this.colorInterpolator = this.$route.query.colors || 'interpolateBlues';
     await this.initialize();
     this.ready = true;
   },

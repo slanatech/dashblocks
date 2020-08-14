@@ -81,8 +81,6 @@
             <q-icon class="text-primary" name="trending_up" size="md" />
             <!--<q-avatar :icon="icon" color="primary" text-color="white" size="md"/>-->
             <q-toolbar-title> {{ currentRouteName }} </q-toolbar-title>
-            <q-space></q-space>
-            <div class="text-caption">by <a href="https://dashblocks.io" target="blank">dashblocks</a></div>
           </q-toolbar>
           <router-view />
         </q-page>
@@ -102,7 +100,7 @@ export default {
   data() {
     return {
       miniState: true,
-      leftShown: true,
+      leftShown: false,
       rightShown: false,
       transitionName: '',
       testColors: null,
