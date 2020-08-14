@@ -122,7 +122,8 @@ export default {
             { title: 'Playground', link: '/playground', icon: 'waves' },
             { title: 'Ridgeline', link: '/dashridgeline', icon: 'waves' },
             { title: 'Perspective', link: '/perspective', icon: 'waves' },
-            { title: 'Spark Line Map', link: '/sparklinemap', icon: 'waves' }
+            { title: 'Spark Line Map', link: '/sparklinemap', icon: 'waves' },
+            { title: 'Spark Line Map Dynamics', link: '/sparklinemapdyn', icon: 'waves' }
           ]
         },
         {

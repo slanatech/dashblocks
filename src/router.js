@@ -15,6 +15,7 @@ import DashRidgeline from './demo/views/DashRidgeline.vue';
 import Playground from './demo/views/Playground';
 import Perspective from './demo/views/Perspective';
 import SparkLineMap from './demo/views/SparkLineMap';
+import SparkLineMapDyn from './demo/views/SparkLineMapDyn';
 
 Vue.use(Router);
 
@@ -104,6 +105,11 @@ export default new Router({
           path: '/sparklinemap',
           name: 'Sparklinemap',
           component: SparkLineMap
+        },
+        {
+          path: '/sparklinemapdyn',
+          name: 'Sparklinemapdyn',
+          component: SparkLineMapDyn
         }
       ]
     }

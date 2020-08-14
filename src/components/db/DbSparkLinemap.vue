@@ -1,5 +1,5 @@
 <template>
-  <div ref="chart" style="height:100%;width:100%;">
+  <div ref="chart" style="height:100%;width:100%;" @mousedown="captureOn" @mouseup="captureOff" @mousemove="mo">
     <canvas ref="canvas" style="position: absolute;top:0;left:0;height: 100%; width: 100%;"></canvas>
   </div>
 </template>
@@ -18,7 +18,11 @@ export default {
     return {
       canvasWidth: 100,
       canvasHeight: 100,
-      needUpdate: false
+      needUpdate: false,
+      captureToggle: false,
+      cutoff: 0,
+      startY: 0,
+      currY: 0
     };
   },
   props: {
@@ -142,10 +146,16 @@ export default {
         return;
       }
 
-      console.log(`Entering render Linemap: ${startTs}`);
+      console.log(`Entering render Linemap: ${startTs} / ${height}`);
 
-      let data = this.data; // jvmdata; // this.data; // apireqdata; // // this.data; jvmdata;
-      const numseries = data.length;
+      let fullData = this.data;
+      const fullNumSeries = fullData.length;
+      let data = fullData; // jvmdata; // this.data; // apireqdata; // // this.data; jvmdata;
+      let numseries = data.length;
+      if( this.cutoff > 0 ){
+        //data = fullData.slice(fullNumSeries-this.cutoff);
+        numseries = numseries - this.cutoff;
+      }
       const serieslength = data[0].length;
       const maxValue = this.max ? this.max : d3.max(data, d => d3.max(d, i => i));
 
@@ -241,6 +251,38 @@ export default {
       let c = d3Color.color(hex);
       c.opacity = opacity;
       return c + '';
+    },
+
+    mo: function(evt) {
+      if (this.captureToggle) {
+        //this.x = evt.x
+        this.currY = evt.y
+        if(this.startY === 0){
+          this.startY = this.currY;
+        }
+        //console.log(`Mouse move: ${this.currY}`);
+      }
+    },
+    captureOn: function(evt) {
+      this.captureToggle = true
+      this.startY = 0;
+    },
+    captureOff: function(evt) {
+      this.captureToggle = false
+      console.log(`Capture off: ${this.currY} - ${this.startY} - ${this.canvasHeight}`);
+      let numseries = this.data.length;
+      let c1 = Math.abs(this.currY-this.startY);
+      let c2 = Math.floor(c1/this.canvasHeight*numseries);
+      console.log(`Capture off: ${c1} - ${c2}`);
+      if(this.currY>this.startY ){
+        this.cutoff += c2; // ???
+      }else{
+        this.cutoff -= c2;
+        if(this.cutoff<0){
+          this.cutoff = 0;
+        }
+      }
+      this.render();
     }
 
   }
