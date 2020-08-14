@@ -5,6 +5,7 @@
       <q-toggle v-model="lineEnabled" label="Enable Outline">
         <q-tooltip anchor="bottom right" self="center middle">Enable Outline</q-tooltip>
       </q-toggle>
+      <q-btn-toggle class="q-ma-md" v-model="colorInterpolator" toggle-color="primary" :options="colorOptions" />
     </q-toolbar>
     <db-dashboard v-if="ready" :dbspec="dbspec" :dbdata="dbdata" :dark="isDark"> </db-dashboard>
   </div>
@@ -35,7 +36,16 @@ export default {
         { label: 'Ridge 2', value: 'r2' },
         { label: 'Small Test (10)', value: 't1' }
       ],
+      colorOptions: [
+        { label: 'Blues', value: 'interpolateBlues' },
+        { label: 'Reds', value: 'interpolateReds' },
+        { label: 'Oranges', value: 'interpolateOranges' },
+        { label: 'Greens', value: 'interpolateGreens' },
+        { label: 'Purples', value: 'interpolatePurples' },
+        { label: 'Greys', value: 'interpolateGreys' }
+      ],
       dataSet: 'm1',
+      colorInterpolator: 'interpolateBlues',
       dbdata: new DbData(),
       dbspec: {
         layout: {
@@ -46,7 +56,10 @@ export default {
             id: 'wSLM',
             type: 'DbSparkLineMap',
             cspan: 16,
-            height: 600
+            height: 600,
+            properties: {
+              colorInterpolateScheme: 'interpolateOranges'
+            }
           }
         ]
       },
@@ -73,6 +86,11 @@ export default {
       });
     },
     dataSet() {
+      this.$nextTick(function() {
+        this.setData();
+      });
+    },
+    colorInterpolator() {
       this.$nextTick(function() {
         this.setData();
       });
@@ -127,7 +145,8 @@ export default {
 
       this.dbdata.setWData('wSLM', {
         data: Object.freeze(ds),
-        line: this.lineEnabled
+        line: this.lineEnabled,
+        colorInterpolateScheme: this.colorInterpolator
       });
     }
   }
