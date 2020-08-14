@@ -44,7 +44,7 @@ export default {
         { label: 'Purples', value: 'interpolatePurples' },
         { label: 'Greys', value: 'interpolateGreys' }
       ],
-      dataSet: 'm1',
+      dataSet: 't2',
       colorInterpolator: 'interpolateBlues',
       dbdata: new DbData(),
       dbspec: {
