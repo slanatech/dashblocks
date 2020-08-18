@@ -66,7 +66,8 @@
     "@finos/perspective-viewer": "^0.5.1",
     "@finos/perspective-viewer-datagrid": "^0.5.1",
     "@finos/perspective-viewer-d3fc": "^0.5.1",
-    "@finos/perspective-webpack-plugin": "^0.5.0"
+    "@finos/perspective-webpack-plugin": "^0.5.0",
+    "nouislider": "^14.6.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.1",

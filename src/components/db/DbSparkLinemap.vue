@@ -1,6 +1,9 @@
 <template>
-  <div ref="chart" style="height:100%;width:100%;" @mousedown="captureOn" @mouseup="captureOff" @mousemove="mo">
-    <canvas ref="canvas" style="position: absolute;top:0;left:0;height: 100%; width: 100%;"></canvas>
+  <div class="db-sparklinemap" ref="chart" style="height:100%;width:100%;" @dblclick="handleDblClick">
+    <div style="position: relative;" @mousedown="captureOn" @mouseup="captureOff" @mousemove="mo">
+      <canvas ref="canvas" style="position: absolute;top:0;left:0;height: 100%; width: 100%;"></canvas>
+    </div>
+    <div ref="vslider" style="margin-left: 10px; height: 100%;"></div>
   </div>
 </template>
 <script>
@@ -9,6 +12,9 @@
  */
 import * as d3 from 'd3';
 import * as d3Color from 'd3-color';
+import noUiSlider from 'nouislider';
+import 'nouislider/distribute/nouislider.css';
+
 //import dbColors from '../dbcolors';
 
 export default {
@@ -22,7 +28,11 @@ export default {
       captureToggle: false,
       cutoff: 0,
       startY: 0,
-      currY: 0
+      currY: 0,
+      vSlider: null,
+      resetData: true,
+      tsStart: 0,
+      tsEnd: -1
     };
   },
   props: {
@@ -63,12 +73,14 @@ export default {
   watch: {
     _updated(/*newVal*/) {
       this.$nextTick(function() {
+        this.resetData = true;
         this.render();
       });
     },
     // TODO watch data for updates
     data() {
       this.$nextTick(function() {
+        this.resetData = true;
         this.render();
       });
     },
@@ -85,6 +97,23 @@ export default {
   },
   mounted() {
     window.addEventListener('resize', this.handleResize);
+    let sref = this.$refs.vslider;
+    this.vSlider = noUiSlider.create(sref, {
+      start: [0, 100],
+      connect: true,
+      orientation: 'vertical',
+      behaviour: 'drag',
+      range: {
+        min: 0,
+        max: 100
+      }
+    });
+    // Note: change or end will be fired twice when range is dragged
+    let comp = this;
+    this.vSlider.on('change', function(values) {
+      comp.handleVSliderChange(values);
+    });
+
     this.$nextTick(() => {
       this.render();
     });
@@ -93,16 +122,37 @@ export default {
     window.removeEventListener('resize', this.handleResize);
   },
   methods: {
+    delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
     initSize() {
       this.canvasHeight = this.height ? this.height : this.$refs.chart.clientHeight;
       this.canvasWidth = this.width ? this.width : this.$refs.chart.clientWidth;
     },
     handleResize(/*event*/) {
       this.$nextTick(() => {
+        //this.render();
+      });
+    },
+    handleVSliderChange(values) {
+      console.log(`Got change: ${JSON.stringify(values)} - ${this.canvasWidth}`);
+      this.tsStart = Math.floor(values[0]);
+      this.tsEnd = Math.floor(values[1]);
+      this.$nextTick(() => {
         this.render();
       });
     },
-
+    async handleDblClick(){
+      console.log(`Got dbl-click!`);
+      this.tsStart = 0;
+      this.tsEnd = 50;
+      while(this.tsEnd < this.data.length){
+        this.render();
+        await this.delay(100);
+        //this.tsStart += 1;
+        this.tsEnd += 1;
+      }
+    },
     // TODO Consider re-creating canvas and context
     // TODO -> Utils
     initContext(width, height) {
@@ -151,13 +201,51 @@ export default {
       let fullData = this.data;
       const fullNumSeries = fullData.length;
       let data = fullData; // jvmdata; // this.data; // apireqdata; // // this.data; jvmdata;
-      let numseries = data.length;
-      if( this.cutoff > 0 ){
-        //data = fullData.slice(fullNumSeries-this.cutoff);
-        numseries = numseries - this.cutoff;
+      let totalNumSeries = data.length;
+      let numseries = totalNumSeries;
+
+      if (this.resetData) {
+        // Means we're drawing full dataset after data was set the first time or updated
+        this.tsStart = 0;
+        this.tsEnd = totalNumSeries - 1;
+        this.vSlider.updateOptions({
+          start: [0, totalNumSeries - 1],
+          range: { min: 0, max: totalNumSeries - 1 }
+        });
+        this.resetData = false;
+      } else {
+        // ???
+        numseries = this.tsEnd - this.tsStart ; // +1 ?
       }
-      const serieslength = data[0].length;
-      const maxValue = this.max ? this.max : d3.max(data, d => d3.max(d, i => i));
+
+      /*
+      this.tsStart = 0;
+      this.tsEnd = 30;
+      numseries = this.tsEnd - this.tsStart;
+      */
+
+      /*
+       */
+      // TODO Reconsider
+      //if (this.cutoff > 0) {
+      //data = fullData.slice(fullNumSeries-this.cutoff);
+      //numseries = numseries - this.cutoff;
+      //}
+
+      const serieslength = data[this.tsStart].length;
+
+      let maxValue = this.max;
+      if (!this.max) {
+        let sm = [];
+        for (let sidx = this.tsStart; sidx <= this.tsEnd; sidx++) {
+          sm.push(d3.max(data[sidx], d => d));
+        }
+        maxValue = d3.max(sm, d => d);
+        // TODO Consider prop / slider to manipulate max: it can be used to zoom in / out on Z
+        //maxValue = maxValue/10;
+      }
+
+      //let testMax = d3.max(data, d => d3.max(d, i => i));
 
       // This should depend on number of series, and height. 1/4 th ?
       let seriesHeight = numseries > 1 ? Math.floor(height / 4) : height;
@@ -176,8 +264,15 @@ export default {
       // Depending on number of series
       let opacityScale = d3
         .scaleLinear()
-        .domain([0, numseries - 1])
-        .range(numseries > 1 ? [0.9, 0.001] : [0.3, 0.3]);
+        .domain([this.tsStart, this.tsEnd])
+        .range(numseries > 1 ? [0.9, 0.1] : [0.3, 0.3]);
+
+        //.domain([0, numseries - 1])
+        // TODO Fix Domain !!! .domain([0, numseries - 1])
+        // TODO ?????  5 / numseries
+
+        //.range(numseries > 1 ? [0.9, 0.6] : [0.3, 0.3]);
+        //.range(numseries > 1 ? [0.9, 0.001] : [0.3, 0.3]);
 
       let line = d3
         .line()
@@ -200,14 +295,20 @@ export default {
 
       let padScale = d3
         .scaleLinear()
-        .domain([0, numseries - 1])
+        .domain([this.tsStart, this.tsEnd])
         .range([0, height - seriesHeight]);
 
-      let colorInterpolator = d3[this.colorInterpolateScheme] || d3.interpolateBlues;
-      let colorScale = d3.scaleSequential(colorInterpolator).domain([0, numseries + 20]);
-      let cidx = 10; //Math.floor(numseries / 2);
+        //.domain([0, numseries - 1])
 
-      for (let sidx = 0; sidx < numseries; sidx++) {
+      let colorInterpolator = d3[this.colorInterpolateScheme] || d3.interpolateBlues;
+
+      //let colorScale = d3.scaleSequential(colorInterpolator).domain([0, numseries + 20]);
+      //let cidx = 10; //Math.floor(numseries / 2);
+      let colorScale = d3.scaleSequential(colorInterpolator).domain([0, numseries+2]);
+      let cidx = 1; //Math.floor(numseries / 2);
+
+      //for (let sidx = 0; sidx < numseries; sidx++) {
+      for (let sidx = this.tsStart; sidx <= this.tsEnd; sidx++) {
         let pointsData = data[sidx].map((d, i) => {
           return { x: i, y: isNaN(d) ? 0 : d };
         });
@@ -256,35 +357,40 @@ export default {
     mo: function(evt) {
       if (this.captureToggle) {
         //this.x = evt.x
-        this.currY = evt.y
-        if(this.startY === 0){
+        this.currY = evt.y;
+        if (this.startY === 0) {
           this.startY = this.currY;
         }
         //console.log(`Mouse move: ${this.currY}`);
       }
     },
     captureOn: function(evt) {
-      this.captureToggle = true
+      this.captureToggle = true;
       this.startY = 0;
     },
     captureOff: function(evt) {
-      this.captureToggle = false
+      this.captureToggle = false;
       console.log(`Capture off: ${this.currY} - ${this.startY} - ${this.canvasHeight}`);
       let numseries = this.data.length;
-      let c1 = Math.abs(this.currY-this.startY);
-      let c2 = Math.floor(c1/this.canvasHeight*numseries);
+      let c1 = Math.abs(this.currY - this.startY);
+      let c2 = Math.floor((c1 / this.canvasHeight) * numseries);
       console.log(`Capture off: ${c1} - ${c2}`);
-      if(this.currY>this.startY ){
+      if (this.currY > this.startY) {
         this.cutoff += c2; // ???
-      }else{
+      } else {
         this.cutoff -= c2;
-        if(this.cutoff<0){
+        if (this.cutoff < 0) {
           this.cutoff = 0;
         }
       }
       this.render();
     }
-
   }
 };
 </script>
+<style lang="scss">
+.db-sparklinemap {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+</style>
