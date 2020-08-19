@@ -6,24 +6,26 @@
       <q-toggle v-model="lineEnabled" icon="waves">
         <q-tooltip anchor="bottom right" self="center middle">Enable Outline</q-tooltip>
       </q-toggle>
+      <q-btn label="Run" @click="animate"></q-btn>
     </q-toolbar>
-    <db-dashboard v-if="ready" :dbspec="dbspec" :dbdata="dbdata" :dark="isDark"> </db-dashboard>
+    <div style="width:100%; height: 600px;">
+      <db-spark-line-map style="position: relative;" :data="slmData" :color-interpolate-scheme="colorInterpolator"></db-spark-line-map>
+    </div>
   </div>
 </template>
 
 <script>
-import { DbData, DbDashboard } from 'dashblocks';
+import { DbData, DbSparkLineMap } from 'dashblocks';
 import { demodashboard } from '@/demo/mixins/demodashboard';
 import ridgedata from '../data/ridgedata.json';
 import ridgemapdata from '../data/ridgemapdata.json';
 import apireqdata from '../data/series_rate_api_req_count.json';
 import jvmdata from '../data/series_test_jvm_memory_used_bytes.json';
-import metrics3 from '../data/metrics3.json';
 
 export default {
-  name: 'SparkLineMap',
+  name: 'SparkLineMapDyn',
   components: {
-    DbDashboard
+    DbSparkLineMap
   },
   mixins: [demodashboard],
   data() {
@@ -33,7 +35,6 @@ export default {
         { label: 'Metrics (1000+)', value: 't2' },
         { label: 'Metrics (160)', value: 'm1' },
         { label: 'Metrics 2 (160)', value: 'm2' },
-        { label: 'Metrics 3 (42)', value: 'm3' },
         { label: 'Ridge 1', value: 'r1' },
         { label: 'Ridge 2', value: 'r2' },
         { label: 'Small Test (10)', value: 't1' }
@@ -46,7 +47,7 @@ export default {
         { label: 'Purples', value: 'interpolatePurples' },
         { label: 'Greys', value: 'interpolateGreys' }
       ],
-      dataSet: 'm2',
+      dataSet: 't2',
       colorInterpolator: 'interpolateBlues',
       dbdata: new DbData(),
       dbspec: {
@@ -78,7 +79,11 @@ export default {
         [0, 3, 4, 5, 1, 1, 2, 2, 2, 6, 6, 5, 4, 2, 2, 2],
         [0, 3, 4, 5, 1, 1, 2, 2, 2, 6, 6, 5, 4, 2, 2, 2],
         [0, 3, 4, 5, 1, 1, 2, 2, 2, 6, 6, 5, 4, 2, 2, 2]
-      ]
+      ],
+      ds: null,
+      slmData: null,
+      animateSteps: 0,
+      animateCurrentStep: 0
     };
   },
   watch: {
@@ -129,10 +134,6 @@ export default {
           ds = jvmdata;
           break;
         }
-        case 'm3': {
-          ds = metrics3;
-          break;
-        }
         case 'r1': {
           ds = ridgedata;
           break;
@@ -151,10 +152,32 @@ export default {
         }
       }
 
-      this.dbdata.setWData('wSLM', {
-        data: Object.freeze(ds),
-        line: this.lineEnabled,
-        colorInterpolateScheme: this.colorInterpolator
+      this.ds = Object.freeze(ds);
+    },
+
+    delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
+
+    animate: async function() {
+      let numseries = this.ds.length;
+      //this.animateCurrentStep = 0;
+      //this.animateStep();
+      for (let i = 1; i < numseries; i++) {
+        let slmDs = this.ds.slice(0, i);
+        this.slmData = Object.freeze(slmDs);
+        await this.delay(120);
+      }
+    },
+
+    animateStep: function() {
+      this.$nextTick(function() {
+        let slmDs = this.ds.slice(0, this.animateCurrentStep);
+        this.slmData = Object.freeze(slmDs);
+        this.animateCurrentStep++;
+        if (this.animateCurrentStep < this.animateSteps) {
+          this.animateStep();
+        }
       });
     }
   }
