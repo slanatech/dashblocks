@@ -5,3 +5,4 @@ export * from './components/db/index.js';
 export * from './components/funnel/index.js';
 export * from './components/d3/index.js';
 export * from './components/perspective/index.js';
+export * from './components/geo/index.js';

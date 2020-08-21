@@ -63,11 +63,14 @@
     "@tweenjs/tween.js": "^18.6.0",
     "funnel-graph-js": "^1.4.2",
     "polymorph-js": "^1.0.2",
-    "@finos/perspective-viewer": "^0.5.1",
-    "@finos/perspective-viewer-datagrid": "^0.5.1",
-    "@finos/perspective-viewer-d3fc": "^0.5.1",
+    "@finos/perspective": "^0.5.2",
+    "@finos/perspective-viewer": "^0.5.2",
+    "@finos/perspective-viewer-datagrid": "^0.5.2",
+    "@finos/perspective-viewer-d3fc": "^0.5.2",
     "@finos/perspective-webpack-plugin": "^0.5.0",
-    "nouislider": "^14.6.1"
+    "nouislider": "^14.6.1",
+    "deck.gl": "^8.2.5",
+    "mapbox-gl": "^1.12.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.1",

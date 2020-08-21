@@ -10,9 +10,9 @@
 import * as d3 from 'd3';
 //import dbColors from '../dbcolors';
 //import { makeNoise2D } from 'open-simplex-noise';
-import ridgedata from '../data/ridgedata.json';
-import apireqdata from '../data/series_rate_api_req_count.json';
-import jvmdata from '../data/series_test_jvm_memory_used_bytes.json';
+//import ridgedata from '../data/ridgedata.json';
+//import apireqdata from '../data/series_rate_api_req_count.json';
+//import jvmdata from '../data/series_test_jvm_memory_used_bytes.json';
 
 export default {
   name: 'DbSparkHeatmap',

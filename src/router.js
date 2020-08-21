@@ -15,6 +15,9 @@ import DashRidgeline from './demo/views/DashRidgeline.vue';
 import Playground from './demo/views/Playground';
 import Perspective from './demo/views/Perspective';
 import SparkLineMap from './demo/views/SparkLineMap';
+import SparkHeatMap from './demo/views/SparkHeatMap';
+import DynamicPerspective from './demo/views/DynamicPerspective';
+import GeoMapBoxUS from './demo/views/GeoMapboxUS';
 //import SparkLineMapDyn from './demo/views/SparkLineMapDyn';
 
 Vue.use(Router);
@@ -105,6 +108,21 @@ export default new Router({
           path: '/sparklinemap',
           name: 'Sparklinemap',
           component: SparkLineMap
+        },
+        {
+          path: '/sparkheatmap',
+          name: 'Sparkheatmap',
+          component: SparkHeatMap
+        },
+        {
+          path: '/dynp',
+          name: 'dynp',
+          component: DynamicPerspective
+        },
+        {
+          path: '/geomapboxus',
+          name: 'geomapboxus',
+          component: GeoMapBoxUS
         }
         /*
         {

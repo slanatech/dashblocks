@@ -115,6 +115,14 @@ export default {
       ],
       menuSections: [
         {
+          title: 'Geo',
+          icon: 'thumbs_up_down',
+          expanded: false,
+          items: [
+            { title: 'MapBox US', link: '/geomapboxus', icon: 'map' },
+          ]
+        },
+        {
           title: 'Experimental',
           icon: 'thumbs_up_down',
           expanded: false,
@@ -123,7 +131,9 @@ export default {
             { title: 'Ridgeline', link: '/dashridgeline', icon: 'waves' },
             { title: 'Perspective', link: '/perspective', icon: 'waves' },
             { title: 'Spark Line Map', link: '/sparklinemap', icon: 'waves' },
-            { title: 'Spark Line Map Dynamics', link: '/sparklinemapdyn', icon: 'waves' }
+            { title: 'Spark Line Map Dynamics', link: '/sparklinemapdyn', icon: 'waves' },
+            { title: 'Spark Heat Map', link: '/sparkheatmap', icon: 'waves' },
+            { title: 'Dynamic Perspective', link: '/dynp', icon: 'trending_up' }
           ]
         },
         {

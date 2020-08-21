@@ -18,7 +18,7 @@ import ridgedata from '../data/ridgedata.json';
 import ridgemapdata from '../data/ridgemapdata.json';
 import apireqdata from '../data/series_rate_api_req_count.json';
 import jvmdata from '../data/series_test_jvm_memory_used_bytes.json';
-import metrics3 from '../data/metrics3.json';
+//import metrics3 from '../data/metrics3.json';
 
 export default {
   name: 'SparkLineMap',
@@ -130,7 +130,7 @@ export default {
           break;
         }
         case 'm3': {
-          ds = metrics3;
+          ds = jvmdata; //metrics3;
           break;
         }
         case 'r1': {
