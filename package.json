@@ -103,7 +103,7 @@
     "vue-cli-plugin-quasar": "^2.0.2",
     "vue-docgen-api": "^4.24.0",
     "vue-template-compiler": "^2.6.11",
-    "vuepress": "^1.5.2",
+    "vuepress": "^1.5.3",
     "open-simplex-noise": "^2.2.0"
   },
   "eslintConfig": {

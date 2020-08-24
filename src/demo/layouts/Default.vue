@@ -115,7 +115,16 @@ export default {
       ],
       menuSections: [
         {
-          title: 'Geo',
+          title: 'Dynamic Dashboards',
+          icon: 'trending_up',
+          expanded: false,
+          items: [
+            { title: 'Dynamic Timelines', link: '/dynamictimelines', icon: 'schedule' },
+            { title: 'Dynamic Timelines Dygraphs', link: '/dynamictimelinesdygraphs', icon: 'schedule' }
+          ]
+        },
+        {
+          title: 'Geo Dashboards',
           icon: 'thumbs_up_down',
           expanded: false,
           items: [
