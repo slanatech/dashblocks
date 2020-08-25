@@ -87,7 +87,7 @@ export default {
         row_pivot: [groupBy, 'Order Date']
       };
     */
-    queryData: async function(viewConfig){
+    queryData: async function(viewConfig) {
       //let groupByDepth = pathOr([],['row_pivot'],viewConfig).length;
       let dthView = this.table.view(viewConfig);
       let vJson = await dthView.to_json();
@@ -108,24 +108,20 @@ export default {
           pathOr([], ['columns'], viewConfig).map(x => {
             values[x] = r[x];
           });
-          if( rp.length===1 ) {
+          if (rp.length === 1) {
             gEntry.values = values;
           } else {
-            gEntry.data.push(
-              {
-                key: rp[1],
-                values: values
-              }
-            );
+            gEntry.data.push({
+              key: rp[1],
+              values: values
+            });
           }
         }
       });
       return allData;
     },
 
-
     showData: async function() {
-
       let groupBy = 'Sub-Category';
 
       let viewConfig = {
@@ -136,33 +132,122 @@ export default {
 
       let allData = await this.queryData(viewConfig);
 
+      let totalOrders = Object.keys(allData)
+        .map(x => allData[x].values['Order ID'])
+        .reduce((sum, v) => sum + v, 0);
+
+      let totalSales = Object.keys(allData)
+        .map(x => allData[x].values['Sales'])
+        .reduce((sum, v) => sum + v, 0);
+
+      let byCategorySegment = await this.queryData({
+        columns: ['Order ID', 'Sales', 'Quantity'],
+        aggregates: { 'Order ID': 'count', Sales: 'sum', Quantity: 'sum' },
+        row_pivot: ['Sub-Category', 'Segment']
+      });
+
+      let byCategoryRegion = await this.queryData({
+        columns: ['Order ID', 'Sales', 'Quantity'],
+        aggregates: { 'Order ID': 'count', Sales: 'sum', Quantity: 'sum' },
+        row_pivot: ['Sub-Category', 'Region']
+      });
+
+
       let dbWidgets = [];
       let idx = 0;
       for (let group of Object.keys(allData)) {
         let gEntry = allData[group];
+        let byCategorySegmentEntry = byCategorySegment[group];
+        let byCategoryRegionEntry = byCategoryRegion[group];
 
-        dbWidgets.push({ id: `wA${idx}`, type: 'DbNumber', cspan: 3,
-          properties: { title: 'Order Count', subtitle: 'Total orders received' } });
+        dbWidgets.push({
+          id: `wA${idx}`,
+          type: 'DbNumber',
+          cspan: 3,
+          properties: {
+            title: group,
+            subtitle: 'Total orders received',
+            value: pathOr(0, ['values', 'Order ID'], gEntry),
+            total: totalOrders,
+            trend: gEntry.data.map(x => x.values['Quantity'])
+          }
+        });
 
-        // +++
+
+        // TODO !!!
+        dbWidgets.push({
+          id: `wC${idx}`,
+          type: 'DbChartjsPie',
+          cspan: 3,
+          rspan: 2,
+          properties: {
+            options: { legend: {position: 'right'},
+              title: {
+                display: true,
+                fontFamily: 'Roboto, sans-serif',
+                fontSize: 16,
+                fontStyle: 'normal',
+                text: 'Sales by Segment'
+              }},
+            data: {
+              labels: byCategorySegmentEntry.data.map(x => x.key),
+              datasets: [
+                {
+                  data: byCategorySegmentEntry.data.map(x => x.values['Sales'])
+                }
+              ]
+            }
+          }
+        });
+
+        dbWidgets.push({
+          id: `wR${idx}`,
+          type: 'DbChartjsBar',
+          cspan: 3,
+          rspan: 2,
+          properties: {
+            data: {
+              labels: byCategoryRegionEntry.data.map(x => x.key),
+              datasets: [
+                {
+                  label: 'By Region',
+                  data: byCategoryRegionEntry.data.map(x => x.values['Sales'])
+                }
+              ]
+            }
+          }
+        });
 
         let wid = `wL${idx}`;
         let wdef = {
           id: wid,
           type: 'DbDygraphsLine',
           cspan: 3,
+          rspan: 2,
           height: 220,
           properties: {
-            options: {
-              title: group,
-              labels: ['Date', 'Value'],
-              legend: 'follow'
-            }
+            options: { title: group, labels: ['Date', 'Value'], legend: 'follow' },
+            data: gEntry.data.map(d => {
+              return [new Date(d.key), d.values['Quantity']];
+            })
           }
         };
         dbWidgets.push(wdef);
-        let wData = gEntry.data.map(d => {return [new Date(d.key), d.values['Quantity']]});
-        this.dbdata.setWData(wid, { data: wData });
+
+        dbWidgets.push({
+          id: `wB${idx}`,
+          type: 'DbNumber',
+          cspan: 3,
+          properties: {
+            title: `${group} Sales` ,
+            subtitle: `Total sales for ${group}`,
+            format: "$%.2f",
+            value: pathOr(0, ['values', 'Sales'], gEntry),
+            total: totalSales,
+            trend: gEntry.data.map(x => x.values['Sales'])
+          }
+        });
+
         idx++;
       }
       this.dbspec.widgets = dbWidgets;
