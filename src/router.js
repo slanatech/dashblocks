@@ -19,6 +19,7 @@ import SparkHeatMap from './demo/views/SparkHeatMap';
 import DynamicPerspective from './demo/views/DynamicPerspective';
 import DynamicTimelines from './demo/views/DynamicTimelines';
 import DynamicTimelinesDygraphs from './demo/views/DynamicTimelinesDygraphs';
+import DynamicSalesDashboard from './demo/views/DynamicSalesDashboard';
 import GeoMapBoxUS from './demo/views/GeoMapboxUS';
 //import SparkLineMapDyn from './demo/views/SparkLineMapDyn';
 
@@ -130,6 +131,11 @@ export default new Router({
           path: '/dynamictimelinesdygraphs',
           name: 'dynamictimelinesdygraphs',
           component: DynamicTimelinesDygraphs
+        },
+        {
+          path: '/dynamicsalesdashboard',
+          name: 'dynamicsalesdashboard',
+          component: DynamicSalesDashboard
         },
         {
           path: '/geomapboxus',
