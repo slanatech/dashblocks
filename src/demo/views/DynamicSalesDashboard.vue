@@ -121,6 +121,12 @@ export default {
       return allData;
     },
 
+    reduceTimeSeries(timestamps, values) {
+      if (!Array.isArray(timestamps) || !Array.isArray(values) || timestamps.length != values.length) {
+        return [];
+      }
+    },
+
     showData: async function() {
       let groupBy = 'Sub-Category';
 
@@ -152,7 +158,6 @@ export default {
         row_pivot: ['Sub-Category', 'Region']
       });
 
-
       let dbWidgets = [];
       let idx = 0;
       for (let group of Object.keys(allData)) {
@@ -165,7 +170,7 @@ export default {
           type: 'DbNumber',
           cspan: 3,
           properties: {
-            title: group,
+            title: `${group} Orders`,
             subtitle: 'Total orders received',
             value: pathOr(0, ['values', 'Order ID'], gEntry),
             total: totalOrders,
@@ -173,22 +178,22 @@ export default {
           }
         });
 
-
-        // TODO !!!
         dbWidgets.push({
           id: `wC${idx}`,
           type: 'DbChartjsPie',
           cspan: 3,
           rspan: 2,
           properties: {
-            options: { legend: {position: 'right'},
+            options: {
+              legend: { position: 'right' },
               title: {
                 display: true,
                 fontFamily: 'Roboto, sans-serif',
                 fontSize: 16,
                 fontStyle: 'normal',
                 text: 'Sales by Segment'
-              }},
+              }
+            },
             data: {
               labels: byCategorySegmentEntry.data.map(x => x.key),
               datasets: [
@@ -202,15 +207,24 @@ export default {
 
         dbWidgets.push({
           id: `wR${idx}`,
-          type: 'DbChartjsBar',
+          type: 'DbChartjsPie',
           cspan: 3,
           rspan: 2,
           properties: {
+            options: {
+              legend: { position: 'right' },
+              title: {
+                display: true,
+                fontFamily: 'Roboto, sans-serif',
+                fontSize: 16,
+                fontStyle: 'normal',
+                text: 'Sales by Region'
+              }
+            },
             data: {
               labels: byCategoryRegionEntry.data.map(x => x.key),
               datasets: [
                 {
-                  label: 'By Region',
                   data: byCategoryRegionEntry.data.map(x => x.values['Sales'])
                 }
               ]
@@ -226,9 +240,9 @@ export default {
           rspan: 2,
           height: 220,
           properties: {
-            options: { title: group, labels: ['Date', 'Value'], legend: 'follow' },
+            options: { title: `${group} Sales Over Time`, labels: ['Date', 'Value'], legend: 'follow' /*rollPeriod: 60*/ },
             data: gEntry.data.map(d => {
-              return [new Date(d.key), d.values['Quantity']];
+              return [new Date(d.key + 5.5 * 365 * 24 * 60 * 60 * 1000), d.values['Sales']];
             })
           }
         };
@@ -239,9 +253,9 @@ export default {
           type: 'DbNumber',
           cspan: 3,
           properties: {
-            title: `${group} Sales` ,
+            title: `${group} Sales`,
             subtitle: `Total sales for ${group}`,
-            format: "$%.2f",
+            format: '$%.2f',
             value: pathOr(0, ['values', 'Sales'], gEntry),
             total: totalSales,
             trend: gEntry.data.map(x => x.values['Sales'])
