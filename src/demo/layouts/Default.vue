@@ -91,7 +91,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import DbColors from '../../components/dbcolors';
+import dbColors from '../../components/dbcolors';
 import CodeViewer from '../views/CodeViewer.vue';
 
 export default {
@@ -230,9 +230,8 @@ export default {
     }
   },
   mounted() {
-    this.testColors = DbColors.getColors(true); // TEMP TODO REMOVE
-    this.$q.dark.set(this.dark);
-    this.initRefresh();
+    //this.testColors = dbColors.getColors(true); // TEMP TODO REMOVE
+    this.initialize();
   },
   methods: {
     ...mapActions({
@@ -241,6 +240,15 @@ export default {
       setRefreshTimeout: 'setRefreshTimeout', // map `this.getStats()` to `... dispatch('getStats')`
       performRefresh: 'performRefresh'
     }),
+    initialize(){
+      this.$q.dark.set(this.dark);
+      this.initRefresh();
+      // Create color schemes
+      dbColors.setColorScheme('Diverging', {
+        light: dbColors.d3ScaleChromatic.schemeRdYlBu[10],
+        dark: dbColors.d3ScaleChromatic.schemeRdYlBu[10]
+      });
+    },
     toggleMiniState() {
       this.miniState = !this.miniState;
       if (this.miniState) {

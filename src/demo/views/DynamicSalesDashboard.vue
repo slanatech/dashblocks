@@ -8,6 +8,7 @@ import DbData from '../../components/dbdata';
 import { demodashboard } from '../mixins/demodashboard';
 import pathOr from 'ramda/es/pathOr';
 import perspective from '@finos/perspective';
+import moment from 'moment';
 
 export default {
   name: 'DynamicTimelinesDygraphs',
@@ -23,6 +24,7 @@ export default {
           type: 'grid',
           size: 12
         },
+        colorScheme: 'Diverging',
         widgets: [
           /*
           {
@@ -121,10 +123,28 @@ export default {
       return allData;
     },
 
-    reduceTimeSeries(timestamps, values) {
+    // groupPeriod: 'month', etc
+    reduceTimeSeries(timestamps, values, groupPeriod) {
       if (!Array.isArray(timestamps) || !Array.isArray(values) || timestamps.length != values.length) {
         return [];
       }
+      let result = [];
+      let tsCurrent = moment(timestamps[0]).startOf(groupPeriod).valueOf();
+      let accCurrent = 0;
+      timestamps.map((x, i) => {
+        let tsn = moment(x).startOf(groupPeriod).valueOf();
+        if (tsn !== tsCurrent) {
+          result.push({
+            t: tsCurrent,
+            v: accCurrent
+          });
+          tsCurrent = tsn;
+          accCurrent = values[i];
+        } else {
+          accCurrent += values[i];
+        }
+      });
+      return result;
     },
 
     showData: async function() {
@@ -165,6 +185,18 @@ export default {
         let byCategorySegmentEntry = byCategorySegment[group];
         let byCategoryRegionEntry = byCategoryRegion[group];
 
+        let tsByMonth = this.reduceTimeSeries(
+          gEntry.data.map(d => d.key + 5.5 * 365 * 24 * 60 * 60 * 1000),
+          gEntry.data.map(d => d.values['Sales']),
+          'month'
+        );
+
+        let tsQuantityByMonth = this.reduceTimeSeries(
+          gEntry.data.map(d => d.key + 5.5 * 365 * 24 * 60 * 60 * 1000),
+          gEntry.data.map(d => d.values['Quantity']),
+          'month'
+        );
+
         dbWidgets.push({
           id: `wA${idx}`,
           type: 'DbNumber',
@@ -174,13 +206,13 @@ export default {
             subtitle: 'Total orders received',
             value: pathOr(0, ['values', 'Order ID'], gEntry),
             total: totalOrders,
-            trend: gEntry.data.map(x => x.values['Quantity'])
+            trend: tsQuantityByMonth.map(x=>x.v) //gEntry.data.map(x => x.values['Quantity'])
           }
         });
 
         dbWidgets.push({
           id: `wC${idx}`,
-          type: 'DbChartjsPie',
+          type: 'DbChartjsDoughnut',
           cspan: 3,
           rspan: 2,
           properties: {
@@ -207,7 +239,7 @@ export default {
 
         dbWidgets.push({
           id: `wR${idx}`,
-          type: 'DbChartjsPie',
+          type: 'DbChartjsDoughnut',
           cspan: 3,
           rspan: 2,
           properties: {
@@ -235,14 +267,14 @@ export default {
         let wid = `wL${idx}`;
         let wdef = {
           id: wid,
-          type: 'DbDygraphsLine',
+          type: 'DbDygraphsBar',
           cspan: 3,
           rspan: 2,
           height: 220,
           properties: {
             options: { title: `${group} Sales Over Time`, labels: ['Date', 'Value'], legend: 'follow' /*rollPeriod: 60*/ },
-            data: gEntry.data.map(d => {
-              return [new Date(d.key + 5.5 * 365 * 24 * 60 * 60 * 1000), d.values['Sales']];
+            data: tsByMonth.map(d => {
+              return [new Date(d.t), d.v];
             })
           }
         };
@@ -258,7 +290,7 @@ export default {
             format: '$%.2f',
             value: pathOr(0, ['values', 'Sales'], gEntry),
             total: totalSales,
-            trend: gEntry.data.map(x => x.values['Sales'])
+            trend: tsByMonth.map(x => x.v)
           }
         });
 
