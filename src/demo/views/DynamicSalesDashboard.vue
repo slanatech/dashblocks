@@ -24,26 +24,8 @@ export default {
           type: 'grid',
           size: 12
         },
-        colorScheme: 'Diverging',
-        widgets: [
-          /*
-          {
-            id: 'w2',
-            type: 'DbDygraphsBar',
-            cspan: 16,
-            height: 220,
-            properties: {
-              colorScheme: 'barChartDiverging',
-              options: {
-                stackedGraph: true,
-                title: 'Traffic over time',
-                ylabel: 'Requests, Mil.',
-                labels: ['Date', 'Value'],
-                legend: 'always'
-              }
-            }
-          }*/
-        ]
+        colorScheme: 'DivergingPuOr',
+        widgets: []
       },
       ready: false,
       startTimestamp: null,
@@ -123,6 +105,7 @@ export default {
       return allData;
     },
 
+    // TODO Evolve this to more robust aggregation, i.e. multiple values, function as aggregator ...
     // groupPeriod: 'month', etc
     reduceTimeSeries(timestamps, values, groupPeriod) {
       if (!Array.isArray(timestamps) || !Array.isArray(values) || timestamps.length != values.length) {
@@ -211,6 +194,20 @@ export default {
         });
 
         dbWidgets.push({
+          id: `wL${idx}`,
+          type: 'DbDygraphsBar',
+          cspan: 3,
+          rspan: 2,
+          height: 220,
+          properties: {
+            options: { title: `${group} Sales Over Time`, labels: ['Date', 'Value'], legend: 'follow' /*rollPeriod: 60*/ },
+            data: tsByMonth.map(d => {
+              return [new Date(d.t), d.v];
+            })
+          }
+        });
+
+        dbWidgets.push({
           id: `wC${idx}`,
           type: 'DbChartjsDoughnut',
           cspan: 3,
@@ -263,22 +260,6 @@ export default {
             }
           }
         });
-
-        let wid = `wL${idx}`;
-        let wdef = {
-          id: wid,
-          type: 'DbDygraphsBar',
-          cspan: 3,
-          rspan: 2,
-          height: 220,
-          properties: {
-            options: { title: `${group} Sales Over Time`, labels: ['Date', 'Value'], legend: 'follow' /*rollPeriod: 60*/ },
-            data: tsByMonth.map(d => {
-              return [new Date(d.t), d.v];
-            })
-          }
-        };
-        dbWidgets.push(wdef);
 
         dbWidgets.push({
           id: `wB${idx}`,

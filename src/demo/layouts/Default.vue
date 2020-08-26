@@ -248,6 +248,10 @@ export default {
         light: dbColors.d3ScaleChromatic.schemeRdYlBu[10],
         dark: dbColors.d3ScaleChromatic.schemeRdYlBu[10]
       });
+      dbColors.setColorScheme('DivergingPuOr', {
+        light: dbColors.d3ScaleChromatic.schemePiYG[5],
+        dark: dbColors.d3ScaleChromatic.schemeRdYlBu[5]
+      });
     },
     toggleMiniState() {
       this.miniState = !this.miniState;
