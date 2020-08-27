@@ -8,7 +8,7 @@
       :wdata="dbdata[widget.id]"
       :style="widget.style"
       :dark="dark"
-      :colorScheme="dbspec.colorScheme || 'default'"
+      :colorScheme="getColorScheme(widget)"
       @db-event="handleDbEvent"
     >
     </db-widget-container>
@@ -45,6 +45,9 @@ export default {
     getClass: function() {
       let layoutSize = pathOr(16, ['layout', 'size'], this.dbspec);
       return layoutSize === 16 ? 'db-grid-layout' : 'db-grid-layout-12';
+    },
+    getColorScheme: function(widget) {
+      return pathOr(this.dbspec.colorScheme || 'default',['properties','colorScheme'], widget);
     },
     getWidgetClass: function(widget) {
       // TODO - wspan ?

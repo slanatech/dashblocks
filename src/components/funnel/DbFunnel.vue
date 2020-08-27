@@ -1,9 +1,9 @@
 /* * Based on https://github.com/greghub/vue-funnel-graph-js */
 <template>
   <div ref="container">
-    <div v-if="ready" class="funnel svg-funnel-js" :class="{ 'svg-funnel-js--vertical': direction === 'vertical' }">
+    <div v-if="ready" class="funnel db-funnel svg-funnel-js" :class="{ 'svg-funnel-js--vertical': direction === 'vertical' }">
       <div class="svg-funnel-js__container">
-        <svg :width="chartWidth - 130" :height="chartHeight - 40">
+        <svg :width="chartWidth - 130" :height="chartHeight">
           <defs>
             <linearGradient :id="`funnelGradient-${index + 1}`" v-for="(colors, index) in gradientSet" :key="index" :gradientTransform="gradientAngle">
               <stop :stop-color="color" :offset="offsetColor(index, colors.values.length)" v-for="(color, index) in colors.values" :key="index"></stop>
@@ -211,7 +211,7 @@ export default {
     render() {
       this.initSize();
       this.graph = new FunnelGraph({
-        height: this.chartHeight - 40,
+        height: this.chartHeight,
         width: this.chartWidth - 130,
         direction: this.direction,
         data: {
@@ -309,6 +309,22 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.db-funnel {
+  font-family: 'Roboto', '-apple-system', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  .svg-funnel-js__subLabels {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+}
+
+.svg-funnel-js.svg-funnel-js--vertical .svg-funnel-js__label:not(:first-child) {
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 .appear-enter-active,
 .appear-leave-active {
   transition: all 0.7s ease-in-out;

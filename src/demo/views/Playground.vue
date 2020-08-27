@@ -54,12 +54,12 @@ export default {
           //    v      v     v
           [3000, 2500, 6500], // Segments of "Impressions" from top to bottom
           [3000, 1700, 1000], // Segments of "Add To Cart"
-          [600, 200, 130] // Segments of "Buy"
+          [600, 200, 130]     // Segments of "Buy"
         ],
         colors: [
           ['#FFB178', '#FF3C8E'], // color set for "Impressions" segment
           ['#A0BBFF', '#EC77FF'], // color set for "Add To Cart" segment
-          ['#A0F9FF', '#7795FF'] // color set for "Buy" segment
+          ['#A0F9FF', '#7795FF']  // color set for "Buy" segment
         ],
         direction: 'vertical',
         gradientDirection: 'vertical',

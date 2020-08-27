@@ -121,7 +121,8 @@ export default {
           items: [
             { title: 'Dynamic Timelines', link: '/dynamictimelines', icon: 'schedule' },
             { title: 'Dynamic Timelines Dygraphs', link: '/dynamictimelinesdygraphs', icon: 'schedule' },
-            { title: 'Dynamic Sales Dashboard', link: '/dynamicsalesdashboard', icon: 'schedule' }
+            { title: 'Dynamic Sales Dashboard', link: '/dynamicsalesdashboard', icon: 'schedule' },
+            { title: 'Sales Funnel Dashboard', link: '/salesfunnel', icon: 'filter_alt' }
           ]
         },
         {
@@ -251,6 +252,14 @@ export default {
       dbColors.setColorScheme('DivergingPuOr', {
         light: dbColors.d3ScaleChromatic.schemePiYG[5],
         dark: dbColors.d3ScaleChromatic.schemeRdYlBu[5]
+      });
+      dbColors.setColorScheme('DivergingPiYG', {
+        light: dbColors.d3ScaleChromatic.schemePiYG[5],
+        dark: dbColors.d3ScaleChromatic.schemePiYG[8]
+      });
+      dbColors.setColorScheme('DivergingRdYlGn', {
+        light: dbColors.d3ScaleChromatic.schemePiYG[5],
+        dark: dbColors.d3ScaleChromatic.schemeRdYlGn[8]
       });
     },
     toggleMiniState() {
