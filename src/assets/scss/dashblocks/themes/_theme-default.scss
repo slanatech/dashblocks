@@ -36,3 +36,9 @@
     color: $light;
   }
 }
+
+.db-dashboard.db-transparent.db-theme-default {
+  & .db-widget-container {
+    background: none;
+  }
+}

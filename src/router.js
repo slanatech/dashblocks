@@ -23,6 +23,8 @@ import DynamicSalesDashboard from './demo/views/DynamicSalesDashboard';
 import SalesFunnelDashboard from './demo/views/SalesFunnelDashboard';
 import SalesSunburstDashboard from './demo/views/SalesSunburstDashboard';
 import GeoMapBoxUS from './demo/views/GeoMapboxUS';
+import OverlayDashboard from './demo/views/OverlayDashboard';
+import OverlayDashboardImage from './demo/views/OverlayDashboardImage';
 //import SparkLineMapDyn from './demo/views/SparkLineMapDyn';
 
 Vue.use(Router);
@@ -153,7 +155,17 @@ export default new Router({
           path: '/geomapboxus',
           name: 'geomapboxus',
           component: GeoMapBoxUS
-        }
+        },
+        {
+          path: '/overlay',
+          name: 'overlay',
+          component: OverlayDashboard
+        },
+        {
+          path: '/overlayimage',
+          name: 'overlayimage',
+          component: OverlayDashboardImage
+        },
         /*
         {
           path: '/sparklinemapdyn',

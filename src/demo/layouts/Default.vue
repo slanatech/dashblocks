@@ -127,6 +127,15 @@ export default {
           ]
         },
         {
+          title: 'Overlay Dashboards',
+          icon: 'layers',
+          expanded: false,
+          items: [
+            { title: 'Overlay Infographic', link: '/overlay', icon: 'flip_to_front' },
+            { title: 'Overlay Image', link: '/overlayimage', icon: 'flip_to_front' },
+          ]
+        },
+        {
           title: 'Geo Dashboards',
           icon: 'thumbs_up_down',
           expanded: false,
@@ -252,15 +261,23 @@ export default {
       });
       dbColors.setColorScheme('DivergingPuOr', {
         light: dbColors.d3ScaleChromatic.schemePiYG[5],
-        dark: dbColors.d3ScaleChromatic.schemeRdYlBu[5]
+        dark: dbColors.d3ScaleChromatic.schemePuOr[5]
+      });
+      dbColors.setColorScheme('DivergingRdYlBu', {
+        light: dbColors.d3ScaleChromatic.schemePiYG[5],
+        dark: dbColors.d3ScaleChromatic.schemeRdYlBu[4]
       });
       dbColors.setColorScheme('DivergingPiYG', {
         light: dbColors.d3ScaleChromatic.schemePiYG[5],
-        dark: dbColors.d3ScaleChromatic.schemePiYG[8]
+        dark: dbColors.d3ScaleChromatic.schemePiYG[5]
       });
       dbColors.setColorScheme('DivergingRdYlGn', {
         light: dbColors.d3ScaleChromatic.schemePiYG[5],
         dark: dbColors.d3ScaleChromatic.schemeRdYlGn[8]
+      });
+      dbColors.setColorScheme('DivergingTest', {
+        light: dbColors.d3ScaleChromatic.schemePiYG[5],
+        dark: dbColors.d3ScaleChromatic.schemeReds[3].reverse()
       });
     },
     toggleMiniState() {

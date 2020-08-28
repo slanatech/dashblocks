@@ -193,7 +193,7 @@ export function generateChart(chartId, chartType) {
           this.chartData.labels = this.data.labels;
         }
 
-        if (!('datasets' in this.data) || !Array.isArray(this.data.datasets)) {
+        if (!('datasets' in this.chartData) || !('datasets' in this.data) || !Array.isArray(this.data.datasets)) {
           this.chartData.datasets = [];
           return;
         }
