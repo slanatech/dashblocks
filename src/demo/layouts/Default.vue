@@ -122,7 +122,8 @@ export default {
             { title: 'Dynamic Timelines', link: '/dynamictimelines', icon: 'schedule' },
             { title: 'Dynamic Timelines Dygraphs', link: '/dynamictimelinesdygraphs', icon: 'schedule' },
             { title: 'Dynamic Sales Dashboard', link: '/dynamicsalesdashboard', icon: 'schedule' },
-            { title: 'Sales Funnel Dashboard', link: '/salesfunnel', icon: 'filter_alt' }
+            { title: 'Sales Funnel Dashboard', link: '/salesfunnel', icon: 'filter_alt' },
+            { title: 'Sales Sunburst Dashboard', link: '/salessunburst', icon: 'camera' }
           ]
         },
         {

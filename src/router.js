@@ -21,6 +21,7 @@ import DynamicTimelines from './demo/views/DynamicTimelines';
 import DynamicTimelinesDygraphs from './demo/views/DynamicTimelinesDygraphs';
 import DynamicSalesDashboard from './demo/views/DynamicSalesDashboard';
 import SalesFunnelDashboard from './demo/views/SalesFunnelDashboard';
+import SalesSunburstDashboard from './demo/views/SalesSunburstDashboard';
 import GeoMapBoxUS from './demo/views/GeoMapboxUS';
 //import SparkLineMapDyn from './demo/views/SparkLineMapDyn';
 
@@ -142,6 +143,11 @@ export default new Router({
           path: '/salesfunnel',
           name: 'salesfunnel',
           component: SalesFunnelDashboard
+        },
+        {
+          path: '/salessunburst',
+          name: 'salessunburst',
+          component: SalesSunburstDashboard
         },
         {
           path: '/geomapboxus',

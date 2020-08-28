@@ -182,6 +182,7 @@ export default {
         .attr('transform', d => labelTransform(d))
         .attr('fill-opacity', d => +labelVisible(d))
         .attr('dy', '0.35em')
+        .attr('class','db-sunburst-label')
         .attr('clip-path', function(d, i) {
           return 'url(#cp-' + i + ')';
         })
@@ -282,10 +283,20 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="scss">
 .db-sunburst {
   width: 100%;
   height: 100%;
   display: block;
+  .db-sunburst-label {
+    font-size: 16px;
+    font-family: 'Roboto', '-apple-system', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+}
+
+.db-dark {
+  .db-sunburst-label {
+    fill: #bdbdbd;
+  }
 }
 </style>
