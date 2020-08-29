@@ -224,9 +224,14 @@ export default {
   }
 
   .db-background-img img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
     width: 100%;
     height: 100%;
-    opacity: 0.2;
+    opacity: 0.15;
+    z-index: -1;
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
   }
