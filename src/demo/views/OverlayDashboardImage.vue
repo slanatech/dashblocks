@@ -1,12 +1,12 @@
 <template>
   <div class="db-layers">
     <div class="db-layer db-background-img" style="height: 800px;">
-      <img src="../assets/images/poster_grand_tour.png"/>
+      <img src="../assets/images/poster_grand_tour.png" />
     </div>
     <div class="db-layer">
       <db-dashboard v-if="ready" :dbspec="dbspec" :dbdata="dbdata" :dark="isDark" class="db-transparent"> </db-dashboard>
     </div>
-    <div class="db-layer">
+    <div class="db-layer" style="pointer-events: none;">
       <db-dashboard :dbspec="dbspec2" :dbdata="dbdata2" :dark="isDark" class="db-transparent"> </db-dashboard>
     </div>
   </div>
@@ -54,7 +54,7 @@ export default {
                 },
                 axes: {
                   x: {
-                    drawGrid: false,
+                    drawGrid: false
                   },
                   y: {
                     drawAxis: true,
@@ -90,8 +90,11 @@ export default {
             cspan: 4,
             height: 280,
             properties: {
-              options:{
-                legend: { position: 'right' },
+              styles: {
+                'pointer-events': 'auto'
+              },
+              options: {
+                legend: { position: 'right' }
               }
             }
           },
@@ -107,6 +110,9 @@ export default {
             height: 180,
             properties: {
               colorScheme: 'DivergingTest',
+              styles: {
+                'pointer-events': 'auto'
+              }
             }
           },
           {
@@ -116,6 +122,9 @@ export default {
             height: 180,
             properties: {
               colorScheme: 'DivergingTest',
+              styles: {
+                'pointer-events': 'auto'
+              }
             }
           },
           {
@@ -177,7 +186,7 @@ export default {
       this.dbdata2.setWData('wC', {
         data: {
           labels: ['AMER', 'EMEA', 'APAC'],
-          datasets: [{ data: [300000,180000,70000] }]
+          datasets: [{ data: [300000, 180000, 70000] }]
         }
       });
 
@@ -243,14 +252,14 @@ export default {
   top: -35px;
   left: 0;
   opacity: 0.8;
-  color: #D07345;
+  color: #d07345;
 }
 .overlay-subtitle {
   font-size: 40px;
   position: absolute;
   top: 100px;
   left: 10px;
-  color: #D07345;
+  color: #d07345;
   opacity: 0.7;
 }
 </style>
