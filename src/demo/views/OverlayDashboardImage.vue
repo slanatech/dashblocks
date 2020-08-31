@@ -87,7 +87,7 @@ export default {
           {
             id: 'wA',
             type: 'DbChartjsDoughnut',
-            cspan: 4,
+            cspan: 5,
             height: 280,
             properties: {
               styles: {
@@ -101,35 +101,41 @@ export default {
           {
             id: 'wAN',
             type: 'DbNone',
-            cspan: 8
+            cspan: 7
           },
           {
             id: 'wB',
             type: 'DbChartjsDoughnut',
-            cspan: 2,
-            height: 180,
+            cspan: 3,
+            height: 160,
             properties: {
               colorScheme: 'DivergingTest',
               styles: {
                 'pointer-events': 'auto'
+              },
+              options: {
+                legend: { position: 'right' }
               }
             }
           },
           {
             id: 'wC',
             type: 'DbChartjsDoughnut',
-            cspan: 2,
-            height: 180,
+            cspan: 3,
+            height: 160,
             properties: {
               colorScheme: 'DivergingTest',
               styles: {
                 'pointer-events': 'auto'
+              },
+              options: {
+                legend: { position: 'right' }
               }
             }
           },
           {
             type: 'DbNone',
-            cspan: 10
+            cspan: 6
           }
         ]
       },

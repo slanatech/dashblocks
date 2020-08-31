@@ -8,6 +8,7 @@ import DbData from '../../components/dbdata';
 import { demodashboard } from '../mixins/demodashboard';
 import pathOr from 'ramda/es/pathOr';
 import perspective from '@finos/perspective';
+import moment from 'moment';
 
 export default {
   name: 'DashblocksShowcase',
@@ -32,7 +33,7 @@ export default {
               colorScheme: 'barChartDiverging',
               options: {
                 stackedGraph: true,
-                title: 'Traffic over time',
+                title: 'Sales over time',
                 ylabel: 'Requests, Mil.',
                 labels: ['Date', 'Value'],
                 legend: 'always'
@@ -83,6 +84,68 @@ export default {
       await this.showData();
     },
 
+
+    queryData: async function(viewConfig) {
+      //let groupByDepth = pathOr([],['row_pivot'],viewConfig).length;
+      let dthView = this.table.view(viewConfig);
+      let vJson = await dthView.to_json();
+
+      let allData = {};
+      vJson.map(r => {
+        let rp = r['__ROW_PATH__'];
+        if (Array.isArray(rp) && rp.length > 0) {
+          let grp = rp[0]; // Group
+          if (!(grp in allData)) {
+            allData[grp] = {
+              values: {},
+              data: []
+            };
+          }
+          let gEntry = allData[grp];
+          let values = {};
+          pathOr([], ['columns'], viewConfig).map(x => {
+            values[x] = r[x];
+          });
+          if (rp.length === 1) {
+            gEntry.values = values;
+          } else {
+            gEntry.data.push({
+              key: rp[1],
+              values: values
+            });
+          }
+        }
+      });
+      dthView.delete();
+      return allData;
+    },
+
+    // TODO Evolve this to more robust aggregation, i.e. multiple values, function as aggregator ...
+    // groupPeriod: 'month', etc
+    reduceTimeSeries(timestamps, values, groupPeriod) {
+      if (!Array.isArray(timestamps) || !Array.isArray(values) || timestamps.length != values.length) {
+        return [];
+      }
+      let result = [];
+      let tsCurrent = moment(timestamps[0]).startOf(groupPeriod).valueOf();
+      let accCurrent = 0;
+      timestamps.map((x, i) => {
+        let tsn = moment(x).startOf(groupPeriod).valueOf();
+        if (tsn !== tsCurrent) {
+          result.push({
+            t: tsCurrent,
+            v: accCurrent
+          });
+          tsCurrent = tsn;
+          accCurrent = values[i];
+        } else {
+          accCurrent += values[i];
+        }
+      });
+      return result;
+    },
+
+
     showData: async function() {
       let dthData = [];
 
@@ -99,10 +162,23 @@ export default {
           ['Order Date', '<=', this.endTimestamp]
         ];
       }
+
+      let allData = await this.queryData(dthViewConfig);
+      let groupBy = 'month';
+      if( Object.keys(allData).length < 300){
+        groupBy = 'day';
+      }
+      let tsByMonth = this.reduceTimeSeries(
+        //allData.data.map(d => d.key + 5.5 * 365 * 24 * 60 * 60 * 1000),
+        Object.keys(allData).map(t => parseInt(t)),
+        Object.keys(allData).map(k => allData[k].values['Sales']),
+        groupBy
+      );
+
+
+      /*
       let dthView = this.table.view(dthViewConfig);
-
       let vjson = await dthView.to_json();
-
       vjson.map(r => {
         let rp = r['__ROW_PATH__'];
         if (Array.isArray(rp) && rp.length > 0) {
@@ -111,9 +187,10 @@ export default {
           dthData.push([new Date(ts), v]);
         }
       });
-
       dthView.delete();
       dthView = null;
+      */
+
 
       /*
       let totalReq = 0;
@@ -129,7 +206,9 @@ export default {
       */
 
       this.dbdata.setWData('w2', {
-        data: dthData
+        data: tsByMonth.map(d => {
+          return [new Date(d.t), d.v];
+        })
       });
 
       this.dbdata.setWData('w4', {
