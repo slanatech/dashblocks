@@ -63,6 +63,9 @@ export default {
       log.info('dygraphs: imported');
       Dygraphs = module.default;
       //  note: can use Dygraphs.defaultInteractionModel
+      // ???
+      // Dygraphs.defaultInteractionModel.dblclick = this.handleDblclick;
+
       this.$nextTick(() => {
         this.render();
       });
@@ -174,8 +177,13 @@ export default {
         type: 'zoom',
         minDate: Math.floor(minDate),
         maxDate: Math.floor(maxDate),
-        yRanges: yRanges
+        yRanges: yRanges,
+        g: this.graph
       });
+    },
+    handleDblclick: function (event, g, context) {
+      // Ignore double-click - disable zoom in
+      return;
     },
     handleHighlight: function(event, x, points, row, seriesName) {
       log.debug('handleHighlight: x:' + x + ', points:' + points + ', row:' + row + ', seriesName: ' + seriesName);
