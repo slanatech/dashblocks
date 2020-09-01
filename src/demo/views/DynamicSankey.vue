@@ -12,9 +12,10 @@ import { demodashboard } from '../mixins/demodashboard';
 import pathOr from 'ramda/es/pathOr';
 import perspective from '@finos/perspective';
 import moment from 'moment';
+import energy from '../data/energy.json';
 
 export default {
-  name: 'DashblocksShowcase',
+  name: 'DynamicSankey',
   components: {
     DbDashboard
   },
@@ -33,7 +34,7 @@ export default {
             id: 'w2',
             type: 'DbDygraphsBar',
             cspan: 12,
-            height: 300,
+            height: 240,
             properties: {
               options: {
                 stackedGraph: true,
@@ -45,58 +46,10 @@ export default {
             }
           },
           {
-            id: `wS`,
-            type: 'DbChartjsDoughnut',
-            cspan: 4,
-            height: 380,
-            properties: {
-              options: {
-                legend: { position: 'right' },
-                title: {
-                  display: true,
-                  fontFamily: 'Roboto, sans-serif',
-                  fontSize: 16,
-                  fontStyle: 'normal',
-                  text: 'Sales by Segment'
-                }
-              }
-            }
-          },
-          {
-            id: `wC`,
-            type: 'DbChartjsDoughnut',
-            cspan: 4,
-            height: 380,
-            properties: {
-              options: {
-                legend: { position: 'right' },
-                title: {
-                  display: true,
-                  fontFamily: 'Roboto, sans-serif',
-                  fontSize: 16,
-                  fontStyle: 'normal',
-                  text: 'Sales by Category'
-                }
-              }
-            }
-          },
-          {
-            id: `wSC`,
-            type: 'DbChartjsDoughnut',
-            cspan: 4,
-            height: 400,
-            properties: {
-              options: {
-                legend: { position: 'right' },
-                title: {
-                  display: true,
-                  fontFamily: 'Roboto, sans-serif',
-                  fontSize: 16,
-                  fontStyle: 'normal',
-                  text: 'Sales by Sub-Category'
-                }
-              }
-            }
+            id: `wSK`,
+            type: 'DbSankey',
+            cspan: 12,
+            height: 560
           }
         ]
       },
@@ -170,6 +123,42 @@ export default {
       return allData;
     },
 
+    getSankeyData: async function(viewConfig,valueProp) {
+      let numGroups = viewConfig.row_pivots.length;
+      let dthView = this.table.view(viewConfig);
+      let vJson = await dthView.to_json();
+
+      let nodes = [];
+      let links = [];
+      let nodesNameIdx = {};
+      //let resolveNode = x => { if(x in nodesNameIdx) {return nodesNameIdx[x]} else {nodesNameIdx[x] = }}
+      let resolveNode = x => { if(!(x in nodesNameIdx)) { nodesNameIdx[x] = nodes.push({name: x})-1;} return nodesNameIdx[x]; }
+
+      vJson.map(r => {
+        let rp = r['__ROW_PATH__'];
+
+        if (Array.isArray(rp) && rp.length === numGroups) {
+          let cN = rp[0];
+          for(let i=1;i<rp.length;i++){
+            let nStart = resolveNode(cN);
+            let nEnd = resolveNode(rp[i]);
+            links.push({
+              source: nStart,
+              target: nEnd,
+              value: r[valueProp]
+            });
+            cN = rp[i];
+          }
+        }
+      });
+
+      dthView.delete();
+      return {
+        nodes: nodes,
+        links: links
+      };
+    },
+
     // TODO Evolve this to more robust aggregation, i.e. multiple values, function as aggregator ...
     // groupPeriod: 'month', etc
     reduceTimeSeries(timestamps, values, groupPeriod) {
@@ -228,82 +217,29 @@ export default {
         groupBy
       );
 
-      let bySegment = await this.queryData({
-        columns: ['Order ID', 'Sales', 'Quantity'],
-        aggregates: { 'Order ID': 'count', Sales: 'sum', Quantity: 'sum' },
-        row_pivots: ['Segment'],
-        filter: filters
+      this.dbdata.setWData('w2', {
+        data: tsByMonth.map(d => {
+          return [new Date(d.t), d.v];
+        })
       });
 
+      /*
       this.dbdata.setWData('wS', {
         data: {
           labels: Object.keys(bySegment),
           datasets: [{ data: Object.keys(bySegment).map(x => bySegment[x].values['Sales']) }]
         }
-      });
+      }); */
 
-
-      let byCategory = await this.queryData({
+      let sankeyData = await this.getSankeyData({
         columns: ['Order ID', 'Sales', 'Quantity'],
         aggregates: { 'Order ID': 'count', Sales: 'sum', Quantity: 'sum' },
-        row_pivots: ['Category'],
+        row_pivots: ['Region', 'Category', 'Sub-Category'],
         filter: filters
-      });
+      }, 'Sales');
 
-      this.dbdata.setWData('wC', {
-        data: {
-          labels: Object.keys(byCategory),
-          datasets: [{ data: Object.keys(byCategory).map(x => byCategory[x].values['Sales']) }]
-        }
-      });
-
-
-      let bySubCategory = await this.queryData({
-        columns: ['Order ID', 'Sales', 'Quantity'],
-        aggregates: { 'Order ID': 'count', Sales: 'sum', Quantity: 'sum' },
-        row_pivots: ['Sub-Category'],
-        filter: filters
-      });
-
-      this.dbdata.setWData('wSC', {
-        data: {
-          labels: Object.keys(bySubCategory),
-          datasets: [{ data: Object.keys(bySubCategory).map(x => bySubCategory[x].values['Sales']) }]
-        }
-      });
-
-      /*
-      let dthView = this.table.view(dthViewConfig);
-      let vjson = await dthView.to_json();
-      vjson.map(r => {
-        let rp = r['__ROW_PATH__'];
-        if (Array.isArray(rp) && rp.length > 0) {
-          let ts = rp[0]; // Timestamp
-          let v = r['Quantity']; // r['Order ID']; // Value
-          dthData.push([new Date(ts), v]);
-        }
-      });
-      dthView.delete();
-      dthView = null;
-      */
-
-      /*
-      let totalReq = 0;
-      let sTS = Date.now() - 100 * 3600 * 1000;
-      for (let i = 0; i < 100; i++) {
-        let cTs = sTS + i * 3600 * 1000;
-        let d = new Date(cTs);
-        let r = Math.random();
-        let e = Math.random();
-        totalReq += r + e;
-        dthData2.push([d, r, e]);
-      }
-      */
-
-      this.dbdata.setWData('w2', {
-        data: tsByMonth.map(d => {
-          return [new Date(d.t), d.v];
-        })
+      this.dbdata.setWData('wSK', {
+        data: Object.freeze(sankeyData)
       });
 
       this.ready = true;

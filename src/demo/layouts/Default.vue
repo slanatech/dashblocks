@@ -123,7 +123,8 @@ export default {
             { title: 'Dynamic Timelines Dygraphs', link: '/dynamictimelinesdygraphs', icon: 'schedule' },
             { title: 'Dynamic Sales Dashboard', link: '/dynamicsalesdashboard', icon: 'schedule' },
             { title: 'Sales Funnel Dashboard', link: '/salesfunnel', icon: 'filter_alt' },
-            { title: 'Sales Sunburst Dashboard', link: '/salessunburst', icon: 'camera' }
+            { title: 'Sales Sunburst Dashboard', link: '/salessunburst', icon: 'camera' },
+            { title: 'Dynamic Sankey', link: '/dynamicsankey', icon: 'camera' }
           ]
         },
         {
@@ -255,6 +256,10 @@ export default {
       this.$q.dark.set(this.dark);
       this.initRefresh();
       // Create color schemes
+      dbColors.setColorScheme('Tableau', {
+        light: dbColors.d3ScaleChromatic.schemeTableau10,
+        dark: dbColors.d3ScaleChromatic.schemeTableau10.concat(dbColors.d3ScaleChromatic.schemeTableau10)
+      });
       dbColors.setColorScheme('Diverging', {
         light: dbColors.d3ScaleChromatic.schemeRdYlBu[10],
         dark: dbColors.d3ScaleChromatic.schemeRdYlBu[10]

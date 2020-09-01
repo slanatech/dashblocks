@@ -20,6 +20,7 @@ import DynamicPerspective from './demo/views/DynamicPerspective';
 import DynamicTimelines from './demo/views/DynamicTimelines';
 import DynamicTimelinesDygraphs from './demo/views/DynamicTimelinesDygraphs';
 import DynamicSalesDashboard from './demo/views/DynamicSalesDashboard';
+import DynamicSankey from './demo/views/DynamicSankey';
 import SalesFunnelDashboard from './demo/views/SalesFunnelDashboard';
 import SalesSunburstDashboard from './demo/views/SalesSunburstDashboard';
 import GeoMapBoxUS from './demo/views/GeoMapboxUS';
@@ -166,6 +167,11 @@ export default new Router({
           name: 'overlayimage',
           component: OverlayDashboardImage
         },
+        {
+          path: '/dynamicsankey',
+          name: 'dynamicsankey',
+          component: DynamicSankey
+        }
         /*
         {
           path: '/sparklinemapdyn',

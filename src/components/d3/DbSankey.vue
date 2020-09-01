@@ -1,6 +1,6 @@
 /* DbSankey: Sankey visualization based on https://observablehq.com/@jarrettmeyer/sankey-with-animated-gradients https://observablehq.com/@d3/sankey-diagram */
 <template>
-  <div ref="container" class="db-d3-sankey"></div>
+  <div ref="container" class="db-sankey"></div>
 </template>
 <script>
 import * as d3 from 'd3';
@@ -181,15 +181,16 @@ export default {
         .attr('dx', 6)
         .attr('y', d => (d.y1 + d.y0) / 2)
         .attr('dy', '0.35em')
-        .attr('fill', 'black')
+        .attr('class', 'db-sankey-label')
         .attr('text-anchor', 'start')
-        .attr('font-size', 10)
-        .attr('font-family', 'Arial, sans-serif')
         .text(d => d.name)
         .filter(d => d.x1 > width / 2)
         .attr('x', d => d.x0)
         .attr('dx', -6)
         .attr('text-anchor', 'end');
+
+
+      //.attr('fill', 'black')
 
       // Define the gray links.
       const links = view
@@ -198,10 +199,12 @@ export default {
         .join('path')
         .classed('link', true)
         .attr('d', sankey.sankeyLinkHorizontal())
-        .attr('stroke', 'black')
-        .attr('stroke-opacity', 0.1)
+        .attr('class', 'db-sankey-link')
         .attr('stroke-width', d => Math.max(1, d.width))
         .attr('fill', 'none');
+
+        //.attr('stroke', 'black')
+        //.attr('stroke-opacity', 0.9)
 
       // Add <title> hover effect on links.
       links.append('title').text(d => `${d.source.name} ${arrow} ${d.target.name}\n${format(d.value)}`);
@@ -263,10 +266,30 @@ export default {
   }
 };
 </script>
-<style>
-.db-d3-sankey {
+<style lang="scss">
+.db-sankey {
   width: 100%;
   height: 100%;
   display: block;
+
+  .db-sankey-label {
+    font-size: 12px;
+    font-family: 'Roboto', '-apple-system', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+
+  .db-sankey-link {
+    stroke: black;
+    stroke-opacity: 0.1;
+  }
+}
+
+.db-dark {
+  .db-sankey-label {
+    fill: #bdbdbd;
+  }
+  .db-sankey-link {
+    stroke: #bdbdbd;
+    stroke-opacity: 0.2;
+  }
 }
 </style>
