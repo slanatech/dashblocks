@@ -49,7 +49,7 @@ export default {
             id: `wSK`,
             type: 'DbSankey',
             cspan: 12,
-            height: 560
+            height: 600
           }
         ]
       },
@@ -130,6 +130,7 @@ export default {
 
       let nodes = [];
       let links = [];
+      let linksIdx = {};
       let nodesNameIdx = {};
       //let resolveNode = x => { if(x in nodesNameIdx) {return nodesNameIdx[x]} else {nodesNameIdx[x] = }}
       let resolveNode = x => { if(!(x in nodesNameIdx)) { nodesNameIdx[x] = nodes.push({name: x})-1;} return nodesNameIdx[x]; }
@@ -142,15 +143,24 @@ export default {
           for(let i=1;i<rp.length;i++){
             let nStart = resolveNode(cN);
             let nEnd = resolveNode(rp[i]);
-            links.push({
-              source: nStart,
-              target: nEnd,
-              value: r[valueProp]
-            });
+            let nKey = `${nStart}.${nEnd}`;
+            if( !(nKey in linksIdx) ) {
+              linksIdx[nKey] = {
+                source: nStart,
+                target: nEnd,
+                value: r[valueProp]
+              };
+            } else {
+              linksIdx[nKey].value += r[valueProp];
+            }
             cN = rp[i];
           }
         }
       });
+
+      Object.keys(linksIdx).map( x=> {
+        links.push(linksIdx[x]);
+      })
 
       dthView.delete();
       return {
@@ -234,7 +244,7 @@ export default {
       let sankeyData = await this.getSankeyData({
         columns: ['Order ID', 'Sales', 'Quantity'],
         aggregates: { 'Order ID': 'count', Sales: 'sum', Quantity: 'sum' },
-        row_pivots: ['Region', 'Category', 'Sub-Category'],
+        row_pivots: ['Region', 'Segment', 'Sub-Category'],
         filter: filters
       }, 'Sales');
 
