@@ -34,7 +34,7 @@ export default {
             id: 'w2',
             type: 'DbDygraphsBar',
             cspan: 12,
-            height: 240,
+            height: 220,
             properties: {
               options: {
                 stackedGraph: true,
@@ -48,8 +48,51 @@ export default {
           {
             id: `wSK`,
             type: 'DbSankey',
-            cspan: 12,
+            cspan: 9,
+            rspan: 3,
             height: 600
+          },
+          {
+            id: `wS`,
+            type: 'DbChartjsBar',
+            cspan: 3,
+            height: 200
+          },
+          {
+            id: `wC`,
+            type: 'DbChartjsDoughnut',
+            cspan: 3,
+            height: 200,
+            properties: {
+              options: {
+                legend: { position: 'right' },
+                title: {
+                  display: true,
+                  fontFamily: 'Roboto, sans-serif',
+                  fontSize: 16,
+                  fontStyle: 'normal',
+                  text: 'Sales by Category'
+                }
+              }
+            }
+          },
+          {
+            id: `wSM`,
+            type: 'DbChartjsDoughnut',
+            cspan: 3,
+            height: 200,
+            properties: {
+              options: {
+                legend: { position: 'right' },
+                title: {
+                  display: true,
+                  fontFamily: 'Roboto, sans-serif',
+                  fontSize: 16,
+                  fontStyle: 'normal',
+                  text: 'Sales by Ship Mode'
+                }
+              }
+            }
           }
         ]
       },
@@ -69,6 +112,9 @@ export default {
     await this.initialize();
   },
   methods: {
+    renderNoLabel(arg){
+      return {};
+    },
     initData: async function() {
       const data = await fetch('data/superstore.arrow');
       const dataBuffer = await data.arrayBuffer();
@@ -251,6 +297,60 @@ export default {
       this.dbdata.setWData('wSK', {
         data: Object.freeze(sankeyData)
       });
+
+      let bySegment = await this.queryData({
+        columns: ['Order ID', 'Sales', 'Quantity'],
+        aggregates: { 'Order ID': 'count', Sales: 'sum', Quantity: 'sum' },
+        row_pivots: ['Segment'],
+        filter: filters
+      });
+
+      this.dbdata.setWData('wS', {
+        options: {
+          legend: { display: false },
+          plugins: { labels: { render: () => {} }},
+          title: {
+            display: true,
+            fontFamily: 'Roboto, sans-serif',
+            fontSize: 16,
+            fontStyle: 'normal',
+            text: 'Sales by Segment'
+          }
+        },
+        data: {
+          labels: Object.keys(bySegment),
+          datasets: [{ data: Object.keys(bySegment).map(x => bySegment[x].values['Sales']) }]
+        }
+      });
+
+      let byCategory = await this.queryData({
+        columns: ['Order ID', 'Sales', 'Quantity'],
+        aggregates: { 'Order ID': 'count', Sales: 'sum', Quantity: 'sum' },
+        row_pivots: ['Category'],
+        filter: filters
+      });
+
+      this.dbdata.setWData('wC', {
+        data: {
+          labels: Object.keys(byCategory),
+          datasets: [{ data: Object.keys(byCategory).map(x => byCategory[x].values['Sales']) }]
+        }
+      });
+
+      let byShipMode = await this.queryData({
+        columns: ['Order ID', 'Sales', 'Quantity'],
+        aggregates: { 'Order ID': 'count', Sales: 'sum', Quantity: 'sum' },
+        row_pivots: ['Ship Mode'],
+        filter: filters
+      });
+
+      this.dbdata.setWData('wSM', {
+        data: {
+          labels: Object.keys(byShipMode),
+          datasets: [{ data: Object.keys(byShipMode).map(x => byShipMode[x].values['Sales']) }]
+        }
+      });
+
 
       this.ready = true;
     },
