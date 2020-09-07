@@ -1,0 +1,76 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>db demo</title>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="../../dist/db.js"></script>
+</head>
+<body>
+<div id="test">
+
+<!--<db-dashboard></db-dashboard>-->
+
+Dygraphs
+<db-dygraphs id="dbDygraphs" style="width: 800px;height: 200px;"></db-dygraphs>
+
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    //console.log('Got WebComponentsReady!');
+    console.log('Got DOMContentLoaded!');
+
+    let dark = false;
+
+    let options = {
+      stackedGraph: false,
+      title: 'Random value Chart',
+      ylabel: 'Probability',
+      labels: ['Date', 'AAA', 'BBB'],
+      legend: 'always'
+    };
+
+    let dthData = [];
+    let sTS = Date.now() - 100 * 3600 * 1000;
+    for (let i = 0; i < 100; i++) {
+      let cTs = sTS + i * 3600 * 1000;
+      let d = new Date(cTs);
+      let r = Math.random();
+      dthData.push([d, r, r + 0.5]);
+    }
+
+    let graph = document.getElementById("dbDygraphs");
+    graph.options = options;
+    graph.data = dthData;
+
+    setInterval(
+      function() {
+        console.log('Updating data ...');
+        // Update first half of the values in the first chart
+        for (let i = 0; i < 50; i++) {
+          //dthData[i][1] = Math.random();
+
+          let dthData2 = [];
+          let sTS = Date.now() - 100 * 3600 * 1000;
+          for (let i = 0; i < 100; i++) {
+            let cTs = sTS + i * 3600 * 1000;
+            let d = new Date(cTs);
+            let r = Math.random();
+            dthData2.push([d, r, r + 0.5]);
+          }
+
+          graph.data = dthData2;
+          //graph['_updated'] = Date.now();
+          let newDark = true;
+          graph.dark = newDark;
+        }
+      },
+      1000
+    );
+
+  });
+</script>
+</body>
+</html>
+
+
+

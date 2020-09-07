@@ -1,0 +1,81 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>db demo</title>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="../../dist/wc/db.js"></script>
+</head>
+<body>
+<div id="test">
+
+<db-dashboard id="dbDashboard" style="width: 100%;height:900px;"></db-dashboard>
+
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    //console.log('Got WebComponentsReady!');
+    console.log('Got DOMContentLoaded!');
+
+    let dark = false;
+
+    let dbspec = {
+      layout: {
+        type: 'grid'
+      },
+      widgets: [
+        {
+          id: 'w1',
+          type: 'DbDygraphs',
+          cspan: 16,
+          height: 250,
+          properties: {
+            options: {
+              stackedGraph: true
+            }
+          }
+        },
+        {
+          id: 'w2',
+          type: 'DbDygraphs',
+          cspan: 16,
+          height: 250,
+          properties: {
+            options: {
+              stackedGraph: true
+            }
+          }
+        },
+      ]
+    };
+
+    let dbdata = {};
+
+    let dthData = [];
+    let sTS = Date.now() - 100 * 3600 * 1000;
+    for (let i = 0; i < 100; i++) {
+      let cTs = sTS + i * 3600 * 1000;
+      let d = new Date(cTs);
+      let r = Math.random();
+      dthData.push([d, r, r + 0.5]);
+    }
+
+    dbdata['w1'] = {
+      data: dthData
+    };
+
+    dbdata['w2'] = {
+      data: dthData
+    };
+
+    let db = document.getElementById("dbDashboard");
+    db.dbspec = dbspec;
+    db.dbdata = dbdata;
+    db.dark = true;
+
+  });
+</script>
+</body>
+</html>
+
+
+

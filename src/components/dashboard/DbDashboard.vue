@@ -47,7 +47,9 @@ export default {
         log.info('Dashboard specification updated');
         // ???
         this.$nextTick(() => {
-          window.dispatchEvent(new Event('resize'));
+          //window.dispatchEvent(new Event('resize'));
+          // Trigger component drawing
+          this.layoutComponent = DbLayouts.resolve(this.dbspec.layout.type);
         });
       },
       deep: true
@@ -58,7 +60,8 @@ export default {
     // Set log level based on props
     log.setLevel(this.loglevel);
     // Trigger component drawing
-    this.layoutComponent = DbLayouts.resolve(this.dbspec.layout.type);
+    // TODO Optimize, make sure it's created even if dbspec is not passed at all
+    this.layoutComponent = DbLayouts.resolve('grid'); //DbLayouts.resolve(this.dbspec.layout.type);
   },
   methods: {
     getDbClass() {
