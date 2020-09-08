@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <title>db demo</title>
   <script src="https://unpkg.com/vue"></script>
-  <script src="../../dist/wc/db.js"></script>
+  <script src="../../dist/wc/db-dashboard.js"></script>
 </head>
 <body>
 <div id="test">
@@ -36,8 +36,8 @@
         },
         {
           id: 'w2',
-          type: 'DbDygraphs',
-          cspan: 16,
+          type: 'DbDygraphsBar',
+          cspan: 12,
           height: 250,
           properties: {
             options: {
@@ -45,6 +45,12 @@
             }
           }
         },
+        {
+          id: 'w4',
+          type: 'DbChartjsPie',
+          cspan: 4,
+          height: 250
+        }
       ]
     };
 
@@ -67,10 +73,22 @@
       data: dthData
     };
 
+    dbdata['w4'] = {
+      data: {
+        labels: ['January', 'February', 'March', 'April'],
+        datasets: [
+          {
+            label: 'Data One',
+            data: [50, 10, 67, 45]
+          }
+        ]
+      }
+    };
+
     let db = document.getElementById("dbDashboard");
     db.dbspec = dbspec;
     db.dbdata = dbdata;
-    db.dark = true;
+    db.dark = false;
 
   });
 </script>

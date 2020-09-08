@@ -12,7 +12,7 @@
     "lint": "vue-cli-service lint",
     "build-lib": "vue-cli-service build --target lib --dest dist/lib --report --name dashblocks ./src/components/index.js",
     "build-wc": "vue-cli-service build --target wc --name dashblocks 'src/components/**/*.vue'",
-    "build-wc-db": "vue-cli-service build --target wc --dest dist/wc --name db 'src/webcomponents/*.vue'",
+    "build-wc-db": "vue-cli-service build --target wc-async --dest dist/wc --name db-dashboard 'src/webcomponents/dashboard.vue'",
     "build-wc-async": "vue-cli-service build --target wc-async --name dash-blocks 'src/components/**/*.vue'",
     "demo:build": "vue-cli-service build --dest pages/demo",
     "docs:build": "vuepress build docs -d pages",
