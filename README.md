@@ -1,6 +1,10 @@
+<p align="center">
+<img src="https://github.com/slanatech/dashblocks/blob/master/screenshots/dblogo.png?raw=true" height="200" width="200" alt="https://dashblocks.io"/>
+</p>
+
 # dashblocks 
 
-####  [https://dashblocks.io](dashblocks.io) | [DOCS](https://slanatech.github.io/dashblocks) | [DEMO](https://slanatech.github.io/dashblocks/demo)
+####  [https://dashblocks.io](dashblocks.io) | [DOCS](https://slanatech.github.io/dashblocks) | [APP TEMPLATE DEMO](https://slanatech.github.io/dashblocks-template/#/) | [DEMO](https://slanatech.github.io/dashblocks/demo)
 
 ### Enable Analytics in your Apps 
 
@@ -31,6 +35,17 @@ Dashblocks aims to simplify enabling robust In-App Analytics:
 * Enable interactivity by providing event handling on dashboard level
 * Streamline dynamic updates of dashboard data, for example based on user interaction with dashboard
 * Even dynamically generate Dashboard itself based on the data - thanks to declarative approach   
+
+## Dashblocks Template
+
+[https://github.com/slanatech/dashblocks-template](https://github.com/slanatech/dashblocks-template)
+
+Dashblocks Vue Material Admin Template is build based on [Quasar Framework](https://quasar.dev/), [Vuex](https://vuex.vuejs.org/installation.html),  [Vuejs](https://vuejs.org/) and [Dashblocks](https://github.com/slanatech/dashblocks).
+
+We focus on providing beautiful interactive Dashboards out of the box, and helping to enable In-App Analytics in your Apps.  
+
+[DASHBLOCKS TEMPLATE DEMO](https://slanatech.github.io/dashblocks-template/#/)
+
 
 
 ## Installation 
