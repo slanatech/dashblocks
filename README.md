@@ -4,7 +4,7 @@
 
 # dashblocks 
 
-####  [https://dashblocks.io](dashblocks.io) | [DOCS](https://slanatech.github.io/dashblocks) | [DEMO](https://slanatech.github.io/dashblocks-template/#/) 
+####  [https://dashblocks.io](https://dashblocks.io) | [GUIDE](https://dashblocks.io/guide/) | [DEMO](https://slanatech.github.io/dashblocks-template/#/) 
 
 ### Enable Analytics in your Apps 
 
