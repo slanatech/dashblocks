@@ -166,7 +166,8 @@ export default {
           items: [
             { title: 'First Dashboard', link: '/sampledashboard', icon: 'code' },
             { title: 'DbHorizon', link: '/dbhorizonsamples', icon: 'code' },
-            { title: 'DbDygraphsBar', link: '/dbdygraphsbarsamples', icon: 'code' }
+            { title: 'DbDygraphsBar', link: '/dbdygraphsbarsamples', icon: 'code' },
+            { title: 'Progress', link: '/progresssamples', icon: 'code' }
           ]
         }
       ],
