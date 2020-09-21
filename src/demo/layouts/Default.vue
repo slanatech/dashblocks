@@ -156,7 +156,8 @@ export default {
             { title: 'Spark Line Map Dynamics', link: '/sparklinemapdyn', icon: 'waves' },
             { title: 'Spark Heat Map', link: '/sparkheatmap', icon: 'waves' },
             { title: 'Dynamic Perspective', link: '/dynp', icon: 'trending_up' },
-            { title: 'Sankey Dashboard', link: '/sankeydashboard', icon: 'trending_up' }
+            { title: 'Sankey Dashboard', link: '/sankeydashboard', icon: 'trending_up' },
+            { title: 'Progress Dashboard', link: '/progressdashboard', icon: 'trending_up' }
          ]
         },
         {

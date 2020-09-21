@@ -6,8 +6,14 @@
     </div>
     <div style="margin-top:30px;" class="db-dashboard db-theme-default  db-dark">
       <div>Progress - Default configuration</div>
-      <div style="width: 300px;height: 70px;">
-      <db-progress title="Requests" subtitle="Number of requests" value="80"></db-progress>
+      <div style="width: 400px;border: 1px solid #0d47a1;">
+        <db-progress title="Requests" subtitle="Total Number of requests" value="80" :trend="trendData"></db-progress>
+      </div>
+    </div>
+    <div style="margin-top:30px;" class="db-dashboard db-theme-default  db-dark">
+      <div>Multi-Progress - Default configuration</div>
+      <div style="width: 400px;">
+        <db-multi-progress title="CPU Usage" :data="multiProgressData" :progress-height="15" :progress-color="'#4e79a7'"></db-multi-progress>
       </div>
     </div>
   </div>
@@ -16,12 +22,14 @@
 <script>
 import DbLinearProgress from '../../../components/db/DbLinearProgress.vue';
 import DbProgress from '../../../components/db/DbProgress.vue';
+import DbMultiProgress from '../../../components/db/DbMultiProgress.vue';
 
 export default {
   name: 'about',
   components: {
     DbLinearProgress,
-    DbProgress
+    DbProgress,
+    DbMultiProgress
   },
   data() {
     return {
@@ -29,13 +37,28 @@ export default {
       hData: null,
       chartData: this.generateData(),
       trendData: [10, 5, 11, 28, 32, 9, 21, 6],
-      progressValue: 100
+      progressValue: 100,
+      multiProgressData: []
     };
   },
   mounted() {
+    this.initialize();
     this.startUpdates();
   },
   methods: {
+    initialize(){
+      this.multiProgressData = [
+        {title: 'host1.acme.com', value: 20},
+        {title: 'host2.acme.com', value: 30},
+        {title: 'host3.acme.com', value: 40},
+        {title: 'host4.acme.com', value: 50},
+        {title: 'host5.acme.com', value: 60},
+        {title: 'host6.acme.com', value: 70},
+        {title: 'host7.acme.com', value: 80},
+        {title: 'host8.acme.com', value: 90},
+        {title: 'host9.acme.com', value: 100}
+      ]
+    },
     startUpdates() {
       let comp = this;
       /*

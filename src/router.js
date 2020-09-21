@@ -28,6 +28,7 @@ import GeoMapBoxUS from './demo/views/GeoMapboxUS';
 import OverlayDashboard from './demo/views/OverlayDashboard';
 import OverlayDashboardImage from './demo/views/OverlayDashboardImage';
 import SankeyDashboard from './demo/views/SankeyDashboard';
+import ProgressDashboard from './demo/views/ProgressDashboard';
 //import SparkLineMapDyn from './demo/views/SparkLineMapDyn';
 
 Vue.use(Router);
@@ -183,6 +184,11 @@ export default new Router({
           path: '/sankeydashboard',
           name: 'sankeydashboard',
           component: SankeyDashboard
+        },
+        {
+          path: '/progressdashboard',
+          name: 'progressdashboard',
+          component: ProgressDashboard
         }
         /*
         {

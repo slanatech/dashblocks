@@ -31,6 +31,18 @@ export default {
       type: Number,
       default: 20
     },
+    color: {
+      type: String,
+      default: null
+    },
+    colorMode: {
+      type: String,
+      default: 'default'
+    },
+    reverse: {
+      type: Boolean,
+      default: false
+    },
     max: {
       type: Number,
       default: null
@@ -100,12 +112,26 @@ export default {
         .domain([0, numrect])
         .range([0, 100]);
 
-      let color = d3.scaleSequential(d3.interpolateRdYlGn).domain([0, numrect]);
+      let colorScale = d3.scaleSequential(d3.interpolateRdYlGn).domain([0, numrect]);
+      let colorValueScale = d3.scaleSequential(d3.interpolateRdYlGn).domain([0, 100]);
 
       for (let i = 0; i < numrect; i++) {
         //console.log(`i=${i}, lx(i)=${lx(i)}`);
         if (lx(i) < this.value) {
-          let c = color(numrect-i);
+          // Determine color
+          let c = this.color;
+          if (!c) {
+            switch (this.colorMode) {
+              case 'test': {
+                c = this.reverse ? colorValueScale(this.value) : colorValueScale(100 - this.value);
+                break;
+              }
+              default: {
+                c = this.reverse ? colorScale(i) : colorScale(numrect - i);
+                break;
+              }
+            }
+          }
           ctx.fillStyle = dbColors.hex2RGBA(c, 0.7); // Light
         } else {
           ctx.fillStyle = dbColors.hex2RGBA('#78909c', 0.2); // Light

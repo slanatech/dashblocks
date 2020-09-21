@@ -38,7 +38,7 @@ export default {
               }
             }
           },
-          { id: 'w51', type: 'DbNumber', cspan: 4, properties: { title: 'Requests', subtitle: 'Total requests received', icon: 'fa fa-signal' } },
+          { id: 'w51', type: 'DbNumber', height: 120, cspan: 4, properties: { title: 'Requests', subtitle: 'Total requests received', icon: 'fa fa-signal' } },
           {
             id: 'w52',
             type: 'DbNumber',

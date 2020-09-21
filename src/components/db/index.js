@@ -8,6 +8,8 @@ import DbSparkHeatMap from './DbSparkHeatmap';
 import DbNone from './DbNone';
 import DbMarkup from './DbMarkup';
 import DbLinearProgress from './DbLinearProgress';
+import DbProgress from './DbProgress';
+import DbMultiProgress from './DbMultiProgress';
 //import DbSparkRidgeline from './DbSparkRidgeline';
 
-export { DbNumber, DbEasyPie, DbTrendLine, DbTrendBar, DbSparkline, DbSparkLineMap, DbSparkHeatMap, DbNone, DbMarkup, DbLinearProgress};
+export { DbNumber, DbEasyPie, DbTrendLine, DbTrendBar, DbSparkline, DbSparkLineMap, DbSparkHeatMap, DbNone, DbMarkup, DbLinearProgress, DbProgress, DbMultiProgress};
