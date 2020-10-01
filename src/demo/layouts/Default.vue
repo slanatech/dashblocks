@@ -134,6 +134,7 @@ export default {
           items: [
             { title: 'Overlay Infographic', link: '/overlay', icon: 'flip_to_front' },
             { title: 'Overlay Image', link: '/overlayimage', icon: 'flip_to_front' },
+            { title: 'Overlay Parallax', link: '/overlayparallax', icon: 'flip_to_front' },
           ]
         },
         {

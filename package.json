@@ -105,7 +105,8 @@
     "vue-docgen-api": "^4.24.0",
     "vue-template-compiler": "^2.6.11",
     "vuepress": "^1.5.4",
-    "open-simplex-noise": "^2.2.0"
+    "open-simplex-noise": "^2.2.0",
+    "rellax": "^1.12.1"
   },
   "eslintConfig": {
     "root": true,

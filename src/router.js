@@ -27,6 +27,7 @@ import SalesSunburstDashboard from './demo/views/SalesSunburstDashboard';
 import GeoMapBoxUS from './demo/views/GeoMapboxUS';
 import OverlayDashboard from './demo/views/OverlayDashboard';
 import OverlayDashboardImage from './demo/views/OverlayDashboardImage';
+import OverlayDashboardParallax from './demo/views/OverlayDashboardParallax';
 import SankeyDashboard from './demo/views/SankeyDashboard';
 import ProgressDashboard from './demo/views/ProgressDashboard';
 //import SparkLineMapDyn from './demo/views/SparkLineMapDyn';
@@ -174,6 +175,11 @@ export default new Router({
           path: '/overlayimage',
           name: 'overlayimage',
           component: OverlayDashboardImage
+        },
+        {
+          path: '/overlayparallax',
+          name: 'overlayparallax',
+          component: OverlayDashboardParallax
         },
         {
           path: '/dynamicsankey',
