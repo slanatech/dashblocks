@@ -10,7 +10,7 @@
       <div class="rellax db-layer" style="pointer-events: none;top: 300px;" data-rellax-speed="7">
         <db-dashboard :dbspec="dbspec2" :dbdata="dbdata2" :dark="isDark" class="db-transparent"> </db-dashboard>
       </div>
-      <div class="rellax db-layer" style="pointer-events: none;top: 1200px;" data-rellax-speed="10">
+      <div class="rellax db-layer" style="pointer-events: none;top: 1200px;" data-rellax-speed="25">
         <db-dashboard :dbspec="dbspec3" :dbdata="dbdata3" :dark="isDark" class="db-transparent"> </db-dashboard>
       </div>
     </div>

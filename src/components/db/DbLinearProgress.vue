@@ -15,7 +15,8 @@ export default {
   data() {
     return {
       canvasWidth: 100,
-      canvasHeight: 50
+      canvasHeight: 50,
+      maxObservedValue: this.value
     };
   },
   props: {
@@ -55,6 +56,14 @@ export default {
       });
     },
     value(/*newVal*/) {
+      if (this.value > this.maxObservedValue) {
+        this.maxObservedValue = this.value;
+      }
+      this.$nextTick(function() {
+        this.render();
+      });
+    },
+    height(/*newVal*/) {
       this.$nextTick(function() {
         this.render();
       });
@@ -117,22 +126,25 @@ export default {
 
       for (let i = 0; i < numrect; i++) {
         //console.log(`i=${i}, lx(i)=${lx(i)}`);
-        if (lx(i) < this.value) {
-          // Determine color
-          let c = this.color;
-          if (!c) {
-            switch (this.colorMode) {
-              case 'test': {
-                c = this.reverse ? colorValueScale(this.value) : colorValueScale(100 - this.value);
-                break;
-              }
-              default: {
-                c = this.reverse ? colorScale(i) : colorScale(numrect - i);
-                break;
-              }
+        // Determine color
+        let c = this.color;
+        if (!c) {
+          switch (this.colorMode) {
+            case 'test': {
+              c = this.reverse ? colorValueScale(this.value) : colorValueScale(100 - this.value);
+              break;
+            }
+            default: {
+              c = this.reverse ? colorScale(i) : colorScale(numrect - i);
+              break;
             }
           }
+        }
+        let scaledValue = lx(i);
+        if (scaledValue < this.value) {
           ctx.fillStyle = dbColors.hex2RGBA(c, 0.7); // Light
+        } else if (scaledValue < this.maxObservedValue) {
+          ctx.fillStyle = dbColors.hex2RGBA(c, 0.3); // Medium
         } else {
           ctx.fillStyle = dbColors.hex2RGBA('#78909c', 0.2); // Light
         }

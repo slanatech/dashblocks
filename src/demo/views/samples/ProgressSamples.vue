@@ -4,6 +4,10 @@
       <div>Linear Progress - Default configuration</div>
       <db-linear-progress :value="progressValue"></db-linear-progress>
     </div>
+    <div>
+      <div>Linear Progress - Dynamic</div>
+      <db-linear-progress :value="progressValue2" :height="30" :color="'#4e79a7'"></db-linear-progress>
+    </div>
     <div style="margin-top:30px;" class="db-dashboard db-theme-default  db-dark">
       <div>Progress - Default configuration</div>
       <div style="width: 400px;border: 1px solid #0d47a1;">
@@ -13,7 +17,7 @@
     <div style="margin-top:30px;" class="db-dashboard db-theme-default  db-dark">
       <div>Multi-Progress - Default configuration</div>
       <div style="width: 400px;">
-        <db-multi-progress title="CPU Usage" :data="multiProgressData" :progress-height="15" :progress-color="'#4e79a7'"></db-multi-progress>
+        <db-multi-progress title="CPU Usage" :data="multiProgressData" :progress-height="20" :progress-color="'#4e79a7'"></db-multi-progress>
       </div>
     </div>
   </div>
@@ -38,12 +42,13 @@ export default {
       chartData: this.generateData(),
       trendData: [10, 5, 11, 28, 32, 9, 21, 6],
       progressValue: 100,
+      progressValue2: 20,
       multiProgressData: []
     };
   },
   mounted() {
     this.initialize();
-    this.startUpdates();
+    //this.startUpdates();
   },
   methods: {
     initialize(){
@@ -61,13 +66,11 @@ export default {
     },
     startUpdates() {
       let comp = this;
-      /*
       setInterval(() => {
         let newval = Math.floor(Math.random() * 100);
         //console.log(`Updating progress to ${newval}`);
-        comp.progressValue = newval;
+        comp.progressValue2 = newval;
       }, 100);
-      */
     },
     generateData() {
       let chartData = [];
